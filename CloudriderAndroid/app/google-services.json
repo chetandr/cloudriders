@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "433228663045",
+    "firebase_url": "https://cloudrider-d5de2.firebaseio.com",
+    "project_id": "cloudrider-d5de2",
+    "storage_bucket": "cloudrider-d5de2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:433228663045:android:31a4fd0046313856",
+        "android_client_info": {
+          "package_name": "com.cloudrider.semicolon"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "433228663045-ro7ht3nb2jhcv0ba0ojr1uib2ik88la8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.cloudrider.semicolon",
+            "certificate_hash": "ac907fc995077bcf9334d306a0ee2ba53247fa36"
+          }
+        },
+        {
+          "client_id": "433228663045-hj25j72kmmncflasa8s5lhf70dk717la.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAP-e_tNfr3-URCRxCWq4utI0l8o5aw9Fw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "433228663045-hj25j72kmmncflasa8s5lhf70dk717la.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
