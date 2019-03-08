@@ -12,18 +12,19 @@ import { IconsComponent } from '../../icons/icons.component';
 import { MapsComponent } from '../../maps/maps.component';
 import { NotificationsComponent } from '../../notifications/notifications.component';
 import { UpgradeComponent } from '../../upgrade/upgrade.component';
-
+import { NvD3Module } from 'ng2-nvd3';
 import {
   MatButtonModule,
   MatInputModule,
   MatRippleModule,
   MatFormFieldModule,
   MatTooltipModule,
-  MatSelectModule
+  MatSelectModule,
 } from '@angular/material';
 @NgModule({
   imports: [
     CommonModule,
+    NvD3Module,
     RouterModule.forChild(AdminLayoutRoutes),
     FormsModule,
     MatButtonModule,

@@ -1,36 +1,77 @@
-import { Component, OnInit } from '@angular/core';
-import { DataSet } from 'vis';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import 'nvd3';
 
+declare let d3: any;
 @Component({
-  selector: 'app-graph-visualization',
-  templateUrl: './graph-visualization.component.html',
-  styleUrls: ['./graph-visualization.component.css']
+  selector: 'network-graph-component',
+  template: `
+    <div>
+      <nvd3 [options]="options" [data]="data"></nvd3>
+    </div>
+  `,
+  // include original styles
+  styleUrls: [
+    '../../../node_modules/nvd3/build/nv.d3.css'
+  ],
+  encapsulation: ViewEncapsulation.None
 })
-export class GraphVisualizationComponent {
-  graphData = {};
 
-  constructor() { }
-
-  ngAfterContentInit(){
-    // create an array with nodes
-    var nodes = new DataSet([
-      {id: 1, label: 'Node 1'},
-      {id: 2, label: 'Node 2'},
-      {id: 3, label: 'Node 3'},
-      {id: 4, label: 'Node 4'},
-      {id: 5, label: 'Node 5'}
-    ]);
-
-    // create an array with edges
-    var edges = new DataSet([
-      {from: 1, to: 3},
-      {from: 1, to: 2},
-      {from: 2, to: 4},
-      {from: 2, to: 5}
-    ]);
-
-    // provide the data in the vis format
-    this.graphData["nodes"] = nodes;
-    this.graphData["edges"] = edges;
+export class NetworkGraphComponent implements OnInit {
+  options;
+  data;
+  ngOnInit() {
+    this.options = {
+      chart: {
+        type: 'forceDirectedGraph',
+        height: 450,
+        margin : {
+          top: 20,
+          right: 20,
+          bottom: 50,
+          left: 55
+        },
+        x: function(d){return d.label;},
+        y: function(d){return d.value;},
+        showValues: true,
+        valueFormat: function(d){
+          return d3.format(',.4f')(d);
+        },
+        duration: 500,
+        xAxis: {
+          axisLabel: 'X Axis'
+        },
+        yAxis: {
+          axisLabel: 'Y Axis',
+          axisLabelDistance: -10
+        }
+      }
+    }
+    this.data = {
+        "nodes":[
+            {"Peer":"MyPeer 1","Organisation":1},
+            {"Peer":"MyPeer 2","Organisation":1},
+            {"Peer":"MyPeer 3","Organisation":1},
+            {"Peer":"MyPeer 1","Organisation":2},
+            {"Peer":"MyPeer 2","Organisation":2},
+            {"Peer":"MyPeer 3","Organisation":2},
+            {"Peer":"MyPeer 1","Organisation":3},
+            {"Peer":"MyPeer 2","Organisation":3},
+            {"Peer":"MyPeer 3","Organisation":3},
+            {"Peer":"MyPeer 1","Organisation":4},
+            {"Peer":"MyPeer 2","Organisation":4},
+            {"Peer":"MyPeer 3","Organisation":4},
+            {"Peer":"MyPeer 1","Organisation":5},
+            {"Peer":"MyPeer 2","Organisation":5},
+            {"Peer":"MyPeer 3","Organisation":5},
+            {"Peer":"MyPeer 1","Organisation":6},
+            {"Peer":"MyPeer 2","Organisation":6},
+            {"Peer":"MyPeer 3","Organisation":6},
+            
+            
+        ],
+        "links":[
+            {"source":1,"target":2,"value":10},
+        ]
+    };
   }
 }

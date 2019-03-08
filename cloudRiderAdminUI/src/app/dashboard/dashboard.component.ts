@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as Chartist from 'chartist';
-
+//import { NetworkGraphComponent } from '../networkgraph/networkgraph.component';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',

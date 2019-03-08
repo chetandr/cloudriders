@@ -53,11 +53,15 @@ export const AdminLayoutRoutes: Routes = [
     //     }]
     // }
     { path: 'dashboard',      component: DashboardComponent },
-    { path: 'user-profile',   component: UserProfileComponent },
-    { path: 'table-list',     component: TableListComponent },
-    { path: 'typography',     component: TypographyComponent },
+    { path: 'orgs',   component: UserProfileComponent },
+    { path: 'peers',     component: TableListComponent },
+    { path: 'channels',     component: TypographyComponent },
     { path: 'icons',          component: IconsComponent },
     { path: 'maps',           component: MapsComponent },
     { path: 'notifications',  component: NotificationsComponent },
     { path: 'upgrade',        component: UpgradeComponent },
 ];
+
+//{ path: '/orgs', title: 'Organisations',  icon:'', class: 'fa fa-first-order' },
+  //  { path: '/peers', title: 'Peers',  icon:'device_hub', class: 'material-icons' },
+    //{ path: '/channels', title: 'Channels',  icon:'', class: 'fa fa-podcast' }
