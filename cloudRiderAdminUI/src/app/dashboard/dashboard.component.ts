@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as Chartist from 'chartist';
+import { HttpClient } from '@angular/common/http';
+
 //import { NetworkGraphComponent } from '../networkgraph/networkgraph.component';
 @Component({
   selector: 'app-dashboard',
@@ -7,13 +9,20 @@ import * as Chartist from 'chartist';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-
-  constructor() { }
+   summaryData = {};
+  constructor(private http: HttpClient) { 
+    this.http = http;
+  }
   startAnimationForLineChart(chart){
       let seq: any, delays: any, durations: any;
       seq = 0;
       delays = 80;
       durations = 500;
+      this.http.get("http://10.44.14.143:3000/").subscribe(
+        Data => {
+          console.log(Data);
+          this.summaryData= Data
+        });
 
       chart.on('draw', function(data) {
         if(data.type === 'line' || data.type === 'area') {
@@ -67,7 +76,7 @@ export class DashboardComponent implements OnInit {
   };
   ngOnInit() {
       /* ----------==========     Daily Sales Chart initialization For Documentation    ==========---------- */
-
+      this.http.get("http://10.44.14.143:3000/")
       const dataDailySalesChart: any = {
           labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
           series: [
