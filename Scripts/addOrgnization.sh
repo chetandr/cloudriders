@@ -16,10 +16,23 @@ FILE_CONFIGTX=configtx.yaml
 
 fileOrgCryptio=""
 orgShortName=""
+noOfPeers=""
+network=""
+startPortPeer=""
 
 DIR_SCRIPTS=scripts
 SCRIPT_STEP1=step1.sh
 SCRIPT_UTILS=utils_add_org.sh
+
+DIR_YAML=YAML
+DIR_CRYPTO_CONFIG=${DIR_YAML}/crypto-config
+DIR_DOCKER_COMPOSE=${DIR_YAML}/docker-compose
+
+FILE_DOCKER_COMPOSE_CLI=docker-compose-cli.yaml
+FILE_CA=ca.yaml
+FILE_SERVICE=service.yaml
+FILE_PEER=peer.yaml
+FILE_CI=cli_new.yaml
 
 showUsage(){
     echo -e "./addOrgnization.sh <domain> <Org Name> <Channel Name> <Orderer Name> <Orderer Host Name>"
@@ -28,7 +41,7 @@ showUsage(){
 
 generateCryptoConfig(){
 
-   sed "s#PARAM_NAME#${orgName}#g; s#PARAM_DOMAIN#${orgShortName}.${domain}#g; " ${DIR_ADD_ORG}/${FILE_NEW_ORG_CRYPTO} >> ${DIR_OUTPUT}/${orgShortName}-crypto.yaml
+   sed "s#PARAM_PEER_NOS#${noOfPeers}#g; s#PARAM_NAME#${orgName}#g; s#PARAM_DOMAIN#${orgShortName}.${domain}#g; " ${DIR_ADD_ORG}/${FILE_NEW_ORG_CRYPTO} >> ${DIR_OUTPUT}/${orgShortName}-crypto.yaml
 
 
     CURRENT_DIR=$PWD
@@ -92,9 +105,77 @@ generateConfigTX(){
 
   docker exec cli.${domain} peer channel update -f org3_update_in_envelope.pb -c ${channel} -o ${ordererHostName}.${domain}:7050 --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/${domain}/orderers/${ordererHostName}.${domain}/msp/tlscacerts/tlsca.${domain}-cert.pem
 
-  
+
 
 }
+
+
+generateDockerComposeCliConfig(){
+
+    FULL_NAME_ORDERER=""
+   
+    for number1 in $(seq 0 ${noOfPeers})
+    do
+        FULL_NAME_ORDERER=${FULL_NAME_ORDERER}"\n  "peer${number1}.${orgShortName}${number}.${domain}:
+    done    
+
+
+    sed "s#PARAM_VOLUMNS#${FULL_NAME_ORDERER}#g; s#PARAM_NETWORK#${network}#g; s#PARAM_ORDERER_HOSTNAME#${ordererHostname}#g;" ${DIR_DOCKER_COMPOSE}/${FILE_DOCKER_COMPOSE_CLI} > ${DIR_OUTPUT_MAIN}/${orgShortName}${FILE_DOCKER_COMPOSE_CLI}
+
+    FULL_NAME_ORDERER_MAIN_NAME=${ordererHostname}.${domain}
+
+    # sed "s#PARAM_SERVICE_NAME#${FULL_NAME_ORDERER_MAIN_NAME}#g; " ${DIR_DOCKER_COMPOSE}/${FILE_SERVICE} >> ${DIR_OUTPUT}/${orgShortName}${FILE_DOCKER_COMPOSE_CLI}
+
+
+    # for number1 in $(seq 0 ${noOfPeers})
+    # do
+    #     sed "s#PARAM_SERVICE_NAME#peer${number1}.${orgShortName}.${domain}#g; " ${DIR_DOCKER_COMPOSE}/${FILE_SERVICE} >> ${DIR_OUTPUT}/${orgShortName}${FILE_DOCKER_COMPOSE_CLI}
+    # done    
+
+    mainPeerPort1=$startPortPeer
+    mainPeerPort2=`expr $startPortPeer + 2`
+    tmpPortPeer=`expr $mainPeerPort2 + 2`
+
+    for number1 in $(seq 0 ${noOfPeers})
+    do
+
+        tmpPortPeer1=`expr $tmpPortPeer + 2`
+
+        sed "s#PARAM_PORT_1#${tmpPortPeer}#g; s#PARAM_PORT_2#7051#g; s#PARAM_PORT_3#${tmpPortPeer1}#g; s#PARAM_PORT_4#7053#g; s#PARAMORGNUMBER#${orgName}#g; s#PARAM_PORT_0#7051#g; s#PARAM_ORG#${orgShortName}.${domain}#g; s#PARAM_NETWORK#${network}#g; s#PARAM_SERVICE_NAME#peer${number1}.${orgShortName}.${domain}#g;" ${DIR_DOCKER_COMPOSE}/${FILE_PEER} >> ${DIR_OUTPUT_MAIN}/${orgShortName}${FILE_DOCKER_COMPOSE_CLI}
+
+        tmpPortPeer=`expr $tmpPortPeer1 + 2`
+
+    done     
+   
+    FULL_NAME_ORDERER_CLI=""
+   
+    for number1 in $(seq 0 ${noOfPeers})
+    do
+        FULL_NAME_ORDERER_CLI=${FULL_NAME_ORDERER_CLI}"\n      - "peer${number1}.${orgShortName}${number}.${domain}
+    done    
+  
+    #sed "s#PARAM_PORT_1#${tmpPortPeer}#g; s#PARAM_PORT_2#7051#g; s#PARAM_PORT_3#${tmpPortPeer1}#g; s#PARAM_PORT_4#7053#g; s#PARAMORGNUMBER#${orgName}#g; s#PARAM_PORT_0#7051#g; s#PARAM_ORG#${orgShortName}.${domain}#g; s#PARAM_NETWORK#${network}#g; s#PARAM_SERVICE_NAME#peer${number1}.${orgShortName}.${domain}#g;" ${DIR_DOCKER_COMPOSE}/${FILE_CI} >> ${DIR_OUTPUT_MAIN}/${orgShortName}${FILE_DOCKER_COMPOSE_CLI}
+
+    PEER_NAME="peer0.${orgShortName}.${domain}"
+    ORG_NAME="${orgShortName}.${domain}"
+
+    sed "s#PARAM_VOLUMNS#${FULL_NAME_ORDERER_CLI}#g; s#PARAM_NETWORK#${network}#g; s#PARAM_SERVICE_NAME#cli.${orgShortName}.${domain}#g; s#PARAM_PEER#${PEER_NAME}#g; s#PARAMORG#${orgName}#g; s#PARAM_ORG#${ORG_NAME}#g; s#PARAM_PORT#${startPortPeer}#g;" ${DIR_DOCKER_COMPOSE}/${FILE_CI} >> ${DIR_OUTPUT_MAIN}/${orgShortName}${FILE_DOCKER_COMPOSE_CLI}
+
+    # PEER_NAME="peer0.${orgShortName}1.${domain}"
+    # ORG_NAME="${orgShortName}1.${domain}"
+
+    # sed "s#PARAM_VOLUMNS#${FULL_NAME_ORDERER_CLI}#g; s#PARAM_NETWORK#${network}#g; s#PARAM_SERVICE_NAME#cli.${domain}#g; s#PARAM_PEER#${PEER_NAME}#g; s#PARAMORG#${orgName}1#g; s#PARAM_ORG#${ORG_NAME}#g; s#PARAM_PORT#${startPortPeer}#g;" ${DIR_DOCKER_COMPOSE}/${FILE_CI} >> ${DIR_OUTPUT}/${FILE_DOCKER_COMPOSE_CLI}
+
+    CURRENT_DIR=$PWD
+    cd $CURRENT_DIR
+
+    cd ${DIR_OUTPUT_MAIN}
+    docker-compose -f ${orgShortName}${FILE_DOCKER_COMPOSE_CLI} up -d
+
+    cd $CURRENT_DIR
+
+}
+
 
 signConfigtxAsPeerOrg() {
   PEERORG=$1
@@ -150,7 +231,7 @@ addNewOrgnization(){
 
  #Main 
 
-if [ "$#" -ne 5 ]; then
+if [ "$#" -ne 8 ]; then
   showUsage
   exit 1
 fi
@@ -168,6 +249,9 @@ orgName=$2
 channel=$3
 ordererName=$4
 ordererHostName=$5
+noOfPeers=$6
+network=$7
+startPortPeer=$8
 
 fileOrgCryptio=${orgName}-crypto.yaml
 orgShortName=`echo "${orgName,,}"`
@@ -183,5 +267,6 @@ orgShortName=`echo "${orgName,,}"`
 generateCryptoConfig
 generateChannelArtifacts
 generateConfigTX
+generateDockerComposeCliConfig
 
 #addNewOrgnization

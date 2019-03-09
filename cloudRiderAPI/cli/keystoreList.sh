@@ -1,1 +1,2 @@
-docker exec cli.example.com find . | grep Organizations | grep peers
+consortium=$1
+docker exec $consortium find . | grep Organizations 

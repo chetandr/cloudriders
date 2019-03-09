@@ -10,63 +10,27 @@
               </div>
               <div class="card-body">
                   <div class="table-responsive">
-                      <table class="table">
-                          <thead class=" text-primary">
-                              <th>
-                                  ID
-                              </th>
-                              <th>
-                                  Name
-                              </th>
-                              </thead>
-                          <tbody>
-                              <tr>
-                                  <td>
-                                      1
-                                  </td>
-                                  <td>
-                                      Dakota Rice
-                                  </td>
+                        <table class="table table-striped table-hover display" style="cellspacing:0;width:100%">
+                                <thead>
+                                     <tr>
+                                            <th>
+                                                    ID
+                                                </th>
+                                                <th>
+                                                    Name
+                                                </th>
+                                     </tr>
+                                </thead>
+                         
+                              <tbody >
                                   
-                              </tr>
-                              <tr>
-                                  <td>
-                                      2
-                                  </td>
-                                  <td>
-                                      Minerva Hooper
-                                  </td>
-                                
-                              </tr>
-                              <tr>
-                                  <td>
-                                      3
-                                  </td>
-                                  <td>
-                                      Sage Rodriguez
-                                  </td>
-                                  
-                              </tr>
-                              <tr>
-                                  <td>
-                                      4
-                                  </td>
-                                  <td>
-                                      Philip Chaney
-                                  </td>
-                                  
-                              </tr>
-                                <tr>
-                                  <td>
-                                      6
-                                  </td>
-                                  <td>
-                                      Mason Porter
-                                  </td>
-                                 
-                              </tr>
-                          </tbody>
-                      </table>
+                                  <tr *ngFor="let cons of consordiumData; index as i"> 
+                                        <td ng-repeat="(val) in row">{{i+1}}</td> 
+                                            <td ng-repeat="(val) in row">{{cons.consortiumname}}</td> 
+                                       </tr>
+                             </tbody>
+                         </table>
+                      
                   </div>
               </div>
           </div>
@@ -130,7 +94,7 @@
                           </div>
                       </div>
                       
-                      <button mat-raised-button type="submit" class="btn btn-danger pull-right">Add Consortium</button>
+                      <button mat-raised-button type="submit" class="btn btn-danger pull-right">Save</button>
                       <div class="clearfix"></div>
                   </form>
               </div>

@@ -60,9 +60,9 @@ createChannel() {
 
 joinChannel () {
 	
-	finalPeers=`expr 1 - 1`
+	finalPeers=`expr 2 - 1`
 	for org in {1..1}; do
-	    for peer in {0..1}; do
+	    for peer in {0..2}; do
 		echo "Joining peer${peer}.Org${org}"
 		joinChannelWithRetry $peer $org
 		echo "===================== peer${peer}.Org${org} joined channel '$CHANNEL_NAME' ===================== "
