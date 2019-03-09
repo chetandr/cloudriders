@@ -7,9 +7,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserProfileComponent implements OnInit {
 
+  consortiums = [ "Consortium 1", "Consortium 2", "Consortium 3"]
+
   constructor() { }
 
   ngOnInit() {
+
   }
 
 }
