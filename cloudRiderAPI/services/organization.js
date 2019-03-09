@@ -6,7 +6,7 @@ const _ = require("lodash")
 function getOrgs(req, res) {
     logger.info("inside getOrg()")
     let data = utils.mockDetails(mockData, res)
-    res.send(data)
+    res.send({data})
     res.end()
 }
 
