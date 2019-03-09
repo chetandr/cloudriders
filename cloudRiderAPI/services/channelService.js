@@ -74,7 +74,7 @@ async function readChannels(req, res) {
             }
         },
         ]
-        res.send(data);    
+        res.send({data});    
 }
 
 function invokeChaincode(req, res) {
