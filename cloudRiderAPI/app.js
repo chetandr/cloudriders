@@ -12,7 +12,6 @@ var services = require('./services/services')
 var dashboard = require('./services/dashboardServices')
 const port = 3000
 logger.info("Hello world")
-//app.get('/', (req, res) => res.send({"message":"This is Cloud Riders Project!"}))
 app.get('/',dashboard.home)
 //channels apis
 app.post('/hyperverse/channels',channelService.createChannel);
