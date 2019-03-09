@@ -12,14 +12,21 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.cloudrider.semicolon.utils.GsonRequest;
-import com.cloudrider.semicolon.utils.Utils;
+import com.cloudrider.semicolon.parse.Consortium;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 
-import java.util.Map;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -48,71 +55,18 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     public void fetchData() {
-//        Gson gson;
-//        gson = new GsonBuilder().serializeNulls()
-//                .create();
-//            Response.Listener<JsonObject> loginResponseListener = new Response.Listener<JsonObject>() {
-//                @Override
-//                public void onResponse(JsonObject response) {
-//                    //closeProgressDialog();
-//                    Log.e("HEMANT", response.toString());
-//                    startActivity(new Intent(SplashActivity.this, OrgSelectActivity.class));
-//                    finish();
-//                    if (response == null) {
-//                        return;
-//                    }
-//                    try {
-//
-//                    } catch (Exception e) {
-//                        e.printStackTrace();
-//                    }
-//
-//                }
-//            };
-//
-//
-//            Response.ErrorListener errorListener = new Response.ErrorListener() {
-//                @Override
-//                public void onErrorResponse(VolleyError error) {
-//                   //closeProgressDialog();
-//                    Log.e("SplashActivity", error.toString());
-//                }
-//            };
-//
-//            GsonRequest<JsonObject> gsonRequest = new GsonRequest<>(
-//                    Request.Method.GET,
-//                    "http://10.44.14.143:3000/hyperverse/organization",
-//                    new TypeToken<JsonObject>() {
-//                    }.getType(),
-//                    gson,
-//                    loginResponseListener,
-//                    errorListener
-//            );
-//            Map<String, String> headers = Utils.requestHeader(false);
-//
-//            gsonRequest.setHeaderParams(headers);
-//
-//            //gsonRequest.setBodyParams(getBodyParams());
-//            gsonRequest.setShouldCache(false);
-//            gsonRequest.setTag("Login");
-//            gsonRequest.setRequestRetryParams();
-//            //gsonRequest.setRetryPolicy(new DefaultRetryPolicy(0, -1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-//            //displayProgressDialog();
 
-
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, "http://10.44.14.143:3000/hyperverse/organization",
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, "http://10.44.14.143:3000/hyperverse/consortium",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         // Display the first 500 characters of the response string.
-                        Log.e("HEMANT", response.toString());
-                        startActivity(new Intent(SplashActivity.this, OrgSelectActivity.class));
-                        finish();
-                        if (response == null) {
-                            return;
-                        }
                         try {
-
+                            Gson gson = new Gson();
+                            Consortium cons = gson.fromJson(response, Consortium.class);
+                            CloudriderApp.getInstance().setConsortium(cons);
+                            startActivity(new Intent(SplashActivity.this, OrgSelectActivity.class));
+                            finish();
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
