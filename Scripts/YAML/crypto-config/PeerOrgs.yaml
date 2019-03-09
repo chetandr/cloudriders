@@ -1,7 +1,7 @@
-  - Name: PARAM_NAME
-    Domain: PARAM_DOMAIN
-    EnableNodeOUs: true
-    Template:
-      Count: 4
-    Users:
-      Count: 4
+- Name: PARAM_NAME
+  Domain: PARAM_DOMAIN
+  EnableNodeOUs: true
+  Template:
+    Count: PARAM_PEER_NOS
+  Users:
+    Count: 1

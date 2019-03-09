@@ -1,6 +1,7 @@
 var logger = require('tracer').console();
 var utils = require('../utils/utils.js')
-var mockData = require('../../mocks/peerDataforAGivenPeer.json')
+let fs =  require("fs");
+let shellExec = require('../utils/shellExecutor')
 //function to get consortium
 async function getConsortiumByName (req, res) {
     logger.info("inside getConsortium()")
@@ -17,7 +18,9 @@ async function getConsortiumByName (req, res) {
 //list of consortiums
 async function getConsortiums (req, res) {
     logger.info("inside getConsortium()")
-    
+    //console.log(fs.readdirSync('../'))
+    //let consortiums = fs.readdirSync('./../Scripts/Output/crypto-config/ordererOrganizations/')
+    //console.log('###',consortiums);
     let result = utils.getNetworkData();    
     res.send(result)
     res.end()

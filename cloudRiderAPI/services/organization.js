@@ -6,33 +6,34 @@ const shellExecuter =  require("../utils/shellExecutor")
 //function to get organizations
 async function getOrgs(req, res) {
     logger.info("inside getOrg()");
-    let output = await shellExecuter.executeShell('KEY_STORE_MAP');
+    let consortiumName = req.params.consortiumName;
+    let output = await shellExecuter.executeShell('KEY_STORE_MAP',[`cli.${consortiumName}`]);
     logger.info(typeof output)
     let map = {}
     output = output.split('\n');
-
+    let consort_name = "";
     output = _.compact(output);
     for(let entry of output){
         let arr = entry.split('/');
         console.log(entry, _.endsWith(entry,'peers'))
-        if(!_.isEqual(arr[2], "ordererOrganizations") && !_.endsWith(entry,'peers')){
-            
+        if(_.isEqual(arr[2], "peerOrganizations") && _.isEqual(arr[4],'peers') && arr[5]){
             let org = arr[3];
-            let peer = arr[5].split('.')[0]
+            let peer = arr[5].split('.')[0];
             if(map[org]) map[org].push(peer);
             else map[org] = [peer];
-        }else{
-            console.log('ORDERORG', arr[2])
         }
-
     }
-    let finalResult = []
+    //console.log(map);
+    let finalResult = {
+        "consortiumname": consortiumName,
+        "orgs":[]
+    }
     for(let org in map){
         let obj ={
             "orgname":org,
             "peers": _.uniq(map[org])
         }
-        finalResult.push(obj);
+        finalResult.orgs.push(obj);
     }
     //let data = utils.mockDetails(mockData, res)
     res.send(finalResult)
