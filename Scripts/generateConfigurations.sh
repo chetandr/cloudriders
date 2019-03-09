@@ -157,7 +157,7 @@ generateDockerComposeCliConfig(){
     PEER_NAME="peer0.${orgShortName}1.${domain}"
     ORG_NAME="${orgShortName}1.${domain}"
 
-    sed "s#PARAM_VOLUMNS#${FULL_NAME_ORDERER_CLI}#g; s#PARAM_NETWORK#${network}#g; s#PARAM_SERVICE_NAME#${orgShortName}-cli#g; s#PARAM_PEER#${PEER_NAME}#g; s#PARAM_ORG#${ORG_NAME}#g; s#PARAM_PORT#${startPortPeer}#g;" ${DIR_DOCKER_COMPOSE}/${FILE_CI} >> ${DIR_OUTPUT}/${FILE_DOCKER_COMPOSE_CLI}
+    sed "s#PARAM_VOLUMNS#${FULL_NAME_ORDERER_CLI}#g; s#PARAM_NETWORK#${network}#g; s#PARAM_SERVICE_NAME#cli.${domain}#g; s#PARAM_PEER#${PEER_NAME}#g; s#PARAMORG#${orgName}1#g; s#PARAM_ORG#${ORG_NAME}#g; s#PARAM_PORT#${startPortPeer}#g;" ${DIR_DOCKER_COMPOSE}/${FILE_CI} >> ${DIR_OUTPUT}/${FILE_DOCKER_COMPOSE_CLI}
 
 
 
@@ -233,9 +233,9 @@ changeScriptBasic(){
 
    echo "ordererHostname : $ordererHostname"
 
-   sed "s#PARAM_SHORT_ORG#${orgShortName}#g; s#PARAM_ORDERER_HOSTNAME#${ordererHostname}.${domain}#g; s#PARAM_PEER#${HOST_PEER}#g;s#PARAM_PORT_1#${HOST_PEER_PORT}#g; " ${DIR_SCRIPTS}/${SCRIPT_BASIC} > ${DIR_OUTPUT}/${DIR_SCRIPTS}/${orgShortName}${SCRIPT_BASIC}   
+   sed "s#PARAM_SHORT_ORG#${orgShortName}#g; s#PARAM_ORDERER_HOSTNAME#${ordererHostname}.${domain}#g; s#PARAM_PORT_1#${HOST_PEER_PORT}#g; s#PARAM_ORG_NOS#${noOfOrgs}#g; s#PARAM_PEER_NOS#${noOfPeers}#g; s#PARAMORG#${orgName}#g" ${DIR_SCRIPTS}/${SCRIPT_BASIC} > ${DIR_OUTPUT}/${DIR_SCRIPTS}/${orgShortName}${SCRIPT_BASIC}   
 
-   sed "s#PARAM_DOMAIN#${domain}#g; s#PARAM_ORDERER_HOSTNAME#${ordererHostname}.${domain}#g; s#PARAM_PEER#${HOST_PEER}#g; s#PARAM_ORG#${orgName}#g; s#PARAMORG_HOSTNAME#${orgShortName}1.${domain}#g; s#PARAM_PORT_1#${startPortPeer}#g; s#PARAMORG_DOMAIN#${CURRENT_ORG}#g; s#PARAMORGDOMAIN#${neworgShortName}.${domain}#g;" ${DIR_SCRIPTS}/${SCRIPT_UTILS} > ${DIR_OUTPUT}/${DIR_SCRIPTS}/${orgShortName}${SCRIPT_UTILS}    
+   sed "s#PARAM_SHORT_ORG#${orgShortName}#g; s#PARAM_DOMAIN#${domain}#g; s#PARAM_ORDERER_HOSTNAME#${ordererHostname}.${domain}#g; s#PARAM_PEER#${HOST_PEER}#g; s#PARAM_ORG#${orgName}#g; s#PARAMORG_HOSTNAME#${orgShortName}1.${domain}#g; s#PARAM_PORT_1#${startPortPeer}#g; s#PARAMORG_DOMAIN#${CURRENT_ORG}#g; s#PARAMORGDOMAIN#${neworgShortName}.${domain}#g;" ${DIR_SCRIPTS}/${SCRIPT_UTILS} > ${DIR_OUTPUT}/${DIR_SCRIPTS}/${orgShortName}${SCRIPT_UTILS}    
 
    chmod a+x ${DIR_OUTPUT}/${DIR_SCRIPTS}/${orgShortName}${SCRIPT_BASIC} ${DIR_OUTPUT}/${DIR_SCRIPTS}/${orgShortName}${SCRIPT_UTILS}   
 
@@ -292,11 +292,6 @@ export IMAGE_TAG=latest
 cd ${DIR_OUTPUT}
 cryptogen generate --config=./crypto-config.yaml
 
-# mkdir ./channel-artifacts
-
-
-
-
 configtxgen -profile ThreeOrgsOrdererGenesis -outputBlock ${DIR_CHANNEL_ARTIFACTS}/genesis.block
 
 configtxgen -profile ThreeOrgsChannel -outputCreateChannelTx ${DIR_CHANNEL_ARTIFACTS}/channel.tx -channelID $CHANNEL_NAME
@@ -322,14 +317,8 @@ cd $CURRENT_DIR
 #Change Scripts
 changeScriptBasic ${orgName}1
 
-echo $CHANNEL_NAME 
-echo $CLI_DELAY 
-echo $LANGUAGE 
-echo $CLI_TIMEOUT 
-echo $VERBOSE
-
 #exit 0
 
 #docker exec ${orgShortName}-cli ls -ltr ${DIR_SCRIPTS}
-docker exec ${orgShortName}-cli ${DIR_SCRIPTS}/${orgShortName}${SCRIPT_BASIC} $CHANNEL_NAME $CLI_DELAY $LANGUAGE $CLI_TIMEOUT $VERBOSE
+docker exec cli.${domain} ${DIR_SCRIPTS}/${orgShortName}${SCRIPT_BASIC} $CHANNEL_NAME $CLI_DELAY $LANGUAGE $CLI_TIMEOUT $VERBOSE
 

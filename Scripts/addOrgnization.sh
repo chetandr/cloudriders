@@ -19,7 +19,7 @@ orgShortName=""
 
 DIR_SCRIPTS=scripts
 SCRIPT_STEP1=step1.sh
-SCRIPT_UTILS=utils_org.sh
+SCRIPT_UTILS=utils_add_org.sh
 
 showUsage(){
     echo -e "./addOrgnization.sh <domain> <Org Name> <Channel Name> <Orderer Name> <Orderer Host Name>"
@@ -30,6 +30,14 @@ generateCryptoConfig(){
 
    sed "s#PARAM_NAME#${orgName}#g; s#PARAM_DOMAIN#${orgShortName}.${domain}#g; " ${DIR_ADD_ORG}/${FILE_NEW_ORG_CRYPTO} >> ${DIR_OUTPUT}/${orgShortName}-crypto.yaml
 
+
+    CURRENT_DIR=$PWD
+    
+    cd ${DIR_OUTPUT}
+    cryptogen generate --config=${orgShortName}-crypto.yaml
+
+    cd $CURRENT_DIR
+
 }
 
 generateChannelArtifacts(){
@@ -39,19 +47,27 @@ generateChannelArtifacts(){
 
     sed "s#PARAM_ORG#${orgName}#g; s#PARAMORG#${orgShortName}.${domain}#g; s#PARAM_PEER#${HOST_PEER}#g;s#PARAM_PORT_1#${HOST_PEER_PORT}#g; " ${DIR_ADD_ORG}/${FILE_CONFIGTX} > ${DIR_OUTPUT}/${FILE_CONFIGTX}
 
+
+    #Copy Old org details
+
 }
 
 generateConfigTX(){
 
    #Generate Step 1 Shell Script
 
+
+  echo $ordererHostName
+
    sed "s#PARAM_ORG#${orgName}#g; s#PARAM_SHORT_ORG#${orgShortName}#g; s#PARAM_ORDERER_HOSTNAME#${ordererHostName}#g;s#PARAM_PORT_1#${HOST_PEER_PORT}#g; " ${DIR_SCRIPTS}/${SCRIPT_STEP1} > ${DIR_OUTPUT_MAIN}/${DIR_SCRIPTS}/${orgShortName}${SCRIPT_STEP1}
 
-   sed "s#PARAM_DOMAIN#${domain}#g; s#PARAM_ORDERER_HOSTNAME#${ordererHostName}#g; s#PARAM_PEER#${HOST_PEER}#g;s#PARAM_PORT_1#${HOST_PEER_PORT}#g; " ${DIR_SCRIPTS}/${SCRIPT_UTILS} > ${DIR_OUTPUT_MAIN}/${DIR_SCRIPTS}/${orgShortName}${SCRIPT_UTILS}   
+   #sed "s#PARAM_DOMAIN#${domain}#g; s#PARAM_ORDERER_HOSTNAME#${ordererHostName}#g; s#PARAM_PEER#${HOST_PEER}#g;s#PARAM_PORT_1#${HOST_PEER_PORT}#g; " ${DIR_SCRIPTS}/${SCRIPT_UTILS} > ${DIR_OUTPUT_MAIN}/${DIR_SCRIPTS}/${orgShortName}${SCRIPT_UTILS}   
+
+   sed "s#PARAM_ORDERER_NAME#${ordererName}#g; s#PARAM_SHORT_ORG#${orgShortName}#g; s#PARAM_DOMAIN#${domain}#g; s#PARAM_ORDERER_HOSTNAME#${ordererHostName}.${domain}#g; s#PARAM_PEER#${HOST_PEER}#g; s#PARAM_ORG#${orgName}#g; s#PARAMORG_HOSTNAME#${orgShortName}1.${domain}#g; s#PARAM_PORT_1#${startPortPeer}#g; s#PARAMORG_DOMAIN#${CURRENT_ORG}#g; s#PARAMORGDOMAIN#${neworgShortName}.${domain}#g;" ${DIR_SCRIPTS}/${SCRIPT_UTILS} > ${DIR_OUTPUT_MAIN}/${DIR_SCRIPTS}/${orgShortName}${SCRIPT_UTILS} 
 
    chmod a+x ${DIR_OUTPUT_MAIN}/${DIR_SCRIPTS}/${orgShortName}${SCRIPT_STEP1} ${DIR_OUTPUT_MAIN}/${DIR_SCRIPTS}/${orgShortName}${SCRIPT_UTILS}   
 
-   docker exec ${orgName}-cli ${DIR_SCRIPTS}/${orgShortName}${SCRIPT_STEP1} $channel $CLI_DELAY $LANGUAGE $CLI_TIMEOUT $VERBOSE $domain $ordererHostName
+   docker exec cli.${domain} ${DIR_SCRIPTS}/${orgShortName}${SCRIPT_STEP1} $channel $CLI_DELAY $LANGUAGE $CLI_TIMEOUT $VERBOSE $domain $ordererHostName
 
 }
 

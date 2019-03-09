@@ -1,69 +1,114 @@
 <div class="main-content">
   <div class="container-fluid">
+      
       <div class="row">
-          <div class="col-12">
-              <h1>Consortium</h1>
-                <network-graph-component>Graph will appear here</network-graph-component>
-          </div>
-      </div>
-      <div class="row">
-          <div class="col-lg-3 col-md-6 col-sm-6">
+          <div class="col-lg-2">
               <div class="card card-stats">
                   <div class="card-header card-header-warning card-header-icon">
                     <div class="card-icon">
                         <i class="fa fa-connectdevelop"></i>
                     </div>
                       <p class="card-category">Consortium</p>
-                      <h3 class="card-title">1
-                      </h3>
+                      <a href="/consortium" class="card-link"><h3 class="card-title">1</h3></a>
                   </div>
                   <div class="card-footer">
                   </div>
               </div>
           </div>
-          <div class="col-lg-3 col-md-6 col-sm-6">
+          <div class="col-lg-2">
               <div class="card card-stats">
                   <div class="card-header card-header-success card-header-icon">
                       <div class="card-icon">
                           <i class="fa fa-first-order"></i>
                       </div>
                       <p class="card-category">Organisations</p>
-                      <h3 class="card-title">2</h3>
+                      <a href="/orgs" class="card-link"><h3 class="card-title">2</h3></a>
                   </div>
                   <div class="card-footer">
                       
                   </div>
               </div>
           </div>
-          <div class="col-lg-3 col-md-6 col-sm-6">
+          <div class="col-lg-2">
               <div class="card card-stats">
                   <div class="card-header card-header-danger card-header-icon">
                       <div class="card-icon">
-                          <i class="material-icons">device_hub</i>
+                          <!--<i class="material-icons">device_hub</i>-->
+                          <i class="fa fa-cube"></i>
                       </div>
                       <p class="card-category">Peers</p>
-                      <h3 class="card-title">4</h3>
+                      <a href="/peers" class="card-link"><h3 class="card-title">4</h3></a>
                   </div>
                   <div class="card-footer">
                   </div>
               </div>
           </div>
-          <div class="col-lg-3 col-md-6 col-sm-6">
-              <div class="card card-stats">
-                  <div class="card-header card-header-info card-header-icon">
-                      <div class="card-icon">
-                          <i class="fa fa-podcast"></i>
-                      </div>
-                      <p class="card-category">Channels</p>
-                      <h3 class="card-title">3</h3>
+          <div class="col-lg-2">
+            <div class="card card-stats">
+                <div class="card-header card-header-warning card-header-icon">
+                  <div class="card-icon">
+                      <i class="fa fa-podcast"></i>
                   </div>
-                  <div class="card-footer">
-                     
-                  </div>
-              </div>
-          </div>
+                    <p class="card-category">Channels</p>
+                    <a href="/channels" class="card-link"><h3 class="card-title">3</h3></a>
+                </div>
+                <div class="card-footer">
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-2">
+            <div class="card card-stats">
+                <div class="card-header card-header-success card-header-icon">
+                    <div class="card-icon">
+                        <i class="fa fa-first-order"></i>
+                    </div>
+                    <p class="card-category">Chaincodes</p>
+                    <a href="/peers" class="card-link"><h3 class="card-title">4</h3></a>
+                </div>
+                <div class="card-footer">
+                    
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-2">
+            <div class="card card-stats">
+                <div class="card-header card-header-danger card-header-icon">
+                    <div class="card-icon">
+                        <i class="material-icons"><img src="/assets/img/table-row.png"/></i>
+                    </div>
+                    <p class="card-category">Ledgers</p>
+                    <a href="/#" class="card-link"><h3 class="card-title">4</h3></a>
+                </div>
+                <div class="card-footer">
+                </div>
+            </div>
+        </div>
+        
       </div>
       <div class="row">
+        <div class="col-lg-8">
+            <h3>Consortium</h3>
+              <network-graph-component>Graph will appear here</network-graph-component>
+        </div>
+        <div class="col-lg-4">
+            <div class="card card-chart">
+                <div class="card-header card-header-success">
+                    <div class="ct-chart" id="dailySalesChart"></div>
+                </div>
+                <div class="card-body">
+                    <h4 class="card-title">Daily Transactions</h4>
+                    <p class="card-category">
+                        <span class="text-success"><i class="fa fa-long-arrow-up"></i> 55% </span> increase in today transactions.</p>
+                </div>
+                <div class="card-footer">
+                    <div class="stats">
+                        <i class="material-icons">access_time</i> updated 4 minutes ago
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+      <!--<div class="row">
           <div class="col-md-12">
               <div class="card card-chart">
                   <div class="card-header card-header-success">
@@ -81,6 +126,6 @@
                   </div>
               </div>
           </div>
-      </div>
+      </div>-->
   </div>
 </div>
