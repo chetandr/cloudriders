@@ -1,9 +1,11 @@
 var logger = require('tracer').console();
-
+var mockData = require('../../mocks/peerDataforAGivenPeer.json')
+var utils = require('../utils/utils.js')
 //function to get organizations
-async function getOrg(req, res) {
+function getOrg(req, res) {
     logger.info("inside getOrg()")
-    res.send({"message":"hello from getOrg!!!"})
+    let data = utils.mockDetails(mockData, res)
+
 }
 //function to get organizations by name
 async function getOrgByName(req, res) {

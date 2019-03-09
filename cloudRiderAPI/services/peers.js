@@ -22,10 +22,16 @@ async function listPeers(request, response){
     return response.json({"message":"Listed Peers Successfully!"});
 }
 
+//deployPeers
+async function deployPeers(request, response) {
+
+}
+
 module.exports={
     getPeers,
     createPeers,
     updatePeers,
     deletePeers,
-    listPeers
+    listPeers,
+    deployPeers
 }
