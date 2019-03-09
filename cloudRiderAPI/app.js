@@ -24,8 +24,9 @@ app.put('/hyperverse/channels/:name',channelService.updateChannel);
 
 app.delete('/hyperverse/channels/:name',channelService.deleteChannel);
 
-app.get('/hyperverse/listChannels',channelService.listChannels);
 
+app.get('/hyperverse/listChannels',channelService.listChannels);
+app.get('/hyperverse/myChannels',channelService.listChannels);
 app.post('/hyperverse/subscribeChannel',channelService.subscribeChannel);
 
 
