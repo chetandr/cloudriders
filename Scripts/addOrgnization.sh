@@ -41,7 +41,7 @@ showUsage(){
 
 generateCryptoConfig(){
 
-   sed "s#PARAM_NAME#${orgName}#g; s#PARAM_DOMAIN#${orgShortName}.${domain}#g; " ${DIR_ADD_ORG}/${FILE_NEW_ORG_CRYPTO} >> ${DIR_OUTPUT}/${orgShortName}-crypto.yaml
+   sed "s#PARAM_PEER_NOS#${noOfPeers}#g; s#PARAM_NAME#${orgName}#g; s#PARAM_DOMAIN#${orgShortName}.${domain}#g; " ${DIR_ADD_ORG}/${FILE_NEW_ORG_CRYPTO} >> ${DIR_OUTPUT}/${orgShortName}-crypto.yaml
 
 
     CURRENT_DIR=$PWD

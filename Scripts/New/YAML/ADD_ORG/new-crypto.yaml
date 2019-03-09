@@ -3,6 +3,6 @@ PeerOrgs:
     Domain: PARAM_DOMAIN
     EnableNodeOUs: true
     Template:
-      Count: 2
+      Count: PARAM_PEER_NOS
     Users:
       Count: 1
