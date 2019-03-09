@@ -68,7 +68,7 @@ generateCryptoConfig(){
 
     for number in $(seq 1 ${noOfOrgs})
     do
-        sed "s#PARAM_NAME#${orgName}$number#g; s#PARAM_DOMAIN#${orgShortName}$number.${domain}#g; " ${DIR_CRYPTO_CONFIG}/${FILE_PEERORGS} >> ${DIR_OUTPUT}/${FILE_CRYPTO_CONFIG}
+        sed "s#PARAM_NAME#${orgName}$number#g; s#PARAM_DOMAIN#${orgShortName}$number.${domain}#g; s#PARAM_PEER_NOS#${noOfPeers}#g;" ${DIR_CRYPTO_CONFIG}/${FILE_PEERORGS} >> ${DIR_OUTPUT}/${FILE_CRYPTO_CONFIG}
     done
     
 }
@@ -262,6 +262,7 @@ startPortPeer=${10}
 channelName=${11}
 
 
+
 if [ -d "${DIR_OUTPUT}" ]; then
     echo -e "Deleting Old Output files"
     rm -rf ${DIR_OUTPUT}
@@ -276,6 +277,9 @@ FULL_NAME_ORDERER=${ordererHostname}.${domain}:
 FULL_NAME_ORDERER_MAIN=${ordererHostname}.${domain}:
 
 generateCryptoConfig
+
+noOfPeers=`expr $noOfPeers - 1`
+
 generateDockerComposeConfig
 generateDockerComposeCliConfig
 generateBaseConfig
