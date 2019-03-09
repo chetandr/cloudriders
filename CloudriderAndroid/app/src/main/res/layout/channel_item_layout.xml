@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="200dip"
+    android:layout_height="200dip"
+    android:id="@+id/layout">
+
+    <TextView
+        android:id="@+id/txtTitlePeers"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Peers Title"
+        android:textColor="@color/text_color"
+        android:textSize="@dimen/text_18sp"
+        android:layout_alignParentTop="true"/>
+
+    <TextView
+        android:id="@+id/txtSubTitlePeers"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Peers Sub title"
+        android:textColor="@color/text_color"
+        android:textSize="@dimen/text_16sp"
+        android:layout_marginTop="4dp"
+        android:layout_below="@+id/txtTitlePeers"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_margin="4dp"
+        android:layout_alignParentBottom="true">
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/peer_action_1"
+        android:src="@android:drawable/ic_menu_add"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/peer_action_2"
+        android:src="@android:drawable/ic_menu_add" />
+    </LinearLayout>
+
+</RelativeLayout>
