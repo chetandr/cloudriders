@@ -1,0 +1,16 @@
+Organizations:
+    - &PARAM_ORDERER_NAMEOrg
+        Name: PARAM_ORDERER_NAMEOrg
+        ID: PARAM_ORDERER_NAMEMSP
+        MSPDir: crypto-config/ordererOrganizations/PARAM_DOMAIN/msp
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('PARAM_ORDERER_NAMEMSP.member')"
+            Writers:
+                Type: Signature
+                Rule: "OR('PARAM_ORDERER_NAMEMSP.member')"
+            Admins:
+                Type: Signature
+                Rule: "OR('PARAM_ORDERER_NAMEMSP.admin')"
+

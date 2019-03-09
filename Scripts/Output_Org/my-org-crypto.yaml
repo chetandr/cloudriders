@@ -1,0 +1,8 @@
+PeerOrgs:
+  - Name: my-org
+    Domain: my-org.cloudriders.com
+    EnableNodeOUs: true
+    Template:
+      Count: 2
+    Users:
+      Count: 1

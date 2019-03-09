@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".RegistrationActivity"
+    tools:context=".RegistrationActivity">
+<android.support.constraint.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:paddingLeft="@dimen/size_10dp"
     android:paddingRight="@dimen/size_10dp"
     android:paddingTop="@dimen/size_20dp">
+
     <TextView
         android:id="@+id/tvHeader"
         android:text="Register Your Organization"
@@ -19,23 +23,31 @@
         app:layout_constraintLeft_toRightOf="parent"
         app:layout_constraintRight_toLeftOf="parent"/>
 
-    <Spinner
-        android:id="@+id/spinnerOrganization"
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/tilOrgname"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_marginLeft="@dimen/size_20dp"
-        android:layout_marginRight="@dimen/size_20dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/size_20dp"
-        android:layout_marginBottom="@dimen/size_6dip"
         app:layout_constraintTop_toBottomOf="@+id/tvHeader"
         app:layout_constraintLeft_toRightOf="parent"
-        app:layout_constraintRight_toLeftOf="parent"/>
+        app:layout_constraintRight_toLeftOf="parent"
+        android:hint="Organization name">
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/etorgname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:maxLength="30"
+            android:textColor="@color/text_color"/>
+    </android.support.design.widget.TextInputLayout>
+
+
     <android.support.design.widget.TextInputLayout
         android:id="@+id/tilNoOfPeers"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/size_20dp"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerOrganization"
+        app:layout_constraintTop_toBottomOf="@+id/tilOrgname"
         app:layout_constraintLeft_toRightOf="parent"
         app:layout_constraintRight_toLeftOf="parent"
         android:hint="No of Peers">
@@ -44,7 +56,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text"
-            android:maxLength="30"/>
+            android:maxLength="30"
+            android:textColor="@color/text_color"/>
     </android.support.design.widget.TextInputLayout>
     <Button
         android:id="@+id/btnAdvanced"
@@ -75,7 +88,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
-                android:maxLength="30"/>
+                android:maxLength="30"
+                android:textColor="@color/text_color"/>
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -91,7 +105,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
-                android:maxLength="30"/>
+                android:maxLength="30"
+                android:textColor="@color/text_color"/>
         </android.support.design.widget.TextInputLayout>
         <android.support.design.widget.TextInputLayout
             android:id="@+id/tilOrderer"
@@ -106,7 +121,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
-                android:maxLength="30"/>
+                android:maxLength="30"
+                android:textColor="@color/text_color"/>
         </android.support.design.widget.TextInputLayout>
         <android.support.design.widget.TextInputLayout
             android:id="@+id/tilOrdererHost"
@@ -121,8 +137,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
-                android:maxLength="30"/>
+                android:maxLength="30"
+                android:textColor="@color/text_color"/>
         </android.support.design.widget.TextInputLayout>
+
+        <include layout="@layout/cert_select"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/tilOrdererHost"
+            app:layout_constraintLeft_toRightOf="parent"
+            app:layout_constraintRight_toLeftOf="parent">
+
+        </include>
     </android.support.constraint.ConstraintLayout>
     <Button
         android:id="@+id/btnRegister"
@@ -138,3 +164,4 @@
         android:onClick="onClick"/>
 
 </android.support.constraint.ConstraintLayout>
+</ScrollView>

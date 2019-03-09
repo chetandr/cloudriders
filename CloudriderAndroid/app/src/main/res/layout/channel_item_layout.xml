@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="150dip"
+    android:layout_width="160dip"
     android:layout_height="150dip"
     android:id="@+id/layout"
     android:background="@drawable/blue_box"
@@ -10,7 +10,7 @@
         android:id="@+id/txtTitlePeers"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
+        android:gravity="center_vertical"
         android:text="Peers Title"
         android:textColor="@color/text_color"
         android:textSize="@dimen/text_14sp"
@@ -20,7 +20,7 @@
         android:id="@+id/txtSubTitlePeers"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
+        android:gravity="center_vertical"
         android:text="Peers Sub title"
         android:textColor="@color/text_color"
         android:textSize="@dimen/text_12sp"
@@ -38,7 +38,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/peer_action_1"
-        android:src="@android:drawable/ic_menu_add"/>
+        android:src="@drawable/minus_circle_outline"
+        android:background="@drawable/blue_filled_box"/>
 
     <ImageView
         android:layout_width="wrap_content"
