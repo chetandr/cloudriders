@@ -13,7 +13,7 @@ FILE_NEW_ORG_CRYPTO=new-crypto.yaml
 #Files - configtx
 FILE_CONFIGTX=configtx.yaml
 
-
+export IMAGE_TAG=latest
 fileOrgCryptio=""
 orgShortName=""
 noOfPeers=""
