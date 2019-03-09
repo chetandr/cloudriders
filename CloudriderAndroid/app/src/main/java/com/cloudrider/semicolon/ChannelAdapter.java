@@ -2,27 +2,32 @@ package com.cloudrider.semicolon;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class PeersAdapter extends RecyclerView.Adapter<PeersAdapter.PeerViewHolder>{
+public class ChannelAdapter extends RecyclerView.Adapter<ChannelAdapter.ChannelViewHolder>{
 
-    ArrayList peers;
+    ArrayList channels;
 
-    public PeersAdapter(ArrayList peers) {
-        this.peers = peers;
+    public ChannelAdapter(ArrayList channels) {
+        this.channels = channels;
     }
 
     @NonNull
     @Override
-    public PeersAdapter.PeerViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        return null;
+    public ChannelAdapter.ChannelViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+        View itemLayoutView = LayoutInflater.from(viewGroup.getContext())
+                .inflate(R.layout.channel_item_layout, viewGroup, false);
+        return new ChannelAdapter.ChannelViewHolder(itemLayoutView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull PeersAdapter.PeerViewHolder myViewHolder, int i) {
+    public void onBindViewHolder(@NonNull ChannelAdapter.ChannelViewHolder myViewHolder, int i) {
 
     }
 
@@ -31,12 +36,18 @@ public class PeersAdapter extends RecyclerView.Adapter<PeersAdapter.PeerViewHold
         return 0;
     }
 
-    public static class PeerViewHolder extends RecyclerView.ViewHolder {
-        // each data item is just a string in this case
-        public TextView textView;
-        public PeerViewHolder(TextView v) {
+    public static class ChannelViewHolder extends RecyclerView.ViewHolder {
+        public TextView txtTitle;
+        public TextView txtSubTitle;
+        public ImageView imgAction1;
+        public ImageView imgAction2;
+
+        public ChannelViewHolder(View v) {
             super(v);
-            textView = v;
+            txtTitle = v.findViewById(R.id.txtTitlePeers);
+            txtSubTitle = v.findViewById(R.id.txtSubTitlePeers);
+            imgAction1 = v.findViewById(R.id.peer_action_1);
+            imgAction2 = v.findViewById(R.id.peer_action_2);
         }
     }
 
