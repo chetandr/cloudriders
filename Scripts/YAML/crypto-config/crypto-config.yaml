@@ -1,0 +1,6 @@
+OrdererOrgs:
+  - Name: PARAM_ORDERER_NAME
+    Domain: PARAM_DOMAIN
+    Specs:
+      - Hostname: PARAM_ORDERER_HOSTNAME
+PeerOrgs:
