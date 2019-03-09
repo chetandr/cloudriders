@@ -18,7 +18,7 @@ var getNetworkData = function () {
         "orgs": [data]
     }
     result.push(consortium);
-    return result;
+    return {data: result };
 }
 
 var mockDetails = function(mockData, res) {
