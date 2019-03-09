@@ -10,21 +10,15 @@ var getMockDetails = function () {
 var getNetworkData = function () {
     let data = getMockDetails();
 
-    let conName = "example.com1"
-    let conName2 = "example.com2"
-    let result = {};
+    let conName = "example.com"
+    let result = [];
 
     let consortium = {
         "consortiumname": conName,
         "orgs": data
     }
-    result[conName] = consortium;
-    let consortium2 = {
-        "consortiumname": conName2,
-        "orgs": [data]
-    }
-    result[conName2] = consortium2
-    return result;
+    result.push(consortium);
+    return {data: result };
 }
 
 var mockDetails = function(mockData, res) {

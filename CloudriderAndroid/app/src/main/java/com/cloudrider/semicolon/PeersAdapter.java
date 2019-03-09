@@ -10,21 +10,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.cloudrider.semicolon.dto.PeerDTO;
 import com.cloudrider.semicolon.parse.Peer;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class PeersAdapter extends RecyclerView.Adapter<PeersAdapter.PeerViewHolder>{
 
     List peers;
-
     Activity activity;
+    OnDeployCodeChainInterface listener;
 
-    public PeersAdapter(Activity activity, List peers) {
+    public PeersAdapter(Activity activity, List peers,OnDeployCodeChainInterface listener) {
         this.activity = activity;
         this.peers = peers;
+        this.listener = listener;
     }
 
     @NonNull
@@ -37,7 +36,7 @@ public class PeersAdapter extends RecyclerView.Adapter<PeersAdapter.PeerViewHold
 
     @Override
     public void onBindViewHolder(@NonNull PeersAdapter.PeerViewHolder myViewHolder, int i) {
-            Peer peer = (Peer) peers.get(i);
+            final Peer peer = (Peer) peers.get(i);
             myViewHolder.txtTitle.setText(peer.getName());
             //myViewHolder.txtSubTitle.setText(peer.getPeerSubTitle());
             //myViewHolder.txtLedgerCount.setText(activity.getString(R.string.channel_count, peer.getChaincodecount()));
@@ -47,18 +46,15 @@ public class PeersAdapter extends RecyclerView.Adapter<PeersAdapter.PeerViewHold
             myViewHolder.imgAction1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(activity, "Action clicked", Toast.LENGTH_LONG).show();
+                    listener.onSubscribe(peer.getName());
                 }
             });
-        myViewHolder.imgAction2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(activity, "Action clicked", Toast.LENGTH_LONG).show();
-            }
-        });
+        myViewHolder.imgAction2.setEnabled(false);
 
     }
+ private void deployChainCode(String peer,String code){
 
+ }
     @Override
     public int getItemCount() {
         return peers.size();

@@ -16,10 +16,9 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:gravity="center_vertical"
-            android:maxLines="2"
             android:text="Peers Title"
             android:textColor="@color/text_color"
-            android:textSize="@dimen/text_14sp" />
+            android:textSize="@dimen/text_16sp" />
 
         <TextView
             android:id="@+id/txtSubTitlePeers"
@@ -31,7 +30,7 @@
             android:maxLines="2"
             android:text="Peers Sub title"
             android:textColor="@color/text_color"
-            android:textSize="@dimen/text_12sp"
+            android:textSize="@dimen/text_14sp"
             android:visibility="gone"/>
 
         <TextView
@@ -43,7 +42,7 @@
             android:gravity="center_vertical"
             android:text="@string/channel_count"
             android:textColor="@color/text_color"
-            android:textSize="@dimen/text_12sp" />
+            android:textSize="@dimen/text_14sp" />
 
         <TextView
             android:id="@+id/txtCCCount"
@@ -54,7 +53,7 @@
             android:gravity="center_vertical"
             android:text="Chaincode count: "
             android:textColor="@color/text_color"
-            android:textSize="@dimen/text_12sp" />
+            android:textSize="@dimen/text_14sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -80,6 +79,7 @@
                 android:layout_height="@dimen/size_35dip"
                 android:layout_marginLeft="8dip"
                 android:clickable="false"
+                android:tint="@android:color/darker_gray"
                 android:src="@drawable/playlist_check" />
         </LinearLayout>
 

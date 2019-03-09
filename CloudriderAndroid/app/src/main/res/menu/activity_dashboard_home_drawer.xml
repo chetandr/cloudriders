@@ -5,11 +5,8 @@
 
         <item
             android:id="@+id/nav_transactions"
-            android:icon="@drawable/transit_connection_variant"
             android:title="Transactions" />
         <item
             android:id="@+id/nav_notifications"
-            android:icon="@drawable/bell_outline"
-            android:title="Notifications"
-            android:visible="false"/>
+            android:title="Select Organization" />
 </menu>

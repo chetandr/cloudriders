@@ -9,14 +9,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cloudrider.semicolon.dto.ChannelDTO;
+import com.cloudrider.semicolon.parse.ChDatum;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ChannelAdapter extends RecyclerView.Adapter<ChannelAdapter.ChannelViewHolder>{
 
-    ArrayList channels;
+    List channels;
 
-    public ChannelAdapter(ArrayList channels) {
+    public ChannelAdapter(List channels) {
         this.channels = channels;
     }
 
@@ -31,9 +33,10 @@ public class ChannelAdapter extends RecyclerView.Adapter<ChannelAdapter.ChannelV
     @Override
     public void onBindViewHolder(@NonNull ChannelAdapter.ChannelViewHolder myViewHolder, int i) {
 
-        ChannelDTO dto = (ChannelDTO) channels.get(i);
-        myViewHolder.txtTitle.setText(dto.getChannelTitle());
-        myViewHolder.txtTitle.setText(dto.getChannelSubTitle());
+        ChDatum dto = (ChDatum) channels.get(i);
+        myViewHolder.txtTitle.setText(dto.getChannelName());
+        //myViewHolder.txtTitle.setText(dto.getChannelSubTitle());
+        myViewHolder.txtSubTitle.setVisibility(View.GONE);
     }
 
     @Override

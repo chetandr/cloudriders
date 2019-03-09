@@ -1,5 +1,6 @@
 package com.cloudrider.semicolon;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -10,15 +11,25 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.cloudrider.semicolon.parse.ChDatum;
+import com.cloudrider.semicolon.parse.Channels;
+import com.cloudrider.semicolon.parse.Consortium;
+import com.cloudrider.semicolon.parse.Org;
 import com.cloudrider.semicolon.parse.Peer;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements OnDeployCodeChainInterface{
 
     private DrawerLayout drawerLayout;
     RecyclerView peerRecyclerView;
@@ -34,6 +45,7 @@ public class HomeActivity extends AppCompatActivity {
     String selectedCons = "";
 
     List<Peer> peers = new ArrayList<>();
+    List<ChDatum> channels = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +73,8 @@ public class HomeActivity extends AppCompatActivity {
 
                         switch (menuItem.getItemId()) {
                             case R.id.nav_notifications:
-                                startActivity(new Intent(HomeActivity.this, NotificationsActivity.class));
+                                startActivity(new Intent(HomeActivity.this, OrgSelectActivity.class));
+                                finish();
                                 break;
                             case R.id.nav_transactions:
                                 startActivity(new Intent(HomeActivity.this, TransactionListActivity.class));
@@ -97,10 +110,11 @@ public class HomeActivity extends AppCompatActivity {
 
 
 
-        initPeerData();
+//        initPeerData();
+//        initChannelData();
 
-        channelsAdapter = new ChannelAdapter(CloudriderApp.getInstance().getChannelList());
-        channelRecyclerView.setAdapter(channelsAdapter);
+        fetchData();
+
 
     }
 
@@ -115,20 +129,87 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     public void initPeerData() {
-
-        for(int i = 0; i < CloudriderApp.getInstance().getConsortium().getData().size(); i++) {
-            if(CloudriderApp.getInstance().getConsortium().getData().get(i).getConsortiumname().equalsIgnoreCase(selectedCons)) {
-                for( int j = 0; j < CloudriderApp.getInstance().getConsortium().getData().get(i).getOrgs().size(); j++) {
-                    if(CloudriderApp.getInstance().getConsortium().getData().get(i).getOrgs().get(j).getOrgname().equalsIgnoreCase(selectedOrg)) {
-                        peers = CloudriderApp.getInstance().getConsortium().getData().get(i).getOrgs().get(j).getPeers();
-                        break;
-                    }
-                }
-                break;
-            }
-        }
-
-        peersAdapter = new PeersAdapter(this, peers);
+        peersAdapter = new PeersAdapter(HomeActivity.this, peers,this);
         peerRecyclerView.setAdapter(peersAdapter);
+    }
+
+    public void initChannelData() {
+        channelsAdapter = new ChannelAdapter(channels);
+        channelRecyclerView.setAdapter(channelsAdapter);
+    }
+
+    public void fetchData() {
+
+        showProgress();
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, "http://10.44.14.143:3000/hyperverse/organization/"+selectedOrg,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // Display the first 500 characters of the response string.
+                        try {
+                            Gson gson = new Gson();
+                            Org cons = gson.fromJson(response, Org.class);
+                            peers = cons.getPeers();
+                            initPeerData();
+                            fetchChannels();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("HEMANT", error.toString());
+            }
+        });
+
+        CloudriderApp.getInstance().getVolleyRequestQueue().add(stringRequest);
+    }
+
+
+    public void fetchChannels() {
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, "http://10.44.14.143:3000/hyperverse/allChannels/" + selectedOrg,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // Display the first 500 characters of the response string.
+                        try {
+                            Gson gson = new Gson();
+                            Channels cons = gson.fromJson(response, Channels.class);
+                            channels = cons.getData();
+                            initChannelData();
+                            hideProgress();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                hideProgress();
+                Log.e("HomeActivity", error.toString());
+            }
+        });
+
+        CloudriderApp.getInstance().getVolleyRequestQueue().add(stringRequest);
+    }
+
+    ProgressDialog pd;
+    public void showProgress() {
+        pd = new ProgressDialog(this);
+        pd.setMessage("Loading...");
+        pd.show();
+    }
+
+    public void hideProgress() {
+        pd.dismiss();
+    }
+
+    @Override
+    public void onSubscribe(String peer) {
+        Intent showDeployFormIntent = new Intent(this,DeployCodeChainActivity.class);
+        showDeployFormIntent.putExtra("peer",peer);
+        startActivity(showDeployFormIntent);
     }
 }

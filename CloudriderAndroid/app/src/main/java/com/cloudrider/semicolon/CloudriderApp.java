@@ -11,6 +11,7 @@ import com.android.volley.toolbox.Volley;
 import com.cloudrider.semicolon.dto.ChannelDTO;
 import com.cloudrider.semicolon.dto.PeerDTO;
 import com.cloudrider.semicolon.dto.RegisterDTO;
+import com.cloudrider.semicolon.parse.Channels;
 import com.cloudrider.semicolon.parse.Consortium;
 import com.cloudrider.semicolon.utils.AppSSLSocketFactory;
 
@@ -32,6 +33,7 @@ public class CloudriderApp extends Application {
     SharedPreferences prefs;
 
     Consortium consortium;
+    Channels channels;
 
     @Override
     public void onCreate() {
@@ -134,5 +136,13 @@ public class CloudriderApp extends Application {
 
     public void setConsortium(Consortium consortium) {
         this.consortium = consortium;
+    }
+
+    public Channels getChannels() {
+        return channels;
+    }
+
+    public void setChannels(Channels channels) {
+        this.channels = channels;
     }
 }
