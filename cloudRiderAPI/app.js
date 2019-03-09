@@ -9,6 +9,7 @@ app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
 });
+var dashboard = require('./services/dashboardServices.js')
 var logger = require('tracer').console();
 var org =require('./services/organization')
 var peers =require('./services/peers')
@@ -16,7 +17,8 @@ var consortium = require('./services/consortium')
 
 const port = 3000
 logger.info("Hello world")
-app.get('/', (req, res) => res.send({"message":"This is Cloud Riders Project!"}))
+// app.get('/', (req, res) => res.send({"message":"This is Cloud Riders Project!"}))
+app.get('/',dashboard.home)
 
 //channels apis
 app.post('/hyperverse/channels',channelService.createChannel);
