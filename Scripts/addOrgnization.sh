@@ -36,7 +36,11 @@ generateCryptoConfig(){
     cd ${DIR_OUTPUT}
     cryptogen generate --config=${orgShortName}-crypto.yaml
 
+    
+
     cd $CURRENT_DIR
+
+    cp -R ${DIR_OUTPUT}/crypto-config/peerOrganizations/${orgShortName}.${domain} ${DIR_OUTPUT_MAIN}/crypto-config/peerOrganizations/
 
 }
 
@@ -47,8 +51,24 @@ generateChannelArtifacts(){
 
     sed "s#PARAM_ORG#${orgName}#g; s#PARAMORG#${orgShortName}.${domain}#g; s#PARAM_PEER#${HOST_PEER}#g;s#PARAM_PORT_1#${HOST_PEER_PORT}#g; " ${DIR_ADD_ORG}/${FILE_CONFIGTX} > ${DIR_OUTPUT}/${FILE_CONFIGTX}
 
+    CURRENT_DIR=$PWD
+    
+    cd ${DIR_OUTPUT}
+
+    export FABRIC_CFG_PATH=$PWD
+    configtxgen -printOrg ${orgName}MSP > ${orgShortName}.json
+
+    cd $CURRENT_DIR
+
+    cp ${DIR_OUTPUT}/${orgShortName}.json ${DIR_OUTPUT_MAIN}/${DIR_SCRIPTS}/
+
+    cp -r ${DIR_OUTPUT_MAIN}/crypto-config/ordererOrganizations ${DIR_OUTPUT}/crypto-config/
+
 
     #Copy Old org details
+
+
+    
 
 }
 
@@ -57,17 +77,22 @@ generateConfigTX(){
    #Generate Step 1 Shell Script
 
 
-  echo $ordererHostName
+   echo "Name : "$ordererHostName
 
-   sed "s#PARAM_ORG#${orgName}#g; s#PARAM_SHORT_ORG#${orgShortName}#g; s#PARAM_ORDERER_HOSTNAME#${ordererHostName}#g;s#PARAM_PORT_1#${HOST_PEER_PORT}#g; " ${DIR_SCRIPTS}/${SCRIPT_STEP1} > ${DIR_OUTPUT_MAIN}/${DIR_SCRIPTS}/${orgShortName}${SCRIPT_STEP1}
+   sed "s#PARAM_ORG#${orgName}#g; s#PARAM_SHORT_ORG#${orgShortName}#g; s#PARAM_ORDERER_HOSTNAME#${ordererHostName}.${domain}#g;s#PARAM_PORT_1#${HOST_PEER_PORT}#g; " ${DIR_SCRIPTS}/${SCRIPT_STEP1} > ${DIR_OUTPUT_MAIN}/${DIR_SCRIPTS}/${orgShortName}${SCRIPT_STEP1}
 
    #sed "s#PARAM_DOMAIN#${domain}#g; s#PARAM_ORDERER_HOSTNAME#${ordererHostName}#g; s#PARAM_PEER#${HOST_PEER}#g;s#PARAM_PORT_1#${HOST_PEER_PORT}#g; " ${DIR_SCRIPTS}/${SCRIPT_UTILS} > ${DIR_OUTPUT_MAIN}/${DIR_SCRIPTS}/${orgShortName}${SCRIPT_UTILS}   
 
-   sed "s#PARAM_ORDERER_NAME#${ordererName}#g; s#PARAM_SHORT_ORG#${orgShortName}#g; s#PARAM_DOMAIN#${domain}#g; s#PARAM_ORDERER_HOSTNAME#${ordererHostName}.${domain}#g; s#PARAM_PEER#${HOST_PEER}#g; s#PARAM_ORG#${orgName}#g; s#PARAMORG_HOSTNAME#${orgShortName}1.${domain}#g; s#PARAM_PORT_1#${startPortPeer}#g; s#PARAMORG_DOMAIN#${CURRENT_ORG}#g; s#PARAMORGDOMAIN#${neworgShortName}.${domain}#g;" ${DIR_SCRIPTS}/${SCRIPT_UTILS} > ${DIR_OUTPUT_MAIN}/${DIR_SCRIPTS}/${orgShortName}${SCRIPT_UTILS} 
+   sed "s#PARAM_ORDERER_NAME#${ordererName}#g; s#PARAM_SHORT_ORG#${orgShortName}#g; s#PARAM_DOMAIN#${domain}#g; s#PARAM_ORDERER_HOSTNAME#${ordererHostName}.${domain}#g; s#PARAM_PEER#${HOST_PEER}#g; s#PARAM_ORG#${orgName}#g; s#PARAMORG_HOSTNAME#${orgShortName}.${domain}#g; s#PARAM_PORT_1#${startPortPeer}#g; s#PARAMORG_DOMAIN#${CURRENT_ORG}#g; s#PARAMORGDOMAIN#${neworgShortName}.${domain}#g;" ${DIR_SCRIPTS}/${SCRIPT_UTILS} > ${DIR_OUTPUT_MAIN}/${DIR_SCRIPTS}/${orgShortName}${SCRIPT_UTILS} 
 
    chmod a+x ${DIR_OUTPUT_MAIN}/${DIR_SCRIPTS}/${orgShortName}${SCRIPT_STEP1} ${DIR_OUTPUT_MAIN}/${DIR_SCRIPTS}/${orgShortName}${SCRIPT_UTILS}   
 
+   echo ${DIR_SCRIPTS}/${orgShortName}${SCRIPT_STEP1}
    docker exec cli.${domain} ${DIR_SCRIPTS}/${orgShortName}${SCRIPT_STEP1} $channel $CLI_DELAY $LANGUAGE $CLI_TIMEOUT $VERBOSE $domain $ordererHostName
+
+  docker exec cli.${domain} peer channel update -f org3_update_in_envelope.pb -c ${channel} -o ${ordererHostName}.${domain}:7050 --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/${domain}/orderers/${ordererHostName}.${domain}/msp/tlscacerts/tlsca.${domain}-cert.pem
+
+  
 
 }
 

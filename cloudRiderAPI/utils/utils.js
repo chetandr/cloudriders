@@ -15,9 +15,7 @@ var getNetworkData = function () {
 
     let consortium = {
         "consortiumname": conName,
-        "orgCount": data.length || 0,
         "orgs": data
-        
     }
     result.push(consortium);
     return {data: result };
@@ -52,9 +50,7 @@ var mockDetails = function(mockData, res) {
     for(let r in result){
         let result1 = {
             "orgname": r,
-            "peerCount": result[r].length || 0,
             "peers":result[r]
-            
         }
 
         finalResult.push(result1)
