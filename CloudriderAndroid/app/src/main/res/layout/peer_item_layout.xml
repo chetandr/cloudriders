@@ -1,29 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="200dip"
-    android:layout_height="200dip"
-    android:id="@+id/layout">
+    android:layout_width="160dip"
+    android:layout_height="150dip"
+    android:id="@+id/layout"
+    android:background="@drawable/red_box"
+    android:padding="@dimen/size_6dip">
 
     <TextView
         android:id="@+id/txtTitlePeers"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
+        android:gravity="center_vertical"
         android:text="Peers Title"
         android:textColor="@color/text_color"
-        android:textSize="@dimen/text_18sp"
+        android:textSize="@dimen/text_14sp"
+        android:maxLines="1"
         android:layout_alignParentTop="true"/>
 
     <TextView
         android:id="@+id/txtSubTitlePeers"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
+        android:gravity="center_vertical"
         android:text="Peers Sub title"
         android:textColor="@color/text_color"
-        android:textSize="@dimen/text_16sp"
+        android:textSize="@dimen/text_12sp"
         android:layout_marginTop="4dp"
+        android:maxLines="2"
         android:layout_below="@+id/txtTitlePeers"/>
+
+    <TextView
+        android:id="@+id/txtLedgerCount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:text="Ledger Count: "
+        android:textColor="@color/text_color"
+        android:textSize="@dimen/text_12sp"
+        android:layout_marginTop="4dp"
+        android:layout_below="@+id/txtSubTitlePeers"/>
+
+    <TextView
+        android:id="@+id/txtCCCount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:text="Chaincode count: "
+        android:textColor="@color/text_color"
+        android:textSize="@dimen/text_12sp"
+        android:layout_marginTop="4dp"
+        android:layout_below="@+id/txtLedgerCount"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -32,17 +58,26 @@
         android:gravity="center"
         android:layout_margin="4dp"
         android:layout_alignParentBottom="true">
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+
+    <ImageButton
+        android:layout_width="30dip"
+        android:layout_height="30dip"
         android:id="@+id/peer_action_1"
-        android:src="@android:drawable/ic_menu_add"/>
+        android:text="Install Chaincode"
+        android:src="@drawable/code_braces"
+        android:textSize="@dimen/text_10sp"
+        android:background="@drawable/blue_filled_box"
+        android:textColor="@color/white"
+        android:layout_marginRight="@dimen/size_6dip"/>
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="30dip"
+        android:layout_height="30dip"
         android:id="@+id/peer_action_2"
-        android:src="@android:drawable/ic_menu_add" />
+        android:src="@drawable/minus_circle_outline"
+        android:clickable="false"
+        android:layout_marginLeft="@dimen/size_6dip"
+        android:background="@drawable/blue_filled_box"/>
     </LinearLayout>
 
 </RelativeLayout>

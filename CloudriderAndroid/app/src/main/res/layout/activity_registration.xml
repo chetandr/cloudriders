@@ -1,31 +1,140 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RegistrationActivity">
-
-    <android.support.design.widget.AppBarLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".RegistrationActivity"
+    android:paddingLeft="@dimen/size_10dp"
+    android:paddingRight="@dimen/size_10dp"
+    android:paddingTop="@dimen/size_20dp">
+    <TextView
+        android:id="@+id/tvHeader"
+        android:text="Register Your Organization"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/size_20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toRightOf="parent"
+        app:layout_constraintRight_toLeftOf="parent"/>
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+    <Spinner
+        android:id="@+id/spinnerOrganization"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginLeft="@dimen/size_20dp"
+        android:layout_marginRight="@dimen/size_20dp"
+        android:layout_marginTop="@dimen/size_20dp"
+        android:layout_marginBottom="@dimen/size_6dip"
+        app:layout_constraintTop_toBottomOf="@+id/tvHeader"
+        app:layout_constraintLeft_toRightOf="parent"
+        app:layout_constraintRight_toLeftOf="parent"/>
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/tilNoOfPeers"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_20dp"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerOrganization"
+        app:layout_constraintLeft_toRightOf="parent"
+        app:layout_constraintRight_toLeftOf="parent"
+        android:hint="No of Peers">
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/etPeers"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
-
-    </android.support.design.widget.AppBarLayout>
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:maxLength="30"/>
+    </android.support.design.widget.TextInputLayout>
+    <Button
+        android:id="@+id/btnAdvanced"
+        app:layout_constraintTop_toBottomOf="@+id/tilNoOfPeers"
+        android:text="Advanced"
+        android:background="@drawable/red_filled_box"
+        android:textAllCaps="false"
+        app:layout_constraintLeft_toLeftOf="@+id/tilNoOfPeers"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
+        android:onClick="onClick"/>
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/view"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/btnAdvanced">
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/tilDomain"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toRightOf="parent"
+            app:layout_constraintRight_toLeftOf="parent"
+            android:hint="Domain">
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/etDomain"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:maxLength="30"/>
+        </android.support.design.widget.TextInputLayout>
 
-</android.support.design.widget.CoordinatorLayout>
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/tilChannel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/tilDomain"
+            app:layout_constraintLeft_toRightOf="parent"
+            app:layout_constraintRight_toLeftOf="parent"
+            android:hint="Channel">
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/etChannel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:maxLength="30"/>
+        </android.support.design.widget.TextInputLayout>
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/tilOrderer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/tilChannel"
+            app:layout_constraintLeft_toRightOf="parent"
+            app:layout_constraintRight_toLeftOf="parent"
+            android:hint="Orderer">
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/etOrderer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:maxLength="30"/>
+        </android.support.design.widget.TextInputLayout>
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/tilOrdererHost"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/tilOrderer"
+            app:layout_constraintLeft_toRightOf="parent"
+            app:layout_constraintRight_toLeftOf="parent"
+            android:hint="Orderer Host Name">
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/etOrdererHost"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:maxLength="30"/>
+        </android.support.design.widget.TextInputLayout>
+    </android.support.constraint.ConstraintLayout>
+    <Button
+        android:id="@+id/btnRegister"
+        android:text="Register"
+        android:background="@drawable/red_filled_box"
+        android:textAllCaps="false"
+        android:layout_marginTop="@dimen/size_10dp"
+        app:layout_constraintTop_toBottomOf="@+id/view"
+        app:layout_constraintLeft_toRightOf="parent"
+        app:layout_constraintRight_toLeftOf="parent"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:onClick="onClick"/>
+
+</android.support.constraint.ConstraintLayout>

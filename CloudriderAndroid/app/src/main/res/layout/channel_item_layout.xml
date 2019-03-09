@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="200dip"
-    android:layout_height="200dip"
-    android:id="@+id/layout">
+    android:layout_width="150dip"
+    android:layout_height="150dip"
+    android:id="@+id/layout"
+    android:background="@drawable/blue_box"
+    android:padding="@dimen/size_6dip">
 
     <TextView
         android:id="@+id/txtTitlePeers"
@@ -11,7 +13,7 @@
         android:gravity="center"
         android:text="Peers Title"
         android:textColor="@color/text_color"
-        android:textSize="@dimen/text_18sp"
+        android:textSize="@dimen/text_14sp"
         android:layout_alignParentTop="true"/>
 
     <TextView
@@ -21,7 +23,7 @@
         android:gravity="center"
         android:text="Peers Sub title"
         android:textColor="@color/text_color"
-        android:textSize="@dimen/text_16sp"
+        android:textSize="@dimen/text_12sp"
         android:layout_marginTop="4dp"
         android:layout_below="@+id/txtTitlePeers"/>
 
@@ -42,7 +44,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/peer_action_2"
-        android:src="@android:drawable/ic_menu_add" />
+        android:src="@android:drawable/ic_menu_add"
+        android:visibility="gone"/>
     </LinearLayout>
 
 </RelativeLayout>

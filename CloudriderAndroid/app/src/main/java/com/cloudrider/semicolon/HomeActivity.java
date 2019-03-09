@@ -61,22 +61,26 @@ public class HomeActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionbar = getSupportActionBar();
+        //actionbar.setDisplayHomeAsUpEnabled(true);
+        actionbar.setHomeAsUpIndicator(R.drawable.ic_drawer);
         actionbar.setDisplayHomeAsUpEnabled(true);
-        actionbar.setHomeAsUpIndicator(R.drawable.ic_menu);
 
         peerRecyclerView.setHasFixedSize(true);
 
         // use a linear layout manager
-        peersLayoutManager = new LinearLayoutManager(this);
+        peersLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         peerRecyclerView.setLayoutManager(peersLayoutManager);
+        ItemOffsetDecoration itemDecoration = new ItemOffsetDecoration(this, R.dimen.size_6dip);
+        peerRecyclerView.addItemDecoration(itemDecoration);
 
         channelRecyclerView.setHasFixedSize(true);
 
         // use a linear layout manager
-        channelsLayoutManager = new LinearLayoutManager(this);
+        channelsLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         channelRecyclerView.setLayoutManager(channelsLayoutManager);
+        channelRecyclerView.addItemDecoration(itemDecoration);
 
-        peersAdapter = new PeersAdapter(new ArrayList());
+        peersAdapter = new PeersAdapter(this, CloudriderApp.getInstance().getPeersList());
         peerRecyclerView.setAdapter(peersAdapter);
 
         channelsAdapter = new ChannelAdapter(new ArrayList());

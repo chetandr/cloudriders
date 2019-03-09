@@ -5,6 +5,13 @@ function createChannel(req, res) {
     }
 }
 
+function deployChaincode(req, res) {
+    console.log("Got the request");
+    if (req.body) {
+        res.send("Request served for deploy chaincode " + req.body);
+    }
+}
+
 function readChannel(req, res) {
     console.log("Got the request");
     if (req.params.name) {
@@ -13,9 +20,29 @@ function readChannel(req, res) {
     }
 }
 
+function invokeChaincode(req, res) {
+    console.log("Got the request");
+    if (req.params.chaincodeId) {
+        let chaincodeId = req.params.chaincodeId
+        res.send("Request served for invokde chaincode ID " + chaincodeId);
+    }
+}
+
 function listChannels(req, res) {
     console.log("Got the request");
     res.send("Request served for list channels");
+
+}
+
+function listLedger(req, res) {
+    console.log("Got the request");
+    res.send("Request served for list ledger");
+
+}
+
+function listChaincode(req, res) {
+    console.log("Got the request");
+    res.send("Request served for list chaincode");
 
 }
 
@@ -44,5 +71,9 @@ module.exports = {
     readChannel: readChannel,
     updateChannel: updateChannel,
     deleteChannel: deleteChannel,
-    listChannels: listChannels
+    listChannels: listChannels,
+    listLedger: listLedger,
+    listChaincode: listChaincode,
+    deployChaincode:deployChaincode,
+    invokeChaincode:invokeChaincode
 }

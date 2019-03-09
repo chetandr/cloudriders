@@ -1,12 +1,18 @@
 package com.cloudrider.semicolon;
 
+import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.cloudrider.semicolon.dto.PeerDTO;
 
 import java.util.ArrayList;
 
@@ -14,7 +20,10 @@ public class PeersAdapter extends RecyclerView.Adapter<PeersAdapter.PeerViewHold
 
     ArrayList peers;
 
-    public PeersAdapter(ArrayList peers) {
+    Activity activity;
+
+    public PeersAdapter(Activity activity, ArrayList peers) {
+        this.activity = activity;
         this.peers = peers;
     }
 
@@ -28,6 +37,17 @@ public class PeersAdapter extends RecyclerView.Adapter<PeersAdapter.PeerViewHold
 
     @Override
     public void onBindViewHolder(@NonNull PeersAdapter.PeerViewHolder myViewHolder, int i) {
+            PeerDTO peer = (PeerDTO) peers.get(i);
+            myViewHolder.txtTitle.setText(peer.getPeerTitle());
+            myViewHolder.txtSubTitle.setText(peer.getPeerSubTitle());
+            myViewHolder.txtLedgerCount.setText(activity.getString(R.string.leder_count, peer.getLederCount()));
+            myViewHolder.txtCCCount.setText(activity.getString(R.string.cc_count, peer.getChainCodeCount()));
+            myViewHolder.imgAction1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(activity, "Action clicked", Toast.LENGTH_LONG).show();
+                }
+            });
 
     }
 
@@ -40,13 +60,17 @@ public class PeersAdapter extends RecyclerView.Adapter<PeersAdapter.PeerViewHold
 
         public TextView txtTitle;
         public TextView txtSubTitle;
-        public ImageView imgAction1;
+        public TextView txtLedgerCount;
+        public TextView txtCCCount;
+        public ImageButton imgAction1;
         public ImageView imgAction2;
 
         public PeerViewHolder(View v) {
             super(v);
            txtTitle = v.findViewById(R.id.txtTitlePeers);
            txtSubTitle = v.findViewById(R.id.txtSubTitlePeers);
+            txtLedgerCount = v.findViewById(R.id.txtLedgerCount);
+            txtCCCount = v.findViewById(R.id.txtCCCount);
            imgAction1 = v.findViewById(R.id.peer_action_1);
            imgAction2 = v.findViewById(R.id.peer_action_2);
         }
