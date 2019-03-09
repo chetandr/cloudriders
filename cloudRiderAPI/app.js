@@ -10,7 +10,7 @@ var peers =require('./services/peers')
 var consortium = require('./services/consortium')
 var dashboard = require('./services/dashboardServices')
 
-const port = 3000
+const port = 8080
 logger.info("Hello Shweta")
 
 app.get('/', dashboard.home);
