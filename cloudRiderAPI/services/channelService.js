@@ -1,3 +1,4 @@
+var logger = require('tracer').console();
 function createChannel(req, res) {
     console.log("Got the request");
     if (req.body) {
@@ -12,11 +13,22 @@ function deployChaincode(req, res) {
     }
 }
 
-function readChannel(req, res) {
-    console.log("Got the request");
+async function readChannel(req, res) {
     if (req.params.name) {
         let nameOfChannel = req.params.name
-        res.send("Request served for read" + nameOfChannel);
+        var data = {
+            "channelName": nameOfChannel,
+            "org1": {
+                "peers": [
+                    {
+                        "name": "peer1",
+                        "ledger": "",
+                        "chaincodes": null
+                    }
+                ]
+            }
+        }
+        res.send(data);
     }
 }
 

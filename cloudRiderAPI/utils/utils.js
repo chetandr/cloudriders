@@ -31,8 +31,9 @@ var mockDetails = function(mockData, res) {
         finalResult.push(result1)
     }
     
-    res.send(finalResult)
-    res.end()
+    return finalResult;
+    // res.send(finalResult)
+    // res.end()
 }
 
 module.exports = {
