@@ -22,6 +22,7 @@ app.put('/channels/:name',channelService.updateChannel);
 app.delete('/channels/:name',channelService.deleteChannel);
 
 app.get('/listChannels',channelService.listChannels);
+
 //API for organization
 app.get('/hyperverse/organization',org.getOrg)
 app.get('/hyperverse/organization/:name',org.getOrgByName)
