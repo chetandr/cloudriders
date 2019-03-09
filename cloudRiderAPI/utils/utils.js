@@ -67,9 +67,55 @@ var listOfChaincodes = function(peerName, orgName) {
     return result;
 }
 
+var getNodes = function () {
+    logger.info("inside getNodes()")
+    let finalResult = [];
+    let org = getMockDetails();
+    let cons = getNetworkData();
+    let count = 0;
+    for (let ele of cons["data"]) {
+        let obj = {};
+        count++;
+        obj["id"] = count,
+        obj["name"] = ele.consortiumname;
+        obj["group"] = "consortium"
+        finalResult.push(obj)
+    }
+
+    for (let ele of org) {
+        let obj = {};
+        count++;
+        obj["id"] = count,
+        obj["name"] = ele.orgname;
+        obj["group"] = "organization"
+        finalResult.push(obj)
+
+        for (let peer of ele["peers"]) {
+            let obj = {};
+            count++;
+            obj["id"] = count,
+            obj["name"] = peer.name;
+            obj["group"] = "peer"
+            finalResult.push(obj)
+        }
+    }
+    let nameOfChannel = "sample-channel"
+    for(let i =1; i<=3; i++) {
+        let obj = {};
+        count++;
+        obj["id"] = count;
+        obj["name"] = nameOfChannel+i;
+        obj["group"] = "channel"
+        finalResult.push(obj)
+    }
+    return finalResult;
+}
+
+
 module.exports = {
     mockDetails,
     getMockDetails,
     getNetworkData,
-    listOfChaincodes
+    listOfChaincodes,
+    getNodes
 }
