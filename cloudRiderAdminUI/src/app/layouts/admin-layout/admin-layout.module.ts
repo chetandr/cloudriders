@@ -15,13 +15,15 @@ import { NotificationsComponent } from '../../notifications/notifications.compon
 import { UpgradeComponent } from '../../upgrade/upgrade.component';
 import { ConsortiumComponent } from '../../consortium/consortium.component';
 import { NvD3Module } from 'ng2-nvd3';
+import { HttpClientModule } from '@angular/common/http'
+
 import {
   MatButtonModule,
   MatInputModule,
   MatRippleModule,
   MatFormFieldModule,
   MatTooltipModule,
-  MatSelectModule,
+  MatSelectModule
 } from '@angular/material';
 @NgModule({
   imports: [
@@ -35,6 +37,7 @@ import {
     MatInputModule,
     MatSelectModule,
     MatTooltipModule,
+    HttpClientModule
   ],
   declarations: [
     DashboardComponent,
