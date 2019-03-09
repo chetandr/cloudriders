@@ -1,4 +1,4 @@
-var mockData = require('../mocks/peerDataforAGivenPeer.json')
+var mockData = require('../../mocks/peerDataforAGivenPeer.json')
 var logger = require('tracer').console();
 const _ = require("lodash")
 
@@ -10,21 +10,17 @@ var getMockDetails = function () {
 var getNetworkData = function () {
     let data = getMockDetails();
 
-    let conName = "example.com1"
-    let conName2 = "example.com2"
-    let result = {};
+    let conName = "example.com"
+    let result = [];
 
     let consortium = {
         "consortiumname": conName,
+        "orgCount": data.length || 0,
         "orgs": data
+        
     }
-    result[conName] = consortium;
-    let consortium2 = {
-        "consortiumname": conName2,
-        "orgs": [data]
-    }
-    result[conName2] = consortium2
-    return result;
+    result.push(consortium);
+    return {data: result };
 }
 
 var mockDetails = function(mockData, res) {
@@ -56,7 +52,9 @@ var mockDetails = function(mockData, res) {
     for(let r in result){
         let result1 = {
             "orgname": r,
+            "peerCount": result[r].length || 0,
             "peers":result[r]
+            
         }
 
         finalResult.push(result1)
