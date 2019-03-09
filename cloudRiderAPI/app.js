@@ -13,6 +13,7 @@ const port = 3000
 logger.info("Hello world")
 app.get('/', (req, res) => res.send({"message":"This is Cloud Riders Project!"}))
 
+//channels apis
 app.post('/hyperverse/channels',channelService.createChannel);
 
 app.get('/hyperverse/channels/:name',channelService.readChannel);
@@ -23,10 +24,11 @@ app.delete('/hyperverse/channels/:name',channelService.deleteChannel);
 
 app.get('/hyperverse/listChannels',channelService.listChannels);
 
+app.post('/hyperverse/subscribeChannel',channelService.subscribeChannel);
 
+
+//chaincode apis
 app.get('/hyperverse/listChaincode',channelService.listChaincode);
-
-app.get('/hyperverse/listChannels',channelService.listChannels);
 
 app.post('/hyperverse/deployChaincode',channelService.deployChaincode);
 
@@ -50,7 +52,9 @@ app.post('/hyperverse/peers', peers.createPeers);
 app.post('/hyperverse/deploypeers', peers.deployPeers);
 app.delete('/hyperverse/peers/:name',peers.deletePeers);
 app.put('/hyperverse/peers/:name',peers.updatePeers)
-//app.update('/hyperverse/peers/:name',peers.updatePeers);
+
+//new apis
+app.get('/hyperverse/listTransaction',channelService.listTransaction);
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 

@@ -77,6 +77,11 @@ function updateChannel(req, res) {
     }
 }
 
+function subscribeChannel(req, res) {
+    console.log("Got the request");
+    res.send("Request served for subscribe channel");
+}
+
 function deleteChannel(req, res) {
     console.log("Got the request");
     if (req.params.name) {
@@ -84,6 +89,12 @@ function deleteChannel(req, res) {
         res.send("Request served for delete" + name);
     }
 }
+
+function listTransaction(req, res) {
+    console.log("Got the request");    
+    res.send("Request served for list transaction" + name);    
+}
+
 module.exports = {
     createChannel: createChannel,
     readChannel: readChannel,
@@ -93,5 +104,7 @@ module.exports = {
     listLedger: listLedger,
     listChaincode: listChaincode,
     deployChaincode:deployChaincode,
-    invokeChaincode:invokeChaincode
+    invokeChaincode:invokeChaincode,
+    subscribeChannel:subscribeChannel,
+    listTransaction:listTransaction
 }
