@@ -35,13 +35,16 @@ async function readChannel(req, res) {
 }
 
 function invokeChaincode(req, res) {
-    console.log("Got the request");
+    logger.info("invokeChaincode()")
+    res.send("Chaincode invoked successfully.");
+}
+function invokeChaincodeById(req, res) {
+    logger.info("invokeChaincodeById()")
     if (req.params.chaincodeId) {
         let chaincodeId = req.params.chaincodeId
         res.send("Request served for invokde chaincode ID " + chaincodeId);
     }
 }
-
 function listChannels(req, res) {
     console.log("Got the request");
     res.send("Request served for list channels");
@@ -104,6 +107,7 @@ module.exports = {
     listChaincode: listChaincode,
     deployChaincode:deployChaincode,
     invokeChaincode:invokeChaincode,
+    invokeChaincodeById:invokeChaincodeById,
     subscribeChannel:subscribeChannel,
     listTransaction:listTransaction
 }
