@@ -79,6 +79,7 @@
                 android:layout_height="@dimen/size_35dip"
                 android:layout_marginLeft="8dip"
                 android:clickable="false"
+                android:tint="@android:color/darker_gray"
                 android:src="@drawable/playlist_check" />
         </LinearLayout>
 

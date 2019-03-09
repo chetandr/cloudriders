@@ -9,7 +9,12 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".OrgSelectActivity"></activity>
+
+        <activity android:name=".DeployCodeChainActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+
+        <activity android:name=".OrgSelectActivity" />
+
         <activity
             android:name=".SplashActivity"
             android:theme="@style/AppTheme.NoActionBar">
@@ -27,7 +32,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".RegistrationActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".HomeActivity"
             android:theme="@style/AppTheme.NoActionBar" />

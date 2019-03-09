@@ -29,7 +29,7 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements OnDeployCodeChainInterface{
 
     private DrawerLayout drawerLayout;
     RecyclerView peerRecyclerView;
@@ -129,7 +129,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     public void initPeerData() {
-        peersAdapter = new PeersAdapter(this, peers);
+        peersAdapter = new PeersAdapter(HomeActivity.this, peers,this);
         peerRecyclerView.setAdapter(peersAdapter);
     }
 
@@ -204,5 +204,12 @@ public class HomeActivity extends AppCompatActivity {
 
     public void hideProgress() {
         pd.dismiss();
+    }
+
+    @Override
+    public void onSubscribe(String peer) {
+        Intent showDeployFormIntent = new Intent(this,DeployCodeChainActivity.class);
+        showDeployFormIntent.putExtra("peer",peer);
+        startActivity(showDeployFormIntent);
     }
 }

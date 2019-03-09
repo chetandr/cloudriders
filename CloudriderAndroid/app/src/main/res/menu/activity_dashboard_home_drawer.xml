@@ -8,5 +8,5 @@
             android:title="Transactions" />
         <item
             android:id="@+id/nav_notifications"
-            android:title="Org List" />
+            android:title="Select Organization" />
 </menu>
