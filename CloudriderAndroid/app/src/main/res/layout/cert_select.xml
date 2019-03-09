@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="@dimen/size_10dp">
+
+    <TextView
+        android:id="@+id/txtTitleChannels"
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        android:gravity="center_vertical"
+        android:text="Select certificate"
+        android:textColor="@color/text_color"
+        android:textSize="@dimen/text_18sp"
+        android:paddingLeft="@dimen/size_10dp"
+        android:background="@drawable/red_box"/>
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dip"
+        android:background="@drawable/blue_box">
+        <RadioButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/rdo1"
+            android:text="System generated"
+            android:textColor="@color/text_color"
+            android:textSize="@dimen/text_18sp"
+            android:layout_marginTop="@dimen/size_10dp"
+            android:checked="true"/>
+        <RadioButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/rdo2"
+            android:text="Customer provided"
+            android:textColor="@color/text_color"
+            android:textSize="@dimen/text_18sp"
+            android:layout_marginTop="@dimen/size_10dp"
+            android:enabled="false"/>
+        <RadioButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/rdo3"
+            android:text="Third party"
+            android:textColor="@color/text_color"
+            android:textSize="@dimen/text_18sp"
+            android:layout_marginTop="@dimen/size_10dp"
+            android:enabled="false"/>
+    </RadioGroup>
+</LinearLayout>

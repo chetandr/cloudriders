@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.cloudrider.semicolon.dto.ChannelDTO;
+
 import java.util.ArrayList;
 
 public class ChannelAdapter extends RecyclerView.Adapter<ChannelAdapter.ChannelViewHolder>{
@@ -29,11 +31,14 @@ public class ChannelAdapter extends RecyclerView.Adapter<ChannelAdapter.ChannelV
     @Override
     public void onBindViewHolder(@NonNull ChannelAdapter.ChannelViewHolder myViewHolder, int i) {
 
+        ChannelDTO dto = (ChannelDTO) channels.get(i);
+        myViewHolder.txtTitle.setText(dto.getChannelTitle());
+        myViewHolder.txtTitle.setText(dto.getChannelSubTitle());
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return channels.size();
     }
 
     public static class ChannelViewHolder extends RecyclerView.ViewHolder {

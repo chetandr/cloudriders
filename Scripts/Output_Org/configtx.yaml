@@ -1,0 +1,8 @@
+Organizations:
+    - &my-org
+        Name: my-orgMSP
+        ID: my-orgMSP
+        MSPDir: crypto-config/peerOrganizations/my-org.cloudriders.com/msp
+        AnchorPeers:
+            - Host: peer0.my-org.cloudriders.com
+              Port: 7051
