@@ -76,9 +76,9 @@ var getNodes = function () {
     for (let ele of cons["data"]) {
         let obj = {};
         count++;
-        obj["id"] = count,
+        obj["id"] = count;
         obj["name"] = ele.consortiumname;
-        obj["group"] = "consortium"
+        obj["group"] = "consortium";
         finalResult.push(obj)
     }
 

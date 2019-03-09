@@ -9,10 +9,11 @@ var org =require('./services/organization')
 var peers =require('./services/peers')
 var consortium = require('./services/consortium')
 var services = require('./services/services')
+var dashboard = require('./services/dashboardServices')
 const port = 3000
 logger.info("Hello world")
-app.get('/', (req, res) => res.send({"message":"This is Cloud Riders Project!"}))
-
+//app.get('/', (req, res) => res.send({"message":"This is Cloud Riders Project!"}))
+app.get('/',dashboard.home)
 //channels apis
 app.post('/hyperverse/channels',channelService.createChannel);
 
@@ -60,7 +61,7 @@ app.put('/hyperverse/peers/:name',peers.updatePeers)
 //new apis
 app.get('/hyperverse/listTransaction',channelService.listTransaction);
 app.get('/hyperverse/getNodes',services.nodes);
-
+app.get('/hyperverse/getNetworkGraph', services.getNetworkGraph);
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
 
