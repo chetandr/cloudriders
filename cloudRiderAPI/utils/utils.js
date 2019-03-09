@@ -11,13 +11,13 @@ var getNetworkData = function () {
     let data = getMockDetails();
 
     let conName = "example.com"
-    let result = {};
+    let result = [];
 
     let consortium = {
         "consortiumname": conName,
         "orgs": [data]
     }
-    result[conName] = consortium;
+    result.push(consortium);
     return result;
 }
 
