@@ -9,10 +9,15 @@ var mockDetails = function(mockData, res) {
         let str = mockData[ele].Endpoint.split(".");
         let orgName = str[1] +"."+ str[2] +"."+ str[3];
         let peerName = str[0];
+        let chaincodecount=0
         //let chaincodeArr = mockData[ele].Chaincodes;
+        if(mockData[ele].Chaincodes && mockData[ele].Chaincodes.length > 0) {
+            chaincodecount = mockData[ele].Chaincodes.length
+        }
         let peer = {
             "name":peerName,
             "ledger":"",
+            "chaincodecount": chaincodecount,
             "chaincodes": mockData[ele].Chaincodes
 
         }

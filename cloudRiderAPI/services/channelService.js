@@ -92,7 +92,7 @@ function deleteChannel(req, res) {
 
 function listTransaction(req, res) {
     console.log("Got the request");    
-    res.send("Request served for list transaction" + name);    
+    res.send("Request served for list transaction");    
 }
 
 module.exports = {
