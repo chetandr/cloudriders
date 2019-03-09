@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Cloudrider</string>
+    <string name="app_name">HyperVerse</string>
     <string name="title_activity_registration">RegistrationActivity</string>
     <string name="title_activity_transaction_list">Transactions</string>
     <string name="title_activity_notifications_list">Notifications</string>
