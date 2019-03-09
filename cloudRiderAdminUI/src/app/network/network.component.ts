@@ -1,4 +1,5 @@
 import { Component, ElementRef, ViewChild, AfterViewInit} from '@angular/core';
+import {Router} from '@angular/router';
 
 import * as vis from 'vis';
 
@@ -33,7 +34,7 @@ export class NetworkComponent implements AfterViewInit {
     }
   ];
 
-  constructor() { }
+  constructor(private router : Router) {}
 
   ngAfterViewInit() {
 
@@ -124,10 +125,11 @@ export class NetworkComponent implements AfterViewInit {
       edges.add({from: 15, to: 9});
     }, 1000);
 
-    this.network.on( 'click', function(properties) {
+    this.network.on( 'click', (properties) => {
       var ids = properties.nodes;
       var clickedNodes = nodes.get(ids);
       console.log('clicked nodes:', clickedNodes);
+      this.router.navigateByUrl('/chaincode');
   });
 
   }
