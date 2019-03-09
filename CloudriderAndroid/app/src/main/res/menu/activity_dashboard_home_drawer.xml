@@ -5,10 +5,10 @@
 
         <item
             android:id="@+id/nav_transactions"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/transit_connection_variant"
             android:title="Transactions" />
         <item
             android:id="@+id/nav_notifications"
-            android:icon="@android:drawable/ic_dialog_email"
+            android:icon="@drawable/bell_outline"
             android:title="Notifications" />
 </menu>

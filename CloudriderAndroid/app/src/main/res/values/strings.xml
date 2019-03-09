@@ -10,4 +10,12 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
+
+    <string name="leder_count">Leder Count: %d</string>
+    <string name="cc_count">Chaincode Count: %d</string>
+
+    <array name="organizations">
+        <item>Organization one</item>
+        <item>Organization Two</item>
+    </array>
 </resources>
