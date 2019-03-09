@@ -10,6 +10,7 @@ import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.Volley;
 import com.cloudrider.semicolon.dto.ChannelDTO;
 import com.cloudrider.semicolon.dto.PeerDTO;
+import com.cloudrider.semicolon.dto.RegisterDTO;
 import com.cloudrider.semicolon.utils.AppSSLSocketFactory;
 
 import java.io.IOException;
@@ -70,13 +71,13 @@ public class CloudriderApp extends Application {
     public void initData() {
         peersList = new ArrayList();
 
-        peersList.add(new PeerDTO("Peer 1", "Peer 1 Sub title", 10, 12));
-        peersList.add(new PeerDTO("Peer 2", "Peer 2 Sub title", 12, 14));
+        peersList.add(new PeerDTO("Peer 1", "peer1.org1.example.com", 10, 12));
+        peersList.add(new PeerDTO("Peer 2", "peer2.org1.example.com", 12, 14));
 
 
         channelList = new ArrayList();
-        channelList.add(new ChannelDTO("Channel 1", "Channe 1 Sub title"));
-        channelList.add(new ChannelDTO("Channel 2", "Channe 2 Sub title"));
+        channelList.add(new ChannelDTO("My Channel 1", "My Channel 1 Sub title"));
+        channelList.add(new ChannelDTO("My Channel 2", "My Channel 2 Sub title"));
     }
 
     public ArrayList getPeersList() {
@@ -97,5 +98,30 @@ public class CloudriderApp extends Application {
 
     public SharedPreferences getPrefs() {
         return prefs;
+    }
+
+    public void saveRegisterDTO(RegisterDTO dto){
+
+        SharedPreferences.Editor edt = prefs.edit();
+        edt.putString("orgName", dto.getOrgName());
+        edt.putString("peers", dto.getPeers());
+        edt.putString("domain", dto.getDomain());
+        edt.putString("channel", dto.getChannel());
+        edt.putString("orderer", dto.getOrderer());
+        edt.putString("ordererHost", dto.getOrdererHost());
+        edt.putString("certType", dto.getCertType());
+        edt.commit();
+    }
+
+    public RegisterDTO getRegisterDTO() {
+        RegisterDTO dto = new RegisterDTO();
+        dto.setPeers(prefs.getString("peers", "0"));
+        dto.setOrgName(prefs.getString("orgName", ""));
+        dto.setDomain(prefs.getString("domain", ""));
+        dto.setChannel(prefs.getString("channel", ""));
+        dto.setOrderer(prefs.getString("orderer", ""));
+        dto.setOrdererHost(prefs.getString("ordererHost", ""));
+        dto.setCertType(prefs.getString("certType", "System generated"));
+        return dto;
     }
 }

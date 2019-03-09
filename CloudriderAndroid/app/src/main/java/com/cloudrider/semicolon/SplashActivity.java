@@ -17,7 +17,7 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void run() {
                     if(CloudriderApp.getInstance().getPrefs().getBoolean("isRegistered", false)) {
-                        startActivity(new Intent(SplashActivity.this, HomeActivity.class));
+                        startActivity(new Intent(SplashActivity.this, OrgSelectActivity.class));
                     }
                     else {
                         startActivity(new Intent(SplashActivity.this, RegistrationActivity.class));

@@ -35,6 +35,7 @@ public class HomeActivity extends AppCompatActivity {
     private void initUI() {
         drawerLayout = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setItemIconTintList(null);
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
@@ -83,7 +84,7 @@ public class HomeActivity extends AppCompatActivity {
         peersAdapter = new PeersAdapter(this, CloudriderApp.getInstance().getPeersList());
         peerRecyclerView.setAdapter(peersAdapter);
 
-        channelsAdapter = new ChannelAdapter(new ArrayList());
+        channelsAdapter = new ChannelAdapter(CloudriderApp.getInstance().getChannelList());
         channelRecyclerView.setAdapter(channelsAdapter);
 
     }

@@ -58,9 +58,7 @@
                         android:background="@drawable/red_filled_box"
                         android:src="@drawable/plus_circle_outline"
                         android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:paddingLeft="@dimen/size_6dip"
-                        android:paddingRight="@dimen/size_6dip"/>
+                        android:layout_centerVertical="true"/>
 
                 </RelativeLayout>
 
@@ -73,6 +71,7 @@
                     android:layout_marginTop="@dimen/size_10dp"/>
 
             </LinearLayout>
+            
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
