@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TypographyComponent implements OnInit {
 
+  organizations = [ "Organization 1", "Organization 2", "Organization 3"]
+
   constructor() { }
 
   ngOnInit() {

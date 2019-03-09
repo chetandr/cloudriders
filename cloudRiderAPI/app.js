@@ -33,8 +33,9 @@ app.post('/hyperverse/subscribeChannel',channelService.subscribeChannel);
 app.get('/hyperverse/listChaincode',channelService.listChaincode);
 
 app.post('/hyperverse/deployChaincode',channelService.deployChaincode);
+app.post('/hyperverse/invokeChaincode',channelService.invokeChaincode);
 
-app.get('/hyperverse/invokeChaincode/:chaincodeId',channelService.invokeChaincode);
+app.get('/hyperverse/invokeChaincode/:chaincodeId',channelService.invokeChaincodeById);
 
 //API for organization
 app.post('/hyperverse/organization', org.createOrg);

@@ -74,11 +74,15 @@ async function readChannels(req, res) {
             }
         },
         ]
-        res.send(data);    
+        res.send({data});    
 }
 
 async function invokeChaincode(req, res) {
-    console.log("Got the request");
+    logger.info("invokeChaincode()")
+    res.send("Chaincode invoked successfully.");
+}
+async function invokeChaincodeById(req, res) {
+    logger.info("invokeChaincodeById()")
     if (req.params.chaincodeId) {
         let chaincodeId = req.params.chaincodeId
         res.send("Request served for invokde chaincode ID " + chaincodeId);
@@ -147,6 +151,7 @@ module.exports = {
     listChaincode: listChaincode,
     deployChaincode:deployChaincode,
     invokeChaincode:invokeChaincode,
+    invokeChaincodeById:invokeChaincodeById,
     subscribeChannel:subscribeChannel,
     listTransaction:listTransaction,
     readChannels:readChannels

@@ -16,7 +16,7 @@ var getNetworkData = function () {
 
     let consortium = {
         "consortiumname": conName,
-        "orgs": [data]
+        "orgs": data
     }
     result[conName] = consortium;
     let consortium2 = {
