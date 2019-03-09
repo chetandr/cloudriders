@@ -12,6 +12,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.cloudrider.semicolon.parse.Channels;
 import com.cloudrider.semicolon.parse.Consortium;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -80,4 +81,31 @@ public class SplashActivity extends AppCompatActivity {
 
         CloudriderApp.getInstance().getVolleyRequestQueue().add(stringRequest);
     }
+
+    /*public void fetchChannels() {
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, "http://10.44.14.143:3000/hyperverse/consortium",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // Display the first 500 characters of the response string.
+                        try {
+                            Gson gson = new Gson();
+                            Channels cons = gson.fromJson(response, Channels.class);
+                            CloudriderApp.getInstance().setChannels(cons);
+                            startActivity(new Intent(SplashActivity.this, OrgSelectActivity.class));
+                            finish();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("HEMANT", error.toString());
+            }
+        });
+
+        CloudriderApp.getInstance().getVolleyRequestQueue().add(stringRequest);
+    }*/
 }

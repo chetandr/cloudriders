@@ -5,7 +5,7 @@
     <color name="colorAccent">#9c27b0</color>
     <color name="text_color">#212121</color>
     <color name="white">#ffffff</color>
-    <color name="splash_bg">#fbfbfa</color>
+    <color name="splash_bg">#ffffff</color>
     <color name="blue">#2196f3</color>
     <color name="violet">#9c27b0</color>
 </resources>

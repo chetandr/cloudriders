@@ -1,5 +1,6 @@
 package com.cloudrider.semicolon;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -8,6 +9,7 @@ import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -16,7 +18,20 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.HttpHeaderParser;
+import com.android.volley.toolbox.StringRequest;
 import com.cloudrider.semicolon.dto.RegisterDTO;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
 
 public class RegistrationActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -63,10 +78,11 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
 
             RegisterDTO dto = fetchData();
             if(!TextUtils.isEmpty(dto.getOrgName()) && !TextUtils.isEmpty(dto.getPeers())) {
+                createOrg(dto);
                 CloudriderApp.getInstance().saveRegisterDTO(dto);
                 CloudriderApp.getInstance().getPrefs().edit().putBoolean("isRegistered", true).commit();
-                startActivity(new Intent(RegistrationActivity.this, OrgSelectActivity.class));
-                finish();
+                //Toast.makeText(this, "Your organization creation is in progress. Please check again some time later.", Toast.LENGTH_LONG).show();
+                //finish();
             }
             else {
                 Toast.makeText(this, "Please enter valid data", Toast.LENGTH_LONG).show();
@@ -84,5 +100,79 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
         dto.setOrgName(etOrgName.getText().toString());
         dto.setPeers(etPeers.getText().toString());
         return dto;
+    }
+
+    ProgressDialog pd;
+    public void showProgress() {
+        pd = new ProgressDialog(this);
+        pd.setMessage("Oranization creation in progress. Please wait...");
+        pd.show();
+    }
+
+    public void hideProgress() {
+        if( pd != null && pd.isShowing()) {
+            try {
+                pd.dismiss();
+            }
+            catch (Exception e) {
+
+            }
+        }
+    }
+    public void createOrg(RegisterDTO dto) {
+        try {
+            showProgress();
+            String URL = "http://10.44.14.143:3000/hyperverse/organization";
+            JSONObject jsonBody = new JSONObject();
+            jsonBody.put("orgName", dto.getOrgName());
+            jsonBody.put("peers", dto.getPeers());
+            jsonBody.put("domain", dto.getDomain());
+            jsonBody.put("channel", dto.getChannel());
+            jsonBody.put("orderer", dto.getOrderer());
+            jsonBody.put("ordererHost", dto.getOrdererHost());
+            jsonBody.put("certType", dto.getCertType());
+
+
+            final String requestBody = jsonBody.toString();
+
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    hideProgress();
+                    postCreate();
+                    Log.i("VOLLEY onResponse", response);
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    hideProgress();
+                    Log.e("VOLLEY onErrorResponse", error.toString());
+                }
+            }) {
+                @Override
+                public String getBodyContentType() {
+                    return "application/json; charset=utf-8";
+                }
+
+                @Override
+                public byte[] getBody() throws AuthFailureError {
+                    try {
+                        return requestBody == null ? null : requestBody.getBytes("utf-8");
+                    } catch (UnsupportedEncodingException uee) {
+                        VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", requestBody, "utf-8");
+                        return null;
+                    }
+                }
+            };
+
+            CloudriderApp.getInstance().getVolleyRequestQueue().add(stringRequest);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void postCreate() {
+        Toast.makeText(this, "Your organization creation is in progress. Please check again some time later.", Toast.LENGTH_LONG).show();
+        finish();
     }
 }

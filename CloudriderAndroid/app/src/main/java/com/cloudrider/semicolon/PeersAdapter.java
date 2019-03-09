@@ -10,10 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.cloudrider.semicolon.dto.PeerDTO;
 import com.cloudrider.semicolon.parse.Peer;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class PeersAdapter extends RecyclerView.Adapter<PeersAdapter.PeerViewHolder>{

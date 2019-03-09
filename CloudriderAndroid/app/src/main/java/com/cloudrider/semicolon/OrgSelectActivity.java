@@ -91,5 +91,15 @@ public class OrgSelectActivity extends AppCompatActivity implements View.OnClick
                 Toast.makeText(this, "Please select organization", Toast.LENGTH_LONG).show();
             }
         }
+        if(v.getId() == R.id.btnRegister) {
+            if(spinnerOrganization.getSelectedItemPosition() != -1 ) {
+                CloudriderApp.getInstance().getPrefs().edit().putString("selectedOrg", spinnerOrganization.getSelectedItem().toString()).commit();
+                CloudriderApp.getInstance().getPrefs().edit().putString("selectedCons", spinnerCons.getSelectedItem().toString()).commit();
+                startActivity(new Intent(this, RegistrationActivity.class));
+            }
+            else {
+                Toast.makeText(this, "Please select organization", Toast.LENGTH_LONG).show();
+            }
+        }
     }
 }
