@@ -1,5 +1,5 @@
 var logger = require('tracer').console();
-var mockData = require('../../mocks/peerDataforAGivenPeer.json')
+var mockData = require('../mocks/peerDataforAGivenPeer.json')
 var utils = require('../utils/utils.js')
 const _ = require("lodash")
 //function to get organizations
