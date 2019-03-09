@@ -8,12 +8,14 @@ const shellMap = {
     },
     "KEY_STORE_MAP":{
         "cmd": "./cli/keystoreList.sh",
-        "args":[""]
+        "args": ["cli.cloudrider.com"]
     }
 }
-function executeShell(command){
+function executeShell(command, args){
+  console.log(shellMap[command]['cmd'], args)
+  console.log(fs.readdirSync('./'))
   return new Promise(function(resolve, reject){
-    return execFile(shellMap[command]['cmd'], shellMap[command]['args'],function(err, out, code) {
+    return execFile(shellMap[command]['cmd'], args,function(err, out, code) {
       if (err instanceof Error){
         process.stderr.write(err);
         return reject(err);
@@ -26,9 +28,9 @@ function executeShell(command){
 // executeShell("../cli/discover.sh", ["peer0.org1.example.com", "org1.example.com", "User1", "Org1MSP" ,"mychannel"]).then((data)=>{
 //    console.log(data)
 // })
-// executeShell("KEY_STORE_MAP").then((data)=>{
-//     console.log(data)
-//  })
+// executeShell("KEY_STORE_MAP", ["cli.cloudrider.com"]).then((data)=>{
+//      console.log(data)
+//   })
 module.exports={
   executeShell
 }
