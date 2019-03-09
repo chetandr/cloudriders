@@ -21,6 +21,17 @@ app.put('/channels/:name',channelService.updateChannel);
 app.delete('/channels/:name',channelService.deleteChannel);
 
 app.get('/listChannels',channelService.listChannels);
+
+app.get('/listLedger',channelService.listLedger);
+
+app.get('/listChaincode',channelService.listChaincode);
+
+app.get('/listChannels',channelService.listChannels);
+
+app.post('/deployChaincode',channelService.deployChaincode);
+
+app.get('/invokeChaincode/:chaincodeId',channelService.invokeChaincode);
+
 //API for organization
 app.get('/hyperverse/organization',org.getOrg)
 app.get('/hyperverse/organization:name',org.getOrgByName)
@@ -32,9 +43,3 @@ app.get('/hyperverse/consortium:name',  consortium.getConsortiumByName)
 app.post('/hyperverse/consortium', consortium.createConsortium)
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
-
-/*
-list channels
-deploy invoke chaincode
-list ledger and list chaincode
-*/
