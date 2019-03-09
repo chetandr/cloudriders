@@ -21,6 +21,16 @@
         android:visibility="gone"/>
 
     <Spinner
+        android:id="@+id/spinnerCons"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="@dimen/size_20dp"
+        android:layout_marginRight="@dimen/size_20dp"
+        android:layout_marginTop="@dimen/size_20dp"
+        android:layout_marginBottom="@dimen/size_6dip"
+        android:background="@drawable/red_box"/>
+
+    <Spinner
         android:id="@+id/spinnerOrganization"
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -40,5 +50,30 @@
         android:onClick="onClick"
         android:paddingRight="40dip"
         android:paddingLeft="40dip"
+        android:textSize="@dimen/text_18sp"
         android:layout_marginTop="20dip"/>
+
+    <TextView
+        android:id="@+id/txtTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/size_20dp"
+        android:text="OR"
+        android:textColor="@color/text_color"
+        android:textSize="@dimen/text_18sp"
+        android:paddingLeft="@dimen/size_10dp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"/>
+
+    <Button
+        android:id="@+id/btnRegister"
+        android:text="Register"
+        android:background="@drawable/red_filled_box"
+        android:textAllCaps="false"
+        android:layout_marginTop="@dimen/size_10dp"
+        android:layout_width="200dp"
+        android:layout_height="40dip"
+        android:onClick="onClick"
+        android:textSize="@dimen/text_18sp"/>
 </LinearLayout>

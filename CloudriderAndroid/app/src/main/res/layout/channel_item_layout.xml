@@ -1,52 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="150dp"
     android:layout_width="160dip"
-    android:layout_height="150dip"
-    android:id="@+id/layout"
-    android:background="@drawable/blue_box"
-    android:padding="@dimen/size_6dip">
+    android:background="@drawable/blue_box">
+    <RelativeLayout
+        android:layout_width="160dip"
+        android:layout_height="150dip"
+        android:id="@+id/layout"
+        android:padding="@dimen/size_6dip">
 
-    <TextView
-        android:id="@+id/txtTitlePeers"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:text="Peers Title"
-        android:textColor="@color/text_color"
-        android:textSize="@dimen/text_14sp"
-        android:layout_alignParentTop="true"/>
+        <TextView
+            android:id="@+id/txtTitlePeers"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:text="Peers Title"
+            android:textColor="@color/text_color"
+            android:textSize="@dimen/text_14sp"
+            android:layout_alignParentTop="true"/>
 
-    <TextView
-        android:id="@+id/txtSubTitlePeers"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:text="Peers Sub title"
-        android:textColor="@color/text_color"
-        android:textSize="@dimen/text_12sp"
-        android:layout_marginTop="4dp"
-        android:layout_below="@+id/txtTitlePeers"/>
+        <TextView
+            android:id="@+id/txtSubTitlePeers"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:text="Peers Sub title"
+            android:textColor="@color/text_color"
+            android:textSize="@dimen/text_12sp"
+            android:layout_marginTop="4dp"
+            android:layout_below="@+id/txtTitlePeers"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:layout_margin="4dp"
-        android:layout_alignParentBottom="true">
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/peer_action_1"
-        android:src="@drawable/minus_circle_outline"
-        android:background="@drawable/blue_filled_box"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_margin="4dp"
+            android:layout_alignParentBottom="true"
+            android:visibility="gone">
+            <ImageView
+                android:layout_width="@dimen/size_35dip"
+                android:layout_height="@dimen/size_35dip"
+                android:id="@+id/peer_action_1"
+                android:src="@drawable/minus_circle_outline"/>
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/peer_action_2"
-        android:src="@android:drawable/ic_menu_add"
-        android:visibility="gone"/>
-    </LinearLayout>
+            <ImageView
+                android:layout_width="@dimen/size_35dip"
+                android:layout_height="@dimen/size_35dip"
+                android:id="@+id/peer_action_2"
+                android:src="@android:drawable/ic_menu_add"
+                android:visibility="gone"/>
+        </LinearLayout>
 
-</RelativeLayout>
+    </RelativeLayout>
+</android.support.v7.widget.CardView>
