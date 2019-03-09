@@ -31,7 +31,7 @@ if [ "$LANGUAGE" = "node" ]; then
 fi
 
 # import utils
-. scripts/PARAM_SHORT_ORG_utils_org.sh
+. scripts/PARAM_SHORT_ORGutils_add_org.sh
 
 echo
 echo "========= Creating config transaction to add PARAM_ORG to network =========== "
@@ -45,7 +45,7 @@ fetchChannelConfig ${CHANNEL_NAME} config.json
 
 # Modify the configuration to append the new org
 set -x
-jq -s '.[0] * {"channel_group":{"groups":{"Application":{"groups": {"PARAM_ORGMSP":.[1]}}}}}' config.json ./channel-artifacts/PARAM_SHORT_ORG.json > modified_config.json
+jq -s '.[0] * {"channel_group":{"groups":{"Application":{"groups": {"PARAM_ORGMSP":.[1]}}}}}' config.json scripts/PARAM_SHORT_ORG.json > modified_config.json
 set +x
 
 # Compute a config update, based on the differences between config.json and modified_config.json, write it as a transaction to org3_update_in_envelope.pb
@@ -64,7 +64,7 @@ echo "========= Submitting transaction from a different peer (peer0.org2) which 
 echo
 setGlobals 0 2
 set -x
-peer channel update -f PARAM_SHORT_ORG_update_in_envelope.pb -c ${CHANNEL_NAME} -o PARAM_ORDERER_HOSTNAME:7050 --tls --cafile ${ORDERER_CA}
+#peer channel update -f PARAM_SHORT_ORG_update_in_envelope.pb -c ${CHANNEL_NAME} -o PARAM_ORDERER_HOSTNAME:7050 --tls --cafile ${ORDERER_CA}
 set +x
 
 echo
