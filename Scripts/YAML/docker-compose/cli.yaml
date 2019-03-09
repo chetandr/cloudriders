@@ -10,7 +10,7 @@
       - CORE_LOGGING_LEVEL=INFO
       - CORE_PEER_ID=PARAM_SERVICE_NAME
       - CORE_PEER_ADDRESS=PARAM_PEER:PARAM_PORT
-      - CORE_PEER_LOCALMSPID=MyOrg1MSP
+      - CORE_PEER_LOCALMSPID=PARAMORGMSP
       - CORE_PEER_TLS_ENABLED=true
       - CORE_PEER_TLS_CERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/PARAM_ORG/peers/PARAM_PEER/tls/server.crt
       - CORE_PEER_TLS_KEY_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/PARAM_ORG/peers/PARAM_PEER/tls/server.key

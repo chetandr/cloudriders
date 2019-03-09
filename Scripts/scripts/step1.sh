@@ -31,7 +31,7 @@ if [ "$LANGUAGE" = "node" ]; then
 fi
 
 # import utils
-. scripts/PARAM_SHORT_ORG_utils_org.sh
+. scripts/PARAM_SHORT_ORGutils_add_org.sh
 
 echo
 echo "========= Creating config transaction to add PARAM_ORG to network =========== "
