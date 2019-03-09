@@ -7,8 +7,6 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TableListComponent implements OnInit {
 
-  organizations = [ "Organization 1", "Organization 2", "Organization 3"]
-
   constructor() { }
 
   ngOnInit() {
