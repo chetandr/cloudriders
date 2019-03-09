@@ -6,6 +6,7 @@ import { AdminLayoutRoutes } from './admin-layout.routing';
 import { DashboardComponent } from '../../dashboard/dashboard.component';
 import { NetworkGraphComponent } from '../../networkgraph/networkgraph.component';
 import { UserProfileComponent } from '../../user-profile/user-profile.component';
+import { NetworkComponent } from '../../network/network.component';
 import { TableListComponent } from '../../table-list/table-list.component';
 import { TypographyComponent } from '../../typography/typography.component';
 import { IconsComponent } from '../../icons/icons.component';
@@ -46,6 +47,7 @@ import {
     NotificationsComponent,
     UpgradeComponent,
     ConsortiumComponent,
+    NetworkComponent
   ]
 })
 
