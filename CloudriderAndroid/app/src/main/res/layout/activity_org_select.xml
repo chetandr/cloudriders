@@ -73,7 +73,7 @@
         android:textAllCaps="false"
         android:layout_marginTop="@dimen/size_10dp"
         android:layout_width="200dp"
-        android:layout_height="40dip"
+        android:layout_height="wrap_content"
         android:onClick="onClick"
         android:textSize="@dimen/text_18sp"/>
 </LinearLayout>
