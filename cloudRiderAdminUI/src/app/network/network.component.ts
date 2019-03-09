@@ -34,7 +34,7 @@ export class NetworkComponent implements AfterViewInit {
     }
   ];
 
-  constructor(private router: Router) {}
+  constructor(private router : Router) {}
 
   ngAfterViewInit() {
 
@@ -125,7 +125,7 @@ export class NetworkComponent implements AfterViewInit {
       edges.add({from: 15, to: 9});
     }, 1000);
 
-    this.network.on( 'click', function(properties) {
+    this.network.on( 'click', (properties) => {
       var ids = properties.nodes;
       var clickedNodes = nodes.get(ids);
       console.log('clicked nodes:', clickedNodes);
