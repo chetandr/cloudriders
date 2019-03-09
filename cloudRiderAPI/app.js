@@ -44,6 +44,7 @@ app.get('/hyperverse/organization/:name',org.getOrgByName);
 
 //API for consortium
 app.get('/hyperverse/consortium/:name',  consortium.getConsortiumByName)
+app.get('/hyperverse/consortium',  consortium.getConsortiums)
 app.post('/hyperverse/consortium', consortium.createConsortium)
 
 // peers

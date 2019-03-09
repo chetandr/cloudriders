@@ -13,6 +13,7 @@
 
     <string name="leder_count">Leder Count: %d</string>
     <string name="cc_count">Chaincode Count: %d</string>
+    <string name="channel_count">Channel Count: %d</string>
 
     <array name="organizations">
         <item> -- Select Organization -- </item>

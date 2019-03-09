@@ -53,12 +53,12 @@ public class CloudriderApp extends Application {
             HurlStack hurlStack = new HurlStack() {
                 @Override
                 protected HttpURLConnection createConnection(URL url) throws IOException {
-                    HttpsURLConnection httpsURLConnection = (HttpsURLConnection) super.createConnection(url);
-                    try {
+                    HttpURLConnection httpsURLConnection = (HttpURLConnection) super.createConnection(url);
+                    /*try {
                         httpsURLConnection.setSSLSocketFactory(new AppSSLSocketFactory(httpsURLConnection.getSSLSocketFactory()));
                     } catch (Exception e) {
                         e.printStackTrace();
-                    }
+                    }*/
                     return httpsURLConnection;
                 }
             };

@@ -4,13 +4,28 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".RegistrationActivity">
+    tools:context=".RegistrationActivity"
+    android:padding="@dimen/size_10dp"
+    android:fillViewport="true">
 <android.support.constraint.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingLeft="@dimen/size_10dp"
     android:paddingRight="@dimen/size_10dp"
-    android:paddingTop="@dimen/size_20dp">
+    android:paddingTop="@dimen/size_20dp"
+    android:id="@+id/parentLayout">
+
+    <TextView
+        android:id="@+id/tvHeaderCons"
+        android:text="Register Your Organization"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/size_20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toRightOf="parent"
+        app:layout_constraintRight_toLeftOf="parent"/>
+
 
     <TextView
         android:id="@+id/tvHeader"
@@ -19,7 +34,7 @@
         android:textSize="@dimen/size_20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvHeaderCons"
         app:layout_constraintLeft_toRightOf="parent"
         app:layout_constraintRight_toLeftOf="parent"/>
 
@@ -55,7 +70,7 @@
             android:id="@+id/etPeers"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="text"
+            android:inputType="number"
             android:maxLength="30"
             android:textColor="@color/text_color"/>
     </android.support.design.widget.TextInputLayout>
@@ -67,14 +82,18 @@
         android:textAllCaps="false"
         app:layout_constraintLeft_toLeftOf="@+id/tilNoOfPeers"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="onClick"/>
+        android:layout_height="40dip"
+        android:onClick="onClick"
+        android:textSize="@dimen/text_18sp"
+        android:paddingLeft="20dip"
+        android:paddingRight="20dip"/>
     <android.support.constraint.ConstraintLayout
         android:id="@+id/view"
         android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/btnAdvanced">
+        app:layout_constraintTop_toBottomOf="@+id/btnAdvanced"
+        app:layout_constraintBottom_toTopOf="@+id/btnRegister">
         <android.support.design.widget.TextInputLayout
             android:id="@+id/tilDomain"
             android:layout_width="match_parent"
@@ -156,12 +175,13 @@
         android:background="@drawable/red_filled_box"
         android:textAllCaps="false"
         android:layout_marginTop="@dimen/size_10dp"
-        app:layout_constraintTop_toBottomOf="@+id/view"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="parent"
         app:layout_constraintRight_toLeftOf="parent"
         android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:onClick="onClick"/>
+        android:layout_height="40dip"
+        android:onClick="onClick"
+        android:textSize="@dimen/text_18sp"/>
 
 </android.support.constraint.ConstraintLayout>
 </ScrollView>

@@ -2,6 +2,25 @@ var mockData = require('../../mocks/peerDataforAGivenPeer.json')
 var logger = require('tracer').console();
 const _ = require("lodash")
 
+var getMockDetails = function () {
+    let result = mockDetails(mockData);
+    return result;
+}
+
+var getNetworkData = function () {
+    let data = getMockDetails();
+
+    let conName = "example.com"
+    let result = {};
+
+    let consortium = {
+        "consortiumname": conName,
+        "orgs": [data]
+    }
+    result[conName] = consortium;
+    return result;
+}
+
 var mockDetails = function(mockData, res) {
     let result = {};
     let orgs=[];
@@ -50,5 +69,7 @@ var listOfChaincodes = function(peerName, orgName) {
 
 module.exports = {
     mockDetails,
+    getMockDetails,
+    getNetworkData,
     listOfChaincodes
 }
