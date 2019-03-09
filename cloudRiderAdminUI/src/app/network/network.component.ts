@@ -1,9 +1,13 @@
-import { Component, ElementRef, ViewChild, AfterViewInit} from '@angular/core';
+import { Component, ElementRef, ViewChild, AfterViewInit, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 import * as vis from 'vis';
 
 type Icon = Array<{code: string, color: string}>;
+type Node = Array<{id: number, label: string, group : string}>;
+
+type Edge = Array<{from: number, to: number}>;
 
 @Component({
   selector: 'network-component',
@@ -11,9 +15,17 @@ type Icon = Array<{code: string, color: string}>;
   styleUrls: ['./network.component.css']
 })
 
-export class NetworkComponent implements AfterViewInit {
+export class NetworkComponent implements AfterViewInit, OnInit {
   @ViewChild('vis') element: ElementRef;
   network: vis.Network;
+
+  nodes1: Array<Node>
+
+  visNodes: any
+
+  edges1: Array<Edge>
+
+  visEdges: any
 
   options: Icon = [
     {
@@ -34,7 +46,19 @@ export class NetworkComponent implements AfterViewInit {
     }
   ];
 
-  constructor(private router : Router) {}
+  constructor(private router : Router, private http: HttpClient) {
+    this.http = http;
+  }
+
+  ngOnInit() {
+    this.http.get("http://10.44.14.143:3000/hyperverse/getnodes").subscribe((data: Node[]) => {
+      console.log(data);
+      this.nodes1 = data
+      this.visNodes = new vis.DataSet(this.nodes1)
+      this.edges1 = []
+      this.visEdges = new vis.DataSet(this.edges1)
+    });
+  }
 
   ngAfterViewInit() {
 
@@ -50,7 +74,7 @@ export class NetworkComponent implements AfterViewInit {
             color: this.options[0].color
           }
         },
-        org: {
+        organization: {
           shape: 'icon',
           icon: {
             face: 'FontAwesome',
@@ -80,55 +104,54 @@ export class NetworkComponent implements AfterViewInit {
       }
     };
 
-    const nodes = new vis.DataSet([
-      {id: 1, label: 'Consortium 1', group : 'consortium'},
-      {id: 2, label: 'Org 1', group : 'org'},
-      {id: 3, label: 'Org 2', group : 'org'},
-      {id: 4, label: 'Peer 1', group : 'peer'},
-      {id: 5, label: 'Peer 2', group : 'peer'},
-      {id: 6, label: 'Peer 3', group : 'peer'},
-      {id: 7, label: 'Channel 1', group : 'channel'},
-      {id: 8, label: 'Consortium 1', group : 'consortium'},
-      {id: 9, label: 'Org 1', group : 'org'},
-      {id: 10, label: 'Org 2', group : 'org'},
-      {id: 11, label: 'Peer 4', group : 'peer'},
-      {id: 12, label: 'Peer 5', group : 'peer'},
-      {id: 13, label: 'Channel 2', group : 'channel'},
-      {id: 14, label: 'Peer 6', group : 'peer'}
-    ]);
+    // const nodes = new vis.DataSet([
+    //   {id: 'a', label: 'Consortium 1', group : 'consortium'},
+    //   {id: 'b', label: 'Org 1', group : 'org'},
+    //   {id: 'c', label: 'Org 2', group : 'org'},
+    //   {id: 'd', label: 'Peer 1', group : 'peer'},
+    //   {id: 'e', label: 'Peer 2', group : 'peer'},
+    //   {id: 'f', label: 'Peer 3', group : 'peer'},
+    //   {id: 'g', label: 'Channel 1', group : 'channel'},
+    //   {id: 'h', label: 'Consortium 1', group : 'consortium'},
+    //   {id: 'h', label: 'Org 1', group : 'org'},
+    //   {id: 'i', label: 'Org 2', group : 'org'},
+    //   {id: 'j', label: 'Peer 4', group : 'peer'},
+    //   {id: 'k', label: 'Peer 5', group : 'peer'},
+    //   {id: 'l', label: 'Channel 2', group : 'channel'},
+    //   {id: 'm', label: 'Peer 6', group : 'peer'}
+    // ]);
   
-    const edges = new vis.DataSet([
-      {from: 1, to: 2},
-      {from: 1, to: 3},
-      {from: 2, to: 4},
-      {from: 2, to: 5},
-      {from: 3, to: 6},
-      {from: 3, to: 7},
-      {from: 8, to: 9},
-      {from: 8, to: 10},
-      {from: 9, to: 11},
-      {from: 9, to: 12},
-      {from: 10, to: 13},
-      {from: 10, to: 14}
-    ]);
+    // const edges = new vis.DataSet([
+    //   {from: 1, to: 2},
+    //   {from: 1, to: 3},
+    //   {from: 2, to: 4},
+    //   {from: 2, to: 5},
+    //   {from: 3, to: 6},
+    //   {from: 3, to: 7},
+    //   {from: 8, to: 9},
+    //   {from: 8, to: 10},
+    //   {from: 9, to: 11},
+    //   {from: 9, to: 12},
+    //   {from: 10, to: 13},
+    //   {from: 10, to: 14}
+    // ]);
   
+    // const data = {
+    //   nodes: nodes,
+    //   edges: edges
+    // };
+
     const data = {
-      nodes: nodes,
-      edges: edges
+      nodes: this.visNodes,
+      edges: this.visEdges
     };
   
     this.network = new vis.Network(this.element.nativeElement, data, optionsFA); 
 
-    setTimeout(() => {
-      console.log("shweta");
-      nodes.add({id: 15, label: 'Peer 10', group : 'peer'});
-      edges.add({from: 15, to: 9});
-    }, 1000);
-
     this.network.on( 'click', (properties) => {
       var ids = properties.nodes;
-      var clickedNodes = nodes.get(ids);
-      console.log('clicked nodes:', clickedNodes);
+      // var clickedNodes = nodes.get(ids);
+      // console.log('clicked nodes:', clickedNodes);
       this.router.navigateByUrl('/chaincode');
   });
 
