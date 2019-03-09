@@ -8,12 +8,10 @@ var logger = require('tracer').console();
 var org =require('./services/organization')
 var peers =require('./services/peers')
 var consortium = require('./services/consortium')
-var dashboard = require('./services/dashboardServices')
 
-const port = 8080
-logger.info("Hello World")
-
-app.get('/', dashboard.home);
+const port = 3000
+logger.info("Hello world")
+app.get('/', (req, res) => res.send({"message":"This is Cloud Riders Project!"}))
 
 //channels apis
 app.post('/hyperverse/channels',channelService.createChannel);
@@ -21,13 +19,14 @@ app.post('/hyperverse/channels',channelService.createChannel);
 app.get('/hyperverse/channels/:name',channelService.readChannel);
 
 app.get('/hyperverse/allChannels/:org',channelService.readChannels);
+app.get('/hyperverse/myChannels',channelService.readChannels);
 
 app.put('/hyperverse/channels/:name',channelService.updateChannel);
 
 app.delete('/hyperverse/channels/:name',channelService.deleteChannel);
 
-app.get('/hyperverse/listChannels',channelService.listChannels);
 
+app.get('/hyperverse/listChannels',channelService.listChannels);
 app.post('/hyperverse/subscribeChannel',channelService.subscribeChannel);
 
 

@@ -1,12 +1,41 @@
 var logger = require('tracer').console();
-var mockData = require('../mocks/peerDataforAGivenPeer.json')
+var mockData = require('../../mocks/peerDataforAGivenPeer.json')
 var utils = require('../utils/utils.js')
-const _ = require("lodash")
+const _ = require("lodash");
+const shellExecuter =  require("../utils/shellExecutor")
 //function to get organizations
-function getOrgs(req, res) {
-    logger.info("inside getOrg()")
-    let data = utils.mockDetails(mockData, res)
-    res.send(data)
+async function getOrgs(req, res) {
+    logger.info("inside getOrg()");
+    let output = await shellExecuter.executeShell('KEY_STORE_MAP');
+    logger.info(typeof output)
+    let map = {}
+    output = output.split('\n');
+
+    output = _.compact(output);
+    for(let entry of output){
+        let arr = entry.split('/');
+        console.log(entry, _.endsWith(entry,'peers'))
+        if(!_.isEqual(arr[2], "ordererOrganizations") && !_.endsWith(entry,'peers')){
+            
+            let org = arr[3];
+            let peer = arr[5].split('.')[0]
+            if(map[org]) map[org].push(peer);
+            else map[org] = [peer];
+        }else{
+            console.log('ORDERORG', arr[2])
+        }
+
+    }
+    let finalResult = []
+    for(let org in map){
+        let obj ={
+            "orgname":org,
+            "peers": _.uniq(map[org])
+        }
+        finalResult.push(obj);
+    }
+    //let data = utils.mockDetails(mockData, res)
+    res.send(finalResult)
     res.end()
 }
 

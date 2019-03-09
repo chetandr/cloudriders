@@ -1,6 +1,6 @@
 
 var logger = require('tracer').console();
-var mockData = require('../mocks/peerDataforAGivenPeer.json')
+var mockData = require('../../mocks/peerDataforAGivenPeer.json')
 var utils = require('../utils/utils.js')
 let _ = require('lodash')
 async function getPeers(request, response){
