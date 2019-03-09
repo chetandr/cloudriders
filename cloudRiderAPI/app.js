@@ -14,7 +14,7 @@ var logger = require('tracer').console();
 var org =require('./services/organization')
 var peers =require('./services/peers')
 var consortium = require('./services/consortium')
-
+var service = require('./services/services')
 const port = 3000
 logger.info("Hello world")
 // app.get('/', (req, res) => res.send({"message":"This is Cloud Riders Project!"}))
@@ -67,7 +67,8 @@ app.put('/hyperverse/peers/:name',peers.updatePeers)
 
 //new apis
 app.get('/hyperverse/listTransaction',channelService.listTransaction);
-
+app.get('/hyperverse/getNetworkGraph', service.getNetworkGraph);
+app.get('/hyperverse/getNodes', service.nodes);
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
 
