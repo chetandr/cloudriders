@@ -11,6 +11,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -24,6 +25,7 @@ public class HomeActivity extends AppCompatActivity {
 
     private RecyclerView.Adapter channelsAdapter;
     private RecyclerView.LayoutManager channelsLayoutManager;
+    TextView txtTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +35,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void initUI() {
+        txtTitle = findViewById(R.id.txtTitle);
         drawerLayout = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setItemIconTintList(null);

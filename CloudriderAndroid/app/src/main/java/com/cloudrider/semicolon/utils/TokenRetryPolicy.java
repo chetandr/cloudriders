@@ -1,11 +1,10 @@
-package com.watercup.utils;
+package com.cloudrider.semicolon.utils;
 
 import android.util.Log;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
-import com.watercup.App;
 
 import java.net.HttpURLConnection;
 
@@ -60,7 +59,7 @@ class TokenRetryPolicy implements RetryPolicy {
         if (error != null && error.networkResponse != null
                 && error.networkResponse.statusCode == HttpURLConnection.HTTP_UNAUTHORIZED && mCurrentRetryCount <= mMaxNumRetries) {
             mCurrentRetryCount = mMaxNumRetries + 1; // Don't retry anymore, it's pointless
-            new RefreshAccessToken().refreshToken(this); // Get new token
+            //new RefreshAccessToken().refreshToken(this); // Get new token
         }
         if (!this.hasAttemptRemaining()) {
             Log.v(strTAG, "No attempt remaining, ERROR");
@@ -98,7 +97,7 @@ class TokenRetryPolicy implements RetryPolicy {
                 if (mGsonRequest != null && mGsonRequest.getHeaders() != null) {
                     //noinspection unchecked
                     mGsonRequest.getHeaders().put("Authorization", "OAuth " + token);
-                    App.getInstance().getVolleyRequestQueue().add(mGsonRequest);
+                    //App.getInstance().getVolleyRequestQueue().add(mGsonRequest);
                     Log.v(strTAG, "Firing off request for which auth failed");
                 }
             }

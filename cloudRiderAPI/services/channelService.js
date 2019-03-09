@@ -34,14 +34,60 @@ async function readChannel(req, res) {
     }
 }
 
+async function readChannels(req, res) {
+    logger.info("Got the request for read all channels")
+        let nameOfChannel = "sample-channel"
+        var data = [{
+            "channelName": nameOfChannel+'1',
+            "org1": {
+                "peers": [
+                    {
+                        "name": "peer1",
+                        "ledger": "",
+                        "chaincodes": null
+                    }
+                ]
+            }
+        },
+        {
+            "channelName": nameOfChannel+'2',
+            "org1": {
+                "peers": [
+                    {
+                        "name": "peer1",
+                        "ledger": "",
+                        "chaincodes": null
+                    }
+                ]
+            }
+        },
+        {
+            "channelName": nameOfChannel+'3',
+            "org1": {
+                "peers": [
+                    {
+                        "name": "peer1",
+                        "ledger": "",
+                        "chaincodes": null
+                    }
+                ]
+            }
+        },
+        ]
+        res.send(data);    
+}
+
 function invokeChaincode(req, res) {
-    console.log("Got the request");
+    logger.info("invokeChaincode()")
+    res.send("Chaincode invoked successfully.");
+}
+function invokeChaincodeById(req, res) {
+    logger.info("invokeChaincodeById()")
     if (req.params.chaincodeId) {
         let chaincodeId = req.params.chaincodeId
         res.send("Request served for invokde chaincode ID " + chaincodeId);
     }
 }
-
 function listChannels(req, res) {
     console.log("Got the request");
     res.send("Request served for list channels");
@@ -104,6 +150,8 @@ module.exports = {
     listChaincode: listChaincode,
     deployChaincode:deployChaincode,
     invokeChaincode:invokeChaincode,
+    invokeChaincodeById:invokeChaincodeById,
     subscribeChannel:subscribeChannel,
-    listTransaction:listTransaction
+    listTransaction:listTransaction,
+    readChannels:readChannels
 }

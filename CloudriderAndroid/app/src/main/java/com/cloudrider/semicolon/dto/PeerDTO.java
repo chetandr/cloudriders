@@ -5,7 +5,7 @@ public class PeerDTO {
     String peerTitle;
     String peerSubTitle;
     int chainCodeCount;
-    int lederCount;
+    int channelCount;
 
     public PeerDTO() {
     }
@@ -14,7 +14,7 @@ public class PeerDTO {
         this.peerTitle = peerTitle;
         this.peerSubTitle = peerSubTitle;
         this.chainCodeCount = chainCodeCount;
-        this.lederCount = lederCount;
+        this.channelCount = lederCount;
     }
 
     public String getPeerSubTitle() {
@@ -33,12 +33,12 @@ public class PeerDTO {
         this.chainCodeCount = chainCodeCount;
     }
 
-    public int getLederCount() {
-        return lederCount;
+    public int getChannelCount() {
+        return channelCount;
     }
 
-    public void setLederCount(int lederCount) {
-        this.lederCount = lederCount;
+    public void setChannelCount(int lederCount) {
+        this.channelCount = lederCount;
     }
 
     public String getPeerTitle() {
