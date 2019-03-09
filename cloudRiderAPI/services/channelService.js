@@ -1,3 +1,6 @@
+var logger = require('tracer').console();
+var utils = require('../utils/utils.js')
+
 function createChannel(req, res) {
     console.log("Got the request");
     if (req.body) {
@@ -42,8 +45,12 @@ function listLedger(req, res) {
 
 function listChaincode(req, res) {
     console.log("Got the request");
-    res.send("Request served for list chaincode");
-
+    logger.info("@@@@@@@@@",JSON.stringify(req.query))
+    let peerName = req.query.peername;
+    let orgName = req.query.orgname;
+    let data = utils.listOfChaincodes(peerName, orgName)
+    res.send(data)
+    res.end()
 }
 
 function updateChannel(req, res) {

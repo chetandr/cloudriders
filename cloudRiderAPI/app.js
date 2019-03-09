@@ -33,8 +33,10 @@ app.post('/hyperverse/deployChaincode',channelService.deployChaincode);
 app.get('/hyperverse/invokeChaincode/:chaincodeId',channelService.invokeChaincode);
 
 //API for organization
-app.post('/hyperverse/organization', org.createOrg)
-app.delete('/hyperverse/organization/:name',org.delOrgByName)
+app.post('/hyperverse/organization', org.createOrg);
+app.delete('/hyperverse/organization/:name',org.delOrgByName);
+app.get('/hyperverse/organization',org.getOrgs);
+app.get('/hyperverse/organization/:name',org.getOrgByName);
 
 //API for consortium
 app.get('/hyperverse/consortium/:name',  consortium.getConsortiumByName)
