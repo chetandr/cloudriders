@@ -2,6 +2,6 @@
     Domain: PARAM_DOMAIN
     EnableNodeOUs: true
     Template:
-      Count: 2
+      Count: 4
     Users:
-      Count: 1
+      Count: 4

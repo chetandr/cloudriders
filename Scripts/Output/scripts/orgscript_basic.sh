@@ -59,10 +59,13 @@ createChannel() {
 }
 
 joinChannel () {
-	for org in 1 2; do
-	    for peer in 0 1; do
+	
+	finalPeers=`expr 1 - 1`
+	for org in {1..1}; do
+	    for peer in {0..1}; do
+		echo "Joining peer${peer}.Org${org}"
 		joinChannelWithRetry $peer $org
-		echo "===================== peer${peer}.org${org} joined channel '$CHANNEL_NAME' ===================== "
+		echo "===================== peer${peer}.Org${org} joined channel '$CHANNEL_NAME' ===================== "
 		sleep $DELAY
 		echo
 	    done
@@ -78,10 +81,10 @@ echo "Having all peers join the channel..."
 joinChannel
 
 ## Set the anchor peers for each org in the channel
-echo "Updating anchor peers for org1..."
-updateAnchorPeers 0 1
-echo "Updating anchor peers for org2..."
-updateAnchorPeers 0 2
+#echo "Updating anchor peers for org1..."
+#updateAnchorPeers 0 1
+#echo "Updating anchor peers for org2..."
+#updateAnchorPeers 0 2
 
 # ## Install chaincode on peer0.org1 and peer0.org2
 # echo "Installing chaincode on peer0.org1..."

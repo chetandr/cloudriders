@@ -38,7 +38,7 @@ setGlobals() {
     CORE_PEER_LOCALMSPID="Org1MSP"
     CORE_PEER_TLS_ROOTCERT_FILE=$PEER0_Org1_CA
     CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp
-    CORE_PEER_ADDRESS=peer0.org1.example.com:7051
+    CORE_PEER_ADDRESS=peer$PEER.org$ORG.example.com:7051
   
 
   if [ "$VERBOSE" == "true" ]; then
