@@ -13,7 +13,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.cloudrider.semicolon.parse.Peer;
+
 import java.util.ArrayList;
+import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -27,15 +30,23 @@ public class HomeActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager channelsLayoutManager;
     TextView txtTitle;
 
+    String selectedOrg = "";
+    String selectedCons = "";
+
+    List<Peer> peers = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        selectedOrg = CloudriderApp.getInstance().getPrefs().getString("selectedOrg", "");
+        selectedCons = CloudriderApp.getInstance().getPrefs().getString("selectedCons", "");
         initUI();
     }
 
     private void initUI() {
         txtTitle = findViewById(R.id.txtTitle);
+        txtTitle.setText(selectedOrg);
         drawerLayout = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setItemIconTintList(null);
@@ -84,8 +95,9 @@ public class HomeActivity extends AppCompatActivity {
         channelRecyclerView.setLayoutManager(channelsLayoutManager);
         channelRecyclerView.addItemDecoration(itemDecoration);
 
-        peersAdapter = new PeersAdapter(this, CloudriderApp.getInstance().getPeersList());
-        peerRecyclerView.setAdapter(peersAdapter);
+
+
+        initPeerData();
 
         channelsAdapter = new ChannelAdapter(CloudriderApp.getInstance().getChannelList());
         channelRecyclerView.setAdapter(channelsAdapter);
@@ -100,5 +112,23 @@ public class HomeActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void initPeerData() {
+
+        for(int i = 0; i < CloudriderApp.getInstance().getConsortium().getData().size(); i++) {
+            if(CloudriderApp.getInstance().getConsortium().getData().get(i).getConsortiumname().equalsIgnoreCase(selectedCons)) {
+                for( int j = 0; j < CloudriderApp.getInstance().getConsortium().getData().get(i).getOrgs().size(); j++) {
+                    if(CloudriderApp.getInstance().getConsortium().getData().get(i).getOrgs().get(j).getOrgname().equalsIgnoreCase(selectedOrg)) {
+                        peers = CloudriderApp.getInstance().getConsortium().getData().get(i).getOrgs().get(j).getPeers();
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+
+        peersAdapter = new PeersAdapter(this, peers);
+        peerRecyclerView.setAdapter(peersAdapter);
     }
 }

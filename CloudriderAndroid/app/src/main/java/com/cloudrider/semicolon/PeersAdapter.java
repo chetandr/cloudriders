@@ -11,16 +11,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cloudrider.semicolon.dto.PeerDTO;
+import com.cloudrider.semicolon.parse.Peer;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class PeersAdapter extends RecyclerView.Adapter<PeersAdapter.PeerViewHolder>{
 
-    ArrayList peers;
+    List peers;
 
     Activity activity;
 
-    public PeersAdapter(Activity activity, ArrayList peers) {
+    public PeersAdapter(Activity activity, List peers) {
         this.activity = activity;
         this.peers = peers;
     }
@@ -35,11 +37,13 @@ public class PeersAdapter extends RecyclerView.Adapter<PeersAdapter.PeerViewHold
 
     @Override
     public void onBindViewHolder(@NonNull PeersAdapter.PeerViewHolder myViewHolder, int i) {
-            PeerDTO peer = (PeerDTO) peers.get(i);
-            myViewHolder.txtTitle.setText(peer.getPeerTitle());
-            myViewHolder.txtSubTitle.setText(peer.getPeerSubTitle());
-            myViewHolder.txtLedgerCount.setText(activity.getString(R.string.channel_count, peer.getChannelCount()));
-            myViewHolder.txtCCCount.setText(activity.getString(R.string.cc_count, peer.getChainCodeCount()));
+            Peer peer = (Peer) peers.get(i);
+            myViewHolder.txtTitle.setText(peer.getName());
+            //myViewHolder.txtSubTitle.setText(peer.getPeerSubTitle());
+            //myViewHolder.txtLedgerCount.setText(activity.getString(R.string.channel_count, peer.getChaincodecount()));
+        myViewHolder.txtSubTitle.setVisibility(View.GONE);
+        myViewHolder.txtLedgerCount.setVisibility(View.GONE);
+            myViewHolder.txtCCCount.setText(activity.getString(R.string.cc_count, peer.getChaincodecount()));
             myViewHolder.imgAction1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

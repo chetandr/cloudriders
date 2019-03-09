@@ -11,6 +11,7 @@ import com.android.volley.toolbox.Volley;
 import com.cloudrider.semicolon.dto.ChannelDTO;
 import com.cloudrider.semicolon.dto.PeerDTO;
 import com.cloudrider.semicolon.dto.RegisterDTO;
+import com.cloudrider.semicolon.parse.Consortium;
 import com.cloudrider.semicolon.utils.AppSSLSocketFactory;
 
 import java.io.IOException;
@@ -29,6 +30,8 @@ public class CloudriderApp extends Application {
     ArrayList channelList;
 
     SharedPreferences prefs;
+
+    Consortium consortium;
 
     @Override
     public void onCreate() {
@@ -123,5 +126,13 @@ public class CloudriderApp extends Application {
         dto.setOrdererHost(prefs.getString("ordererHost", ""));
         dto.setCertType(prefs.getString("certType", "System generated"));
         return dto;
+    }
+
+    public Consortium getConsortium() {
+        return consortium;
+    }
+
+    public void setConsortium(Consortium consortium) {
+        this.consortium = consortium;
     }
 }
