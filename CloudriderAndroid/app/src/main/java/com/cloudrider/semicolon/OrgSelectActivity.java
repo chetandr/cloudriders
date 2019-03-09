@@ -12,11 +12,13 @@ import android.widget.Toast;
 public class OrgSelectActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Spinner spinnerOrganization;
+    private Spinner spinnerCons;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_org_select);
         spinnerOrganization = findViewById(R.id.spinnerOrganization);
+        spinnerCons = findViewById(R.id.spinnerCons);
         setOrganizationData();
     }
 
@@ -43,6 +45,7 @@ public class OrgSelectActivity extends AppCompatActivity implements View.OnClick
             if(spinnerOrganization.getSelectedItemPosition() != -1 ) {
                 CloudriderApp.getInstance().getPrefs().edit().putString("selectedOrg", spinnerOrganization.getSelectedItem().toString()).commit();
                 startActivity(new Intent(this, HomeActivity.class));
+                finish();
             }
             else {
                 Toast.makeText(this, "Please select organization", Toast.LENGTH_LONG).show();

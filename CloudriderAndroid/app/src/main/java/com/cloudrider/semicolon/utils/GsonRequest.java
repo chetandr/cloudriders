@@ -1,5 +1,5 @@
 
-package com.watercup.utils;
+package com.cloudrider.semicolon.utils;
 
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -88,8 +88,7 @@ public class GsonRequest<T> extends JsonRequest<T> {
             @NonNull final Type type,
             @NonNull final Gson gson,
             @NonNull final Response.Listener<T> listener,
-            @NonNull final Response.ErrorListener errorListener,
-            @SuppressWarnings("unused") final RefreshAccessToken.AuthRefreshTokenListener refreshTokenListener
+            @NonNull final Response.ErrorListener errorListener
     ) {
         super(requestMethod, url, null, listener, errorListener);
         Log.v(strTAG, "url is " + url);// + "  gson is " + gson.toString());

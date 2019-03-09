@@ -16,7 +16,8 @@
         android:textColor="@color/text_color"
         android:textSize="@dimen/text_18sp"
         android:paddingLeft="@dimen/size_10dp"
-        android:background="@drawable/red_box"/>
+        android:background="@drawable/red_box"
+        android:visibility="gone"/>
 
     <RadioGroup
         android:layout_width="match_parent"

@@ -6,8 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,7 +38,7 @@ public class PeersAdapter extends RecyclerView.Adapter<PeersAdapter.PeerViewHold
             PeerDTO peer = (PeerDTO) peers.get(i);
             myViewHolder.txtTitle.setText(peer.getPeerTitle());
             myViewHolder.txtSubTitle.setText(peer.getPeerSubTitle());
-            myViewHolder.txtLedgerCount.setText(activity.getString(R.string.leder_count, peer.getLederCount()));
+            myViewHolder.txtLedgerCount.setText(activity.getString(R.string.channel_count, peer.getChannelCount()));
             myViewHolder.txtCCCount.setText(activity.getString(R.string.cc_count, peer.getChainCodeCount()));
             myViewHolder.imgAction1.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -48,6 +46,12 @@ public class PeersAdapter extends RecyclerView.Adapter<PeersAdapter.PeerViewHold
                     Toast.makeText(activity, "Action clicked", Toast.LENGTH_LONG).show();
                 }
             });
+        myViewHolder.imgAction2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(activity, "Action clicked", Toast.LENGTH_LONG).show();
+            }
+        });
 
     }
 
@@ -62,7 +66,7 @@ public class PeersAdapter extends RecyclerView.Adapter<PeersAdapter.PeerViewHold
         public TextView txtSubTitle;
         public TextView txtLedgerCount;
         public TextView txtCCCount;
-        public ImageButton imgAction1;
+        public ImageView imgAction1;
         public ImageView imgAction2;
 
         public PeerViewHolder(View v) {
