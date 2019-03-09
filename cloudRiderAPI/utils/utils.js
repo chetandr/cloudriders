@@ -10,7 +10,8 @@ var getMockDetails = function () {
 var getNetworkData = function () {
     let data = getMockDetails();
 
-    let conName = "example.com"
+    let conName = "example.com1"
+    let conName2 = "example.com2"
     let result = {};
 
     let consortium = {
@@ -18,6 +19,11 @@ var getNetworkData = function () {
         "orgs": [data]
     }
     result[conName] = consortium;
+    let consortium2 = {
+        "consortiumname": conName2,
+        "orgs": [data]
+    }
+    result[conName2] = consortium2
     return result;
 }
 

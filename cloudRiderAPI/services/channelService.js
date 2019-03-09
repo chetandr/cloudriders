@@ -1,17 +1,17 @@
 var logger = require('tracer').console();
 var utils = require('../utils/utils.js')
 
-function createChannel(req, res) {
+async function createChannel(req, res) {
     console.log("Got the request");
     if (req.body) {
         res.send("Request served for create" + req.body);
     }
 }
 
-function deployChaincode(req, res) {
+async function deployChaincode(req, res) {
     console.log("Got the request");
     if (req.body) {
-        res.send("Request served for deploy chaincode " + req.body);
+        res.send(req.body);
     }
 }
 
@@ -77,7 +77,7 @@ async function readChannels(req, res) {
         res.send(data);    
 }
 
-function invokeChaincode(req, res) {
+async function invokeChaincode(req, res) {
     console.log("Got the request");
     if (req.params.chaincodeId) {
         let chaincodeId = req.params.chaincodeId
@@ -85,19 +85,19 @@ function invokeChaincode(req, res) {
     }
 }
 
-function listChannels(req, res) {
+async function listChannels(req, res) {
     console.log("Got the request");
     res.send("Request served for list channels");
 
 }
 
-function listLedger(req, res) {
+async function listLedger(req, res) {
     console.log("Got the request");
     res.send("Request served for list ledger");
 
 }
 
-function listChaincode(req, res) {
+async function listChaincode(req, res) {
     console.log("Got the request");
     let peerName = req.query.peername;
     let orgName = req.query.orgname;
@@ -106,7 +106,7 @@ function listChaincode(req, res) {
     res.end()
 }
 
-function updateChannel(req, res) {
+async function updateChannel(req, res) {
     console.log("Got the request");
     if (req.params.name) {
         let nameOfChannel = req.params.name;
@@ -119,12 +119,12 @@ function updateChannel(req, res) {
     }
 }
 
-function subscribeChannel(req, res) {
+async function subscribeChannel(req, res) {
     console.log("Got the request");
     res.send("Request served for subscribe channel");
 }
 
-function deleteChannel(req, res) {
+async function deleteChannel(req, res) {
     console.log("Got the request");
     if (req.params.name) {
         let name = req.params.name;
@@ -132,7 +132,7 @@ function deleteChannel(req, res) {
     }
 }
 
-function listTransaction(req, res) {
+async function listTransaction(req, res) {
     console.log("Got the request");    
     res.send("Request served for list transaction");    
 }

@@ -3,7 +3,7 @@ var mockData = require('../../mocks/peerDataforAGivenPeer.json')
 var utils = require('../utils/utils.js')
 const _ = require("lodash")
 //function to get organizations
-function getOrgs(req, res) {
+async function getOrgs(req, res) {
     logger.info("inside getOrg()")
     let data = utils.mockDetails(mockData, res)
     res.send(data)
