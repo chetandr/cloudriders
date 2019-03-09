@@ -16,7 +16,7 @@
     <string name="channel_count">Channel Count: %d</string>
 
     <array name="organizations">
-        <item> -- Select Organization -- </item>
+        <item>-- Select Organization --</item>
         <item>Organization one</item>
         <item>Organization Two</item>
     </array>

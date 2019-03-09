@@ -1,0 +1,253 @@
+Index: app/src/main/java/com/cloudrider/semicolon/DeployCodeChainActivity.java
+===================================================================
+--- app/src/main/java/com/cloudrider/semicolon/DeployCodeChainActivity.java	(date 1552154587536)
++++ app/src/main/java/com/cloudrider/semicolon/DeployCodeChainActivity.java	(date 1552154587536)
+@@ -0,0 +1,70 @@
++package com.cloudrider.semicolon;
++
++import android.content.Intent;
++import android.support.v7.app.AppCompatActivity;
++import android.os.Bundle;
++import android.util.Log;
++import android.view.View;
++import android.widget.Button;
++import android.widget.EditText;
++import android.widget.Toast;
++
++import com.android.volley.Request;
++import com.android.volley.Response;
++import com.android.volley.VolleyError;
++import com.android.volley.toolbox.StringRequest;
++import com.cloudrider.semicolon.parse.Consortium;
++import com.google.gson.Gson;
++import com.google.gson.JsonObject;
++
++import org.json.JSONException;
++import org.json.JSONObject;
++
++public class DeployCodeChainActivity extends AppCompatActivity implements View.OnClickListener {
++    private EditText etCode;
++    private Button btnDeployCode;
++    String peer;
++
++    @Override
++    protected void onCreate(Bundle savedInstanceState) {
++        super.onCreate(savedInstanceState);
++        setContentView(R.layout.activity_deploy_code_chain);
++        peer = getIntent().getStringExtra("peer");
++        etCode = findViewById(R.id.etCode);
++        btnDeployCode = findViewById(R.id.btnDeployCode);
++
++    }
++
++    @Override
++    public void onClick(View v) {
++       if(v.getId()==R.id.btnDeployCode){
++           deployCodeChainRequest(peer);
++       }
++    }
++
++    private void deployCodeChainRequest(String peer){
++        JSONObject reqObject = new JSONObject();
++        try {
++            reqObject.put("peer", peer);
++            reqObject.put("code",etCode.getText().toString());
++        }catch (JSONException e){
++
++        }
++        StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://10.44.14.143:3000/hyperverse/deployChaincode",
++                new Response.Listener<String>() {
++                    @Override
++                    public void onResponse(String response) {
++                        // Display the first 500 characters of the response string.
++                        Toast.makeText(DeployCodeChainActivity.this,"Your Code Chain is Deployed",Toast.LENGTH_LONG).show();
++                        finish();
++                    }
++                }, new Response.ErrorListener() {
++            @Override
++            public void onErrorResponse(VolleyError error) {
++                Log.e("HEMANT", error.toString());
++            }
++        });
++
++        CloudriderApp.getInstance().getVolleyRequestQueue().add(stringRequest);
++    }
++}
+Index: app/src/main/java/com/cloudrider/semicolon/HomeActivity.java
+===================================================================
+--- app/src/main/java/com/cloudrider/semicolon/HomeActivity.java	(date 1552150448000)
++++ app/src/main/java/com/cloudrider/semicolon/HomeActivity.java	(date 1552153594769)
+@@ -18,7 +18,7 @@
+ import java.util.ArrayList;
+ import java.util.List;
+ 
+-public class HomeActivity extends AppCompatActivity {
++public class HomeActivity extends AppCompatActivity implements OnDeployCodeChainInterface{
+ 
+     private DrawerLayout drawerLayout;
+     RecyclerView peerRecyclerView;
+@@ -128,7 +128,14 @@
+             }
+         }
+ 
+-        peersAdapter = new PeersAdapter(this, peers);
++        peersAdapter = new PeersAdapter(HomeActivity.this, peers,this);
+         peerRecyclerView.setAdapter(peersAdapter);
+     }
++
++    @Override
++    public void onSubscribe(String peer) {
++        Intent showDeployFormIntent = new Intent(this,DeployCodeChainActivity.class);
++        showDeployFormIntent.putExtra("peer",peer);
++        startActivity(showDeployFormIntent);
++    }
+ }
+Index: app/src/main/java/com/cloudrider/semicolon/OnDeployCodeChainInterface.java
+===================================================================
+--- app/src/main/java/com/cloudrider/semicolon/OnDeployCodeChainInterface.java	(date 1552151929960)
++++ app/src/main/java/com/cloudrider/semicolon/OnDeployCodeChainInterface.java	(date 1552151929960)
+@@ -0,0 +1,5 @@
++package com.cloudrider.semicolon;
++
++public interface OnDeployCodeChainInterface {
++    public void onSubscribe(String peer);
++}
+Index: app/src/main/java/com/cloudrider/semicolon/PeersAdapter.java
+===================================================================
+--- app/src/main/java/com/cloudrider/semicolon/PeersAdapter.java	(date 1552150448000)
++++ app/src/main/java/com/cloudrider/semicolon/PeersAdapter.java	(date 1552155292515)
+@@ -19,12 +19,13 @@
+ public class PeersAdapter extends RecyclerView.Adapter<PeersAdapter.PeerViewHolder>{
+ 
+     List peers;
+-
+     Activity activity;
++    OnDeployCodeChainInterface listener;
+ 
+-    public PeersAdapter(Activity activity, List peers) {
++    public PeersAdapter(Activity activity, List peers,OnDeployCodeChainInterface listener) {
+         this.activity = activity;
+         this.peers = peers;
++        this.listener = listener;
+     }
+ 
+     @NonNull
+@@ -37,7 +38,7 @@
+ 
+     @Override
+     public void onBindViewHolder(@NonNull PeersAdapter.PeerViewHolder myViewHolder, int i) {
+-            Peer peer = (Peer) peers.get(i);
++            final Peer peer = (Peer) peers.get(i);
+             myViewHolder.txtTitle.setText(peer.getName());
+             //myViewHolder.txtSubTitle.setText(peer.getPeerSubTitle());
+             //myViewHolder.txtLedgerCount.setText(activity.getString(R.string.channel_count, peer.getChaincodecount()));
+@@ -47,18 +48,15 @@
+             myViewHolder.imgAction1.setOnClickListener(new View.OnClickListener() {
+                 @Override
+                 public void onClick(View v) {
+-                    Toast.makeText(activity, "Action clicked", Toast.LENGTH_LONG).show();
++                    listener.onSubscribe(peer.getName());
+                 }
+             });
+-        myViewHolder.imgAction2.setOnClickListener(new View.OnClickListener() {
+-            @Override
+-            public void onClick(View v) {
+-                Toast.makeText(activity, "Action clicked", Toast.LENGTH_LONG).show();
+-            }
+-        });
++        myViewHolder.imgAction2.setEnabled(false);
+ 
+     }
++ private void deployChainCode(String peer,String code){
+ 
++ }
+     @Override
+     public int getItemCount() {
+         return peers.size();
+Index: app/src/main/res/layout/activity_deploy_code_chain.xml
+===================================================================
+--- app/src/main/res/layout/activity_deploy_code_chain.xml	(date 1552155669897)
++++ app/src/main/res/layout/activity_deploy_code_chain.xml	(date 1552155669897)
+@@ -0,0 +1,32 @@
++<?xml version="1.0" encoding="utf-8"?>
++<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"                                                                                                                                                                                                                                                                     
++    xmlns:app="http://schemas.android.com/apk/res-auto"
++    xmlns:tools="http://schemas.android.com/tools"
++    android:layout_width="match_parent"
++    android:layout_height="match_parent"
++    tools:context=".DeployCodeChainActivity">
++
++    <EditText
++        android:id="@+id/etCode"
++        android:hint="Enter Code"
++        android:layout_width="match_parent"
++        android:layout_height="wrap_content"
++        android:layout_marginTop="200dp"
++        app:layout_constraintTop_toTopOf="parent"
++        app:layout_constraintRight_toLeftOf="parent"
++        app:layout_constraintLeft_toRightOf="parent"/>
++    <Button
++        android:id="@+id/btnDeployCode"
++        app:layout_constraintTop_toBottomOf="@+id/etCode"
++        app:layout_constraintLeft_toRightOf="parent"
++        app:layout_constraintRight_toLeftOf="parent"
++        android:text="Deploy ChainCode"
++        android:background="@drawable/red_filled_box"
++        android:textAllCaps="false"
++        android:layout_marginTop="@dimen/size_10dp"
++        android:layout_width="200dp"
++        android:layout_height="40dip"
++        android:onClick="onClick"
++        />
++
++</android.support.constraint.ConstraintLayout>
+\ No newline at end of file
+Index: app/src/main/res/layout/peer_item_layout.xml
+===================================================================
+--- app/src/main/res/layout/peer_item_layout.xml	(date 1552150448000)
++++ app/src/main/res/layout/peer_item_layout.xml	(date 1552155058952)
+@@ -80,6 +80,7 @@
+                 android:layout_height="@dimen/size_35dip"
+                 android:layout_marginLeft="8dip"
+                 android:clickable="false"
++                android:tint="@android:color/darker_gray"
+                 android:src="@drawable/playlist_check" />
+         </LinearLayout>
+ 
+Index: app/src/main/res/values/strings.xml
+===================================================================
+--- app/src/main/res/values/strings.xml	(date 1552150448000)
++++ app/src/main/res/values/strings.xml	(date 1552152113022)
+@@ -16,7 +16,7 @@
+     <string name="channel_count">Channel Count: %d</string>
+ 
+     <array name="organizations">
+-        <item> -- Select Organization -- </item>
++        <item>-- Select Organization --</item>
+         <item>Organization one</item>
+         <item>Organization Two</item>
+     </array>
+Index: app/src/main/AndroidManifest.xml
+===================================================================
+--- app/src/main/AndroidManifest.xml	(date 1552150448000)
++++ app/src/main/AndroidManifest.xml	(date 1552155408555)
+@@ -9,7 +9,9 @@
+         android:label="@string/app_name"
+         android:supportsRtl="true"
+         android:theme="@style/AppTheme">
+-        <activity android:name=".OrgSelectActivity"></activity>
++        <activity android:name=".DeployCodeChainActivity"
++            android:theme="@style/AppTheme.NoActionBar"></activity>
++        <activity android:name=".OrgSelectActivity" />
+         <activity
+             android:name=".SplashActivity"
+             android:theme="@style/AppTheme.NoActionBar">
+@@ -27,7 +29,7 @@
+             android:theme="@style/AppTheme.NoActionBar" />
+         <activity
+             android:name=".RegistrationActivity"
+-            android:theme="@style/AppTheme.NoActionBar"></activity>
++            android:theme="@style/AppTheme.NoActionBar" />
+         <activity
+             android:name=".HomeActivity"
+             android:theme="@style/AppTheme.NoActionBar" />
