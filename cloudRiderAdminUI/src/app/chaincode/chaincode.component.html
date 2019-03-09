@@ -1,16 +1,19 @@
 <div class="main-content">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-8">
-                        <div class="dropdown">
-                            <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown">Chaincode Deploy
-                            <span class="caret"></span></button>
-                            <ul class="dropdown-menu">
-                                <li *ngFor="let con of consortiums">
-                                    <a href="#">{{ con }}</a>
-                                 </li>                      
-                            </ul>
-                        </div>
+                <div class="col-md-12">
+                        <form>
+                                <div class="form-group">
+                                  <label for="peername">Peer Name</label>
+                                  <input type="text" class="form-control" id="peername" aria-describedby="peerhelp" placeholder="Enter Peer Name">
+                                  <small id="peerhelp" class="form-text text-muted">Your Chaincode will get deployed on this peer.</small>
+                                </div>
+                                <div class="form-group">
+                                    <label for="chaincode">Enter Chaincode</label>
+                                    <textarea class="form-control" id="chaincode" rows="10"></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-success">Submit</button>
+                        </form>
                 </div>
             </div>
         </div>
