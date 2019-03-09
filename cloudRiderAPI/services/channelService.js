@@ -56,7 +56,6 @@ function listLedger(req, res) {
 
 function listChaincode(req, res) {
     console.log("Got the request");
-    logger.info("@@@@@@@@@",JSON.stringify(req.query))
     let peerName = req.query.peername;
     let orgName = req.query.orgname;
     let data = utils.listOfChaincodes(peerName, orgName)
