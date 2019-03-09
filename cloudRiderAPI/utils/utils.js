@@ -1,4 +1,4 @@
-var mockData = require('../../mocks/peerDataforAGivenPeer.json')
+var mockData = require('../mocks/peerDataforAGivenPeer.json')
 var logger = require('tracer').console();
 const _ = require("lodash")
 

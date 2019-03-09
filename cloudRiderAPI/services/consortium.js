@@ -1,6 +1,6 @@
 var logger = require('tracer').console();
 var utils = require('../utils/utils.js')
-var mockData = require('../../mocks/peerDataforAGivenPeer.json')
+var mockData = require('../mocks/peerDataforAGivenPeer.json')
 //function to get consortium
 async function getConsortiumByName (req, res) {
     logger.info("inside getConsortium()")

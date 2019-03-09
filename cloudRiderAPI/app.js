@@ -18,14 +18,15 @@ app.post('/hyperverse/channels',channelService.createChannel);
 
 app.get('/hyperverse/channels/:name',channelService.readChannel);
 
-app.get('/hyperverse/allChannels',channelService.readChannels);
+app.get('/hyperverse/allChannels/:org',channelService.readChannels);
+app.get('/hyperverse/myChannels',channelService.readChannels);
 
 app.put('/hyperverse/channels/:name',channelService.updateChannel);
 
 app.delete('/hyperverse/channels/:name',channelService.deleteChannel);
 
-app.get('/hyperverse/listChannels',channelService.listChannels);
 
+app.get('/hyperverse/listChannels',channelService.listChannels);
 app.post('/hyperverse/subscribeChannel',channelService.subscribeChannel);
 
 

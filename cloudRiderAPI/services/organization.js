@@ -1,12 +1,12 @@
 var logger = require('tracer').console();
-var mockData = require('../../mocks/peerDataforAGivenPeer.json')
+var mockData = require('../mocks/peerDataforAGivenPeer.json')
 var utils = require('../utils/utils.js')
 const _ = require("lodash")
 //function to get organizations
 async function getOrgs(req, res) {
     logger.info("inside getOrg()")
     let data = utils.mockDetails(mockData, res)
-    res.send(data)
+    res.send({data})
     res.end()
 }
 
