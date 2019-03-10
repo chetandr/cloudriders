@@ -13,7 +13,7 @@ async function getNetworkGraph(req, res) {
             let obj = {};
             obj["from"] = ele.consortiumname;
             logger.info(org.orgname);
-            obj["To"] = org.orgname;
+            obj["to"] = org.orgname;
             finalResult.push(obj)
         }
     }
@@ -21,7 +21,7 @@ async function getNetworkGraph(req, res) {
         for (let peer of ele["peers"]) {
             let obj = {};
             obj["from"] = ele.orgname;
-            obj["To"] = peer.name;
+            obj["to"] = peer.name;
             finalResult.push(obj)
         }
     }
