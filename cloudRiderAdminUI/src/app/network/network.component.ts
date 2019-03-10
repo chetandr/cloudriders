@@ -1,13 +1,8 @@
 import { Component, ElementRef, ViewChild, AfterViewInit, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-
 import * as vis from 'vis';
 
 type Icon = Array<{code: string, color: string}>;
-type Node = Array<{id: number, label: string, group : string}>;
-
-type Edge = Array<{from: number, to: number}>;
 
 @Component({
   selector: 'network-component',
@@ -18,14 +13,6 @@ type Edge = Array<{from: number, to: number}>;
 export class NetworkComponent implements AfterViewInit, OnInit {
   @ViewChild('vis') element: ElementRef;
   network: vis.Network;
-
-  nodes1: Array<Node>
-
-  visNodes: any
-
-  edges1: Array<Edge>
-
-  visEdges: any
 
   options: Icon = [
     {
@@ -46,21 +33,17 @@ export class NetworkComponent implements AfterViewInit, OnInit {
     }
   ];
 
-  constructor(private router : Router, private http: HttpClient) {
-    this.http = http;
-  }
+  constructor(private http: HttpClient) { }
 
   ngOnInit() {
-    this.http.get("http://10.44.14.143:3000/hyperverse/getnodes").subscribe((data: Node[]) => {
-      console.log(data);
-      this.nodes1 = data
-      this.visNodes = new vis.DataSet(this.nodes1)
-      this.edges1 = []
-      this.visEdges = new vis.DataSet(this.edges1)
-    });
+      
   }
 
   ngAfterViewInit() {
+
+    let nodes1 = []
+
+    let edges1 = []
 
     var optionsFA = {
       height : 270 + 'px',
@@ -104,56 +87,47 @@ export class NetworkComponent implements AfterViewInit, OnInit {
       }
     };
 
-    // const nodes = new vis.DataSet([
-    //   {id: 'a', label: 'Consortium 1', group : 'consortium'},
-    //   {id: 'b', label: 'Org 1', group : 'org'},
-    //   {id: 'c', label: 'Org 2', group : 'org'},
-    //   {id: 'd', label: 'Peer 1', group : 'peer'},
-    //   {id: 'e', label: 'Peer 2', group : 'peer'},
-    //   {id: 'f', label: 'Peer 3', group : 'peer'},
-    //   {id: 'g', label: 'Channel 1', group : 'channel'},
-    //   {id: 'h', label: 'Consortium 1', group : 'consortium'},
-    //   {id: 'h', label: 'Org 1', group : 'org'},
-    //   {id: 'i', label: 'Org 2', group : 'org'},
-    //   {id: 'j', label: 'Peer 4', group : 'peer'},
-    //   {id: 'k', label: 'Peer 5', group : 'peer'},
-    //   {id: 'l', label: 'Channel 2', group : 'channel'},
-    //   {id: 'm', label: 'Peer 6', group : 'peer'}
-    // ]);
-  
-    // const edges = new vis.DataSet([
-    //   {from: 1, to: 2},
-    //   {from: 1, to: 3},
-    //   {from: 2, to: 4},
-    //   {from: 2, to: 5},
-    //   {from: 3, to: 6},
-    //   {from: 3, to: 7},
-    //   {from: 8, to: 9},
-    //   {from: 8, to: 10},
-    //   {from: 9, to: 11},
-    //   {from: 9, to: 12},
-    //   {from: 10, to: 13},
-    //   {from: 10, to: 14}
-    // ]);
-  
-    // const data = {
-    //   nodes: nodes,
-    //   edges: edges
-    // };
+    this.http.get("http://127.0.0.1:3000/hyperverse/getnodes").subscribe((data : any[]) => {
 
-    const data = {
-      nodes: this.visNodes,
-      edges: this.visEdges
-    };
-  
-    this.network = new vis.Network(this.element.nativeElement, data, optionsFA); 
+      this.http.get("http://127.0.0.1:3000/hyperverse/getnetworkgraph").subscribe((edges : any[]) => {
+        data.forEach(element => {
+          console.log(element)
+          let obj = {id: element.id, label: element.label, group : element.group}
+          nodes1.push(obj)
+        });
 
-    this.network.on( 'click', (properties) => {
-      var ids = properties.nodes;
-      // var clickedNodes = nodes.get(ids);
-      // console.log('clicked nodes:', clickedNodes);
-      this.router.navigateByUrl('/chaincode');
-  });
+        edges.forEach(element => {
+          console.log(element)
+          let from = data.filter((node) => {
+            if (node.label == element.from) {
+                return node.id
+            }
+          });
+          console.log("....from"+from[0].id)
+          let to = data.filter((node) => {
+            if (node.label == element.to) {
+                return node.id
+            }
+          });
+          console.log("....from"+to[0].id)
+          let obj = {from: from[0].id, to: to[0].id}
+          edges1.push(obj)
+        });
+  
+        let visnodes = new vis.DataSet({});
+        visnodes.add(nodes1)
+  
+        let visedges = new vis.DataSet({})
+        visedges.add(edges1)
+  
+        const data1 = {
+          nodes: visnodes,
+          edges: visedges
+        };
+  
+        this.network = new vis.Network(this.element.nativeElement, data1, optionsFA);
+      })
+    })
 
   }
 
