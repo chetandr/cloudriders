@@ -76,9 +76,9 @@ var getNodes = function () {
     for (let ele of cons["data"]) {
         let obj = {};
         count++;
-        obj["id"] = count,
-        obj["name"] = ele.consortiumname;
-        obj["group"] = "consortium"
+        obj["id"] = count;
+        obj["label"] = ele.consortiumname;
+        obj["group"] = "consortium";
         finalResult.push(obj)
     }
 
@@ -86,7 +86,7 @@ var getNodes = function () {
         let obj = {};
         count++;
         obj["id"] = count,
-        obj["name"] = ele.orgname;
+        obj["label"] = ele.orgname;
         obj["group"] = "organization"
         finalResult.push(obj)
 
@@ -94,7 +94,7 @@ var getNodes = function () {
             let obj = {};
             count++;
             obj["id"] = count,
-            obj["name"] = peer.name;
+            obj["label"] = peer.name;
             obj["group"] = "peer"
             finalResult.push(obj)
         }
@@ -104,7 +104,7 @@ var getNodes = function () {
         let obj = {};
         count++;
         obj["id"] = count;
-        obj["name"] = nameOfChannel+i;
+        obj["label"] = nameOfChannel+i;
         obj["group"] = "channel"
         finalResult.push(obj)
     }
