@@ -41,16 +41,16 @@
                   <h4 class="card-title">Add Consortium</h4>
                   </div>
               <div class="card-body">
-                  <form>
+                  <form id="myform" >
                       <div class="row">
                           <div class="col-md-5">
                             <mat-form-field class="example-full-width">
-                                <input matInput placeholder="Domain" >
+                                <input id="domain"  name="domain" [(ngModel)]="obj.domain" #domain="ngModel" matInput placeholder="Domain" >
                               </mat-form-field>
                           </div>
                           <div class="col-md-7">
                               <mat-form-field class="example-full-width">
-                                <input matInput placeholder="Orderer Name">
+                                <input id="ordererName"  name="ordererName" [(ngModel)]="obj.ordererName" #ordno="ngModel" matInput placeholder="Orderer Name">
                               </mat-form-field>
                           </div>
                           
@@ -58,12 +58,12 @@
                       <div class="row">
                             <div class="col-md-5">
                                     <mat-form-field class="example-full-width">
-                                      <input matInput placeholder="Orderer Hostname" >
+                                      <input id="ordererHostName"  name="ordererHostName" [(ngModel)]="obj.ordererHostName" #hostname="ngModel" matInput placeholder="Orderer Hostname" >
                                     </mat-form-field>
                                 </div>
                           <div class="col-md-7">
                             <mat-form-field class="example-full-width">
-                              <input matInput placeholder="Organisation Name" type="text">
+                              <input id="orgname"  name="orgname" [(ngModel)]="obj.orgname" #orgname="ngModel" matInput placeholder="Organisation Name" type="text">
                             </mat-form-field>
                           </div>
                           
@@ -71,30 +71,30 @@
                       <div class="row">
                             <div class="col-md-4">
                                     <mat-form-field class="example-full-width">
-                                      <input matInput placeholder="No of Organisation">
+                                      <input id="numberOfOrgs"  name="numberOfOrgs" [(ngModel)]="obj.numberOfOrgs" #orgcount="ngModel" matInput placeholder="No of Organisation">
                                     </mat-form-field>
                                   </div>
                           <div class="col-md-8">
                             <mat-form-field class="example-full-width">
-                              <input matInput placeholder="Network Name" type="text">
+                              <input id="networkname"  name="networkname" [(ngModel)]="obj.networkname" #network="ngModel" matInput placeholder="Network Name" type="text">
                             </mat-form-field>
                           </div>
                       </div>
                       <div class="row">
                           <div class="col-md-6">
                             <mat-form-field class="example-full-width">
-                              <input matInput placeholder="Number of Peers">
+                              <input id="numberOfPeers"  name="numberOfPeers" [(ngModel)]="obj.numberOfPeers" #peers="ngModel" matInput placeholder="Number of Peers">
                             </mat-form-field>
                           </div>
                           
                           <div class="col-md-6">
                             <mat-form-field class="example-full-width">
-                              <input matInput placeholder="Channel Name">
+                              <input id="channelName" name="channelName" [(ngModel)]="obj.channelName" #channelName="ngModel" matInput placeholder="Channel Name">
                             </mat-form-field>
                           </div>
                       </div>
                       
-                      <button mat-raised-button type="submit" class="btn btn-danger pull-right">Save</button>
+                      <button (click)="onClick()" mat-raised-button type="submit" class="btn btn-danger pull-right" >Save</button>
                       <div class="clearfix"></div>
                   </form>
               </div>
