@@ -1,5 +1,5 @@
-import { Component, ElementRef, ViewChild, AfterViewInit, OnInit} from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Component, ElementRef, ViewChild, AfterViewInit} from '@angular/core';
+
 import * as vis from 'vis';
 
 type Icon = Array<{code: string, color: string}>;
@@ -10,7 +10,7 @@ type Icon = Array<{code: string, color: string}>;
   styleUrls: ['./network.component.css']
 })
 
-export class NetworkComponent implements AfterViewInit, OnInit {
+export class NetworkComponent implements AfterViewInit {
   @ViewChild('vis') element: ElementRef;
   network: vis.Network;
 
@@ -33,17 +33,9 @@ export class NetworkComponent implements AfterViewInit, OnInit {
     }
   ];
 
-  constructor(private http: HttpClient) { }
-
-  ngOnInit() {
-      
-  }
+  constructor() { }
 
   ngAfterViewInit() {
-
-    let nodes1 = []
-
-    let edges1 = []
 
     var optionsFA = {
       height : 270 + 'px',
@@ -57,7 +49,7 @@ export class NetworkComponent implements AfterViewInit, OnInit {
             color: this.options[0].color
           }
         },
-        organization: {
+        org: {
           shape: 'icon',
           icon: {
             face: 'FontAwesome',
@@ -87,47 +79,56 @@ export class NetworkComponent implements AfterViewInit, OnInit {
       }
     };
 
-    this.http.get("http://127.0.0.1:3000/hyperverse/getnodes").subscribe((data : any[]) => {
+    const nodes = new vis.DataSet([
+      {id: 1, label: 'Consortium 1', group : 'consortium'},
+      {id: 2, label: 'Org 1', group : 'org'},
+      {id: 3, label: 'Org 2', group : 'org'},
+      {id: 4, label: 'Peer 1', group : 'peer'},
+      {id: 5, label: 'Peer 2', group : 'peer'},
+      {id: 6, label: 'Peer 3', group : 'peer'},
+      {id: 7, label: 'Channel 1', group : 'channel'},
+      {id: 8, label: 'Consortium 1', group : 'consortium'},
+      {id: 9, label: 'Org 1', group : 'org'},
+      {id: 10, label: 'Org 2', group : 'org'},
+      {id: 11, label: 'Peer 4', group : 'peer'},
+      {id: 12, label: 'Peer 5', group : 'peer'},
+      {id: 13, label: 'Channel 2', group : 'channel'},
+      {id: 14, label: 'Peer 6', group : 'peer'}
+    ]);
+  
+    const edges = new vis.DataSet([
+      {from: 1, to: 2},
+      {from: 1, to: 3},
+      {from: 2, to: 4},
+      {from: 2, to: 5},
+      {from: 3, to: 6},
+      {from: 3, to: 7},
+      {from: 8, to: 9},
+      {from: 8, to: 10},
+      {from: 9, to: 11},
+      {from: 9, to: 12},
+      {from: 10, to: 13},
+      {from: 10, to: 14}
+    ]);
+  
+    const data = {
+      nodes: nodes,
+      edges: edges
+    };
+  
+    this.network = new vis.Network(this.element.nativeElement, data, optionsFA); 
 
-      this.http.get("http://127.0.0.1:3000/hyperverse/getnetworkgraph").subscribe((edges : any[]) => {
-        data.forEach(element => {
-          console.log(element)
-          let obj = {id: element.id, label: element.label, group : element.group}
-          nodes1.push(obj)
-        });
+    setTimeout(() => {
+      console.log("shweta");
+      nodes.add({id: 15, label: 'Peer 10', group : 'peer'});
+      edges.add({from: 15, to: 9});
+    }, 1000);
 
-        edges.forEach(element => {
-          console.log(element)
-          let from = data.filter((node) => {
-            if (node.label == element.from) {
-                return node.id
-            }
-          });
-          console.log("....from"+from[0].id)
-          let to = data.filter((node) => {
-            if (node.label == element.to) {
-                return node.id
-            }
-          });
-          console.log("....from"+to[0].id)
-          let obj = {from: from[0].id, to: to[0].id}
-          edges1.push(obj)
-        });
-  
-        let visnodes = new vis.DataSet({});
-        visnodes.add(nodes1)
-  
-        let visedges = new vis.DataSet({})
-        visedges.add(edges1)
-  
-        const data1 = {
-          nodes: visnodes,
-          edges: visedges
-        };
-  
-        this.network = new vis.Network(this.element.nativeElement, data1, optionsFA);
-      })
-    })
+    this.network.on( 'click', function(properties) {
+      var ids = properties.nodes;
+      var clickedNodes = nodes.get(ids);
+      console.log('clicked nodes:', clickedNodes);
+  });
 
   }
 
