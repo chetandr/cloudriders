@@ -1,0 +1,3 @@
+./generateConfigurations.sh example.com Orderer orderer Org 1 byfn 1 10000 7050 7051 mychannel
+
+./addOrgnization.sh example.com Org3 mychannel Orderer orderer 2 byfn 11000

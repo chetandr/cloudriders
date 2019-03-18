@@ -31,7 +31,7 @@ setOrdererGlobals() {
   CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/PARAM_DOMAIN/users/Admin@PARAM_DOMAIN/msp
 }
 
-setGlobals() {
+setGlobalsOLD() {
   PEER=$1
   ORG=$2
 
@@ -39,12 +39,38 @@ setGlobals() {
     CORE_PEER_TLS_ROOTCERT_FILE=$PEER0_PARAMORG_DOMAIN_CA
     CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/PARAMORG_HOSTNAME/users/Admin@PARAMORG_HOSTNAME/msp
     CORE_PEER_ADDRESS=peer$PEER.PARAM_SHORT_ORG$ORG.PARAM_DOMAIN:PARAM_PORT_1
+
+    echo "CORE_PEER_LOCALMSPID -> "$CORE_PEER_LOCALMSPID
+    echo "CORE_PEER_TLS_ROOTCERT_FILE -> "$CORE_PEER_TLS_ROOTCERT_FILE
+    echo "CORE_PEER_MSPCONFIGPATH -> "$CORE_PEER_MSPCONFIGPATH
+    echo "CORE_PEER_ADDRESS -> "$CORE_PEER_ADDRESS
   
 
   if [ "$VERBOSE" == "true" ]; then
     env | grep CORE
   fi
 }
+
+setGlobals() {
+  PEER=$1
+  ORG=$2
+
+  CORE_PEER_LOCALMSPID="PARAM_ORG$ORG"MSP
+  #CORE_PEER_TLS_ROOTCERT_FILE=$PEER0_ORG1_CA
+  CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/PARAM_SHORT_ORG$ORG.PARAM_DOMAIN/peers/peer$PEER.PARAM_SHORT_ORG$ORG.PARAM_DOMAIN/tls/ca.crt
+  CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/PARAM_SHORT_ORG$ORG.PARAM_DOMAIN/users/Admin@PARAM_SHORT_ORG$ORG.PARAM_DOMAIN/msp
+  CORE_PEER_ADDRESS=peer$PEER.PARAM_SHORT_ORG$ORG.PARAM_DOMAIN:PARAM_PORT_1
+
+  echo "CORE_PEER_LOCALMSPID -> "$CORE_PEER_LOCALMSPID
+  echo "CORE_PEER_TLS_ROOTCERT_FILE -> "$CORE_PEER_TLS_ROOTCERT_FILE
+  echo "CORE_PEER_MSPCONFIGPATH -> "$CORE_PEER_MSPCONFIGPATH
+  echo "CORE_PEER_ADDRESS -> "$CORE_PEER_ADDRESS  
+
+  if [ "$VERBOSE" == "true" ]; then
+    env | grep CORE
+  fi
+}
+
 
 updateAnchorPeers() {
   PEER=$1
