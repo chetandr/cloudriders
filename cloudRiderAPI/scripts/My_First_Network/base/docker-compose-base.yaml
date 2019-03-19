@@ -1,0 +1,176 @@
+# Copyright IBM Corp. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+version: '2'
+
+services:
+
+  cloud-orderer.cloudriders.com:
+    container_name: cloud-orderer.cloudriders.com
+    image: hyperledger/fabric-orderer:$IMAGE_TAG
+    environment:
+      - ORDERER_GENERAL_LOGLEVEL=INFO
+      - ORDERER_GENERAL_LISTENADDRESS=0.0.0.0
+      - ORDERER_GENERAL_GENESISMETHOD=file
+      - ORDERER_GENERAL_GENESISFILE=/var/hyperledger/orderer/orderer.genesis.block
+      - ORDERER_GENERAL_LOCALMSPID=OrdererMSP
+      - ORDERER_GENERAL_LOCALMSPDIR=/var/hyperledger/orderer/msp
+      # enabled TLS
+      - ORDERER_GENERAL_TLS_ENABLED=true
+      - ORDERER_GENERAL_TLS_PRIVATEKEY=/var/hyperledger/orderer/tls/server.key
+      - ORDERER_GENERAL_TLS_CERTIFICATE=/var/hyperledger/orderer/tls/server.crt
+      - ORDERER_GENERAL_TLS_ROOTCAS=[/var/hyperledger/orderer/tls/ca.crt]
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric
+    command: orderer
+    volumes:
+    - ../channel-artifacts/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
+    - ../crypto-config/ordererOrganizations/cloudriders.com/orderers/cloud-orderer.cloudriders.com/msp:/var/hyperledger/orderer/msp
+    - ../crypto-config/ordererOrganizations/cloudriders.com/orderers/cloud-orderer.cloudriders.com/tls/:/var/hyperledger/orderer/tls
+    - cloud-orderer.cloudriders.com:/var/hyperledger/production/orderer
+    ports:
+      - 17050:17050
+
+  peer0.my-org1.cloudriders.com:
+    container_name: peer0.my-org1.cloudriders.com
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer0.my-org1.cloudriders.com
+      - CORE_PEER_ADDRESS=peer0.my-org1.cloudriders.com:17051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer1.my-org1.cloudriders.com:17051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.my-org1.cloudriders.com:17051
+      - CORE_PEER_LOCALMSPID=MyOrg1MSP
+    volumes:
+        - /var/run/:/host/var/run/
+        - ../crypto-config/peerOrganizations/my-org1.cloudriders.com/peers/peer0.my-org1.cloudriders.com/msp:/etc/hyperledger/fabric/msp
+        - ../crypto-config/peerOrganizations/my-org1.cloudriders.com/peers/peer0.my-org1.cloudriders.com/tls:/etc/hyperledger/fabric/tls
+        - peer0.my-org1.cloudriders.com:/var/hyperledger/production
+    ports:
+      - 17051:17051
+      - 17053:17053
+
+  peer1.my-org1.cloudriders.com:
+    container_name: peer1.my-org1.cloudriders.com
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer1.my-org1.cloudriders.com
+      - CORE_PEER_ADDRESS=peer1.my-org1.cloudriders.com:17051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.my-org1.cloudriders.com:17051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.my-org1.cloudriders.com:17051
+      - CORE_PEER_LOCALMSPID=MyOrg1MSP
+    volumes:
+        - /var/run/:/host/var/run/
+        - ../crypto-config/peerOrganizations/my-org1.cloudriders.com/peers/peer1.my-org1.cloudriders.com/msp:/etc/hyperledger/fabric/msp
+        - ../crypto-config/peerOrganizations/my-org1.cloudriders.com/peers/peer1.my-org1.cloudriders.com/tls:/etc/hyperledger/fabric/tls
+        - peer1.my-org1.cloudriders.com:/var/hyperledger/production
+
+    ports:
+      - 18051:17051
+      - 18053:17053
+
+  peer0.my-org2.cloudriders.com:
+    container_name: peer0.my-org2.cloudriders.com
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer0.my-org2.cloudriders.com
+      - CORE_PEER_ADDRESS=peer0.my-org2.cloudriders.com:17051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.my-org2.cloudriders.com:17051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer1.my-org2.cloudriders.com:17051
+      - CORE_PEER_LOCALMSPID=MyOrg2MSP
+    volumes:
+        - /var/run/:/host/var/run/
+        - ../crypto-config/peerOrganizations/my-org2.cloudriders.com/peers/peer0.my-org2.cloudriders.com/msp:/etc/hyperledger/fabric/msp
+        - ../crypto-config/peerOrganizations/my-org2.cloudriders.com/peers/peer0.my-org2.cloudriders.com/tls:/etc/hyperledger/fabric/tls
+        - peer0.my-org2.cloudriders.com:/var/hyperledger/production
+    ports:
+      - 19051:17051
+      - 19053:17053
+
+  peer1.my-org2.cloudriders.com:
+    container_name: peer1.my-org2.cloudriders.com
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer1.my-org2.cloudriders.com
+      - CORE_PEER_ADDRESS=peer1.my-org2.cloudriders.com:17051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.my-org2.cloudriders.com:17051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.my-org2.cloudriders.com:17051
+      - CORE_PEER_LOCALMSPID=MyOrg2MSP
+    volumes:
+        - /var/run/:/host/var/run/
+        - ../crypto-config/peerOrganizations/my-org2.cloudriders.com/peers/peer1.my-org2.cloudriders.com/msp:/etc/hyperledger/fabric/msp
+        - ../crypto-config/peerOrganizations/my-org2.cloudriders.com/peers/peer1.my-org2.cloudriders.com/tls:/etc/hyperledger/fabric/tls
+        - peer1.my-org2.cloudriders.com:/var/hyperledger/production
+    ports:
+      - 20051:17051
+      - 20053:17053
+
+
+  peer0.my-org3.cloudriders.com:
+    container_name: peer0.my-org3.cloudriders.com
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer0.my-org3.cloudriders.com
+      - CORE_PEER_ADDRESS=peer0.my-org3.cloudriders.com:17051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.my-org3.cloudriders.com:17051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer1.my-org3.cloudriders.com:17051
+      - CORE_PEER_LOCALMSPID=MyOrg3MSP
+    volumes:
+        - /var/run/:/host/var/run/
+        - ../crypto-config/peerOrganizations/my-org3.cloudriders.com/peers/peer0.my-org3.cloudriders.com/msp:/etc/hyperledger/fabric/msp
+        - ../crypto-config/peerOrganizations/my-org3.cloudriders.com/peers/peer0.my-org3.cloudriders.com/tls:/etc/hyperledger/fabric/tls
+        - peer0.my-org3.cloudriders.com:/var/hyperledger/production
+    ports:
+      - 21051:17051
+      - 21053:17053
+
+  peer1.my-org3.cloudriders.com:
+    container_name: peer1.my-org3.cloudriders.com
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer1.my-org3.cloudriders.com
+      - CORE_PEER_ADDRESS=peer1.my-org3.cloudriders.com:17051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.my-org3.cloudriders.com:17051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.my-org3.cloudriders.com:17051
+      - CORE_PEER_LOCALMSPID=MyOrg3MSP
+    volumes:
+        - /var/run/:/host/var/run/
+        - ../crypto-config/peerOrganizations/my-org3.cloudriders.com/peers/peer1.my-org3.cloudriders.com/msp:/etc/hyperledger/fabric/msp
+        - ../crypto-config/peerOrganizations/my-org3.cloudriders.com/peers/peer1.my-org3.cloudriders.com/tls:/etc/hyperledger/fabric/tls
+        - peer1.my-org3.cloudriders.com:/var/hyperledger/production
+    ports:
+      - 22051:17051
+      - 22053:17053
+
+
+  peer2.my-org3.cloudriders.com:
+    container_name: peer2.my-org3.cloudriders.com
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer2.my-org3.cloudriders.com
+      - CORE_PEER_ADDRESS=peer2.my-org3.cloudriders.com:17051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer2.my-org3.cloudriders.com:17051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.my-org3.cloudriders.com:17051
+      - CORE_PEER_LOCALMSPID=MyOrg3MSP
+    volumes:
+        - /var/run/:/host/var/run/
+        - ../crypto-config/peerOrganizations/my-org3.cloudriders.com/peers/peer2.my-org3.cloudriders.com/msp:/etc/hyperledger/fabric/msp
+        - ../crypto-config/peerOrganizations/my-org3.cloudriders.com/peers/peer2.my-org3.cloudriders.com/tls:/etc/hyperledger/fabric/tls
+        - peer2.my-org3.cloudriders.com:/var/hyperledger/production
+    ports:
+      - 23051:17051
+      - 23053:17053

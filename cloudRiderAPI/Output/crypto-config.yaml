@@ -1,0 +1,76 @@
+OrdererOrgs:
+  - Name: persiOrderer
+    Domain: persi.com
+    Specs:
+      - Hostname: persiorderer
+PeerOrgs:
+- Name: persiorg1
+  Domain: persiorg1.persi.com
+  EnableNodeOUs: true
+  Template:
+    Count: 2
+  Users:
+    Count: 1
+- Name: persiorg2
+  Domain: persiorg2.persi.com
+  EnableNodeOUs: true
+  Template:
+    Count: 2
+  Users:
+    Count: 1
+- Name: persiorg3
+  Domain: persiorg3.persi.com
+  EnableNodeOUs: true
+  Template:
+    Count: 2
+  Users:
+    Count: 1
+- Name: persiorg4
+  Domain: persiorg4.persi.com
+  EnableNodeOUs: true
+  Template:
+    Count: 2
+  Users:
+    Count: 1
+- Name: persiorg5
+  Domain: persiorg5.persi.com
+  EnableNodeOUs: true
+  Template:
+    Count: 2
+  Users:
+    Count: 1
+- Name: persiorg6
+  Domain: persiorg6.persi.com
+  EnableNodeOUs: true
+  Template:
+    Count: 2
+  Users:
+    Count: 1
+- Name: persiorg7
+  Domain: persiorg7.persi.com
+  EnableNodeOUs: true
+  Template:
+    Count: 2
+  Users:
+    Count: 1
+- Name: persiorg8
+  Domain: persiorg8.persi.com
+  EnableNodeOUs: true
+  Template:
+    Count: 2
+  Users:
+    Count: 1
+- Name: persiorg9
+  Domain: persiorg9.persi.com
+  EnableNodeOUs: true
+  Template:
+    Count: 2
+  Users:
+    Count: 1
+- Name: persiorg10
+  Domain: persiorg10.persi.com
+  EnableNodeOUs: true
+  Template:
+    Count: 2
+  Users:
+    Count: 1

@@ -1,0 +1,8 @@
+Organizations:
+    - &PARAM_ORG
+        Name: PARAM_ORGMSP
+        ID: PARAM_ORGMSP
+        MSPDir: crypto-config/peerOrganizations/PARAMORG/msp
+        AnchorPeers:
+            - Host: PARAM_PEER
+              Port: PARAM_PORT_1

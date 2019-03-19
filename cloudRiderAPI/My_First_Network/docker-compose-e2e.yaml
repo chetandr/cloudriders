@@ -1,0 +1,130 @@
+version: '2'
+
+volumes:
+  cloud-orderer.cloudriders.com:
+  peer0.my-org1.cloudriders.com:
+  peer1.my-org1.cloudriders.com:
+  peer0.my-org2.cloudriders.com:
+  peer1.my-org2.cloudriders.com:
+  peer0.my-org3.cloudriders.com:
+  peer1.my-org3.cloudriders.com:
+  peer2.my-org3.cloudriders.com:
+
+networks:
+  byfn:
+services:
+  ca0:
+    image: hyperledger/fabric-ca:$IMAGE_TAG
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - FABRIC_CA_SERVER_CA_NAME=ca-my-org1
+      - FABRIC_CA_SERVER_TLS_ENABLED=true
+      - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.my-org1.cloudriders.com-cert.pem
+      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/edd4537b14f973594f515edeb352054be7f0757f3e7221496fc66253ee813f05_sk
+    ports:
+      - "17054:17054"
+    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.my-org1.cloudriders.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/edd4537b14f973594f515edeb352054be7f0757f3e7221496fc66253ee813f05_sk -b admin:adminpw -d'
+    volumes:
+      - ./crypto-config/peerOrganizations/my-org1.cloudriders.com/ca/:/etc/hyperledger/fabric-ca-server-config
+    container_name: ca_peermy-org1
+    networks:
+      - byfn
+
+  ca1:
+    image: hyperledger/fabric-ca:$IMAGE_TAG
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - FABRIC_CA_SERVER_CA_NAME=ca-my-org2
+      - FABRIC_CA_SERVER_TLS_ENABLED=true
+      - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.my-org2.cloudriders.com-cert.pem
+      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/8527ef93930939ffbb5b72f8b4518ffa66104bccd449288a783d897890f349de_sk
+    ports:
+      - "18054:17054"
+    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.my-org2.cloudriders.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/8527ef93930939ffbb5b72f8b4518ffa66104bccd449288a783d897890f349de_sk -b admin:adminpw -d'
+    volumes:
+      - ./crypto-config/peerOrganizations/my-org2.cloudriders.com/ca/:/etc/hyperledger/fabric-ca-server-config
+    container_name: ca_peermy-org2
+    networks:
+      - byfn
+
+  ca2:
+    image: hyperledger/fabric-ca:$IMAGE_TAG
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - FABRIC_CA_SERVER_CA_NAME=ca-my-org3
+      - FABRIC_CA_SERVER_TLS_ENABLED=true
+      - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.my-org3.cloudriders.com-cert.pem
+      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/4c4d43eab7833bffcf0aedd05eebf74ba02e658eeffff848fc261cfd93cb9553_sk
+    ports:
+      - "19054:17054"
+    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.my-org3.cloudriders.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/4c4d43eab7833bffcf0aedd05eebf74ba02e658eeffff848fc261cfd93cb9553_sk -b admin:adminpw -d'
+    volumes:
+      - ./crypto-config/peerOrganizations/my-org3.cloudriders.com/ca/:/etc/hyperledger/fabric-ca-server-config
+    container_name: ca_peermy-org3
+    networks:
+      - byfn
+
+
+  cloud-orderer.cloudriders.com:
+    extends:
+      file:   base/docker-compose-base.yaml
+      service: cloud-orderer.cloudriders.com
+    container_name: cloud-orderer.cloudriders.com
+    networks:
+      - byfn
+
+  peer0.my-org1.cloudriders.com:
+    container_name: peer0.my-org1.cloudriders.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer0.my-org1.cloudriders.com
+    networks:
+      - byfn
+
+  peer1.my-org1.cloudriders.com:
+    container_name: peer1.my-org1.cloudriders.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer1.my-org1.cloudriders.com
+    networks:
+      - byfn
+
+  peer0.my-org2.cloudriders.com:
+    container_name: peer0.my-org2.cloudriders.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer0.my-org2.cloudriders.com
+    networks:
+      - byfn
+
+  peer1.my-org2.cloudriders.com:
+    container_name: peer1.my-org2.cloudriders.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer1.my-org2.cloudriders.com
+    networks:
+      - byfn
+
+  peer0.my-org3.cloudriders.com:
+    container_name: peer0.my-org3.cloudriders.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer0.my-org3.cloudriders.com
+    networks:
+      - byfn
+
+  peer1.my-org3.cloudriders.com:
+    container_name: peer1.my-org3.cloudriders.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer1.my-org3.cloudriders.com
+    networks:
+      - byfn
+
+  peer2.my-org3.cloudriders.com:
+    container_name: peer2.my-org3.cloudriders.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer2.my-org3.cloudriders.com
+    networks:
+      - byfn

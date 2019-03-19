@@ -1,0 +1,452 @@
+# Copyright IBM Corp. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+version: "2"
+
+services:
+  persiorderer.persi.com:
+    container_name: persiorderer.persi.com
+    image: hyperledger/fabric-orderer:$IMAGE_TAG
+    environment:
+      - ORDERER_GENERAL_LOGLEVEL=INFO
+      - ORDERER_GENERAL_LISTENADDRESS=0.0.0.0
+      - ORDERER_GENERAL_GENESISMETHOD=file
+      - ORDERER_GENERAL_GENESISFILE=/var/hyperledger/orderer/orderer.genesis.block
+      - ORDERER_GENERAL_LOCALMSPID=persiOrdererMSP
+      - ORDERER_GENERAL_LOCALMSPDIR=/var/hyperledger/orderer/msp
+      # enabled TLS
+      - ORDERER_GENERAL_TLS_ENABLED=true
+      - ORDERER_GENERAL_TLS_PRIVATEKEY=/var/hyperledger/orderer/tls/server.key
+      - ORDERER_GENERAL_TLS_CERTIFICATE=/var/hyperledger/orderer/tls/server.crt
+      - ORDERER_GENERAL_TLS_ROOTCAS=[/var/hyperledger/orderer/tls/ca.crt]
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric
+    command: orderer
+    volumes:
+      - ../channel-artifacts/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
+      - ../crypto-config/ordererOrganizations/persi.com/orderers/persiorderer.persi.com/msp:/var/hyperledger/orderer/msp
+      - ../crypto-config/ordererOrganizations/persi.com/orderers/persiorderer.persi.com/tls/:/var/hyperledger/orderer/tls
+      - persiorderer.persi.com:/var/hyperledger/production/orderer
+    ports:
+      - 8500:8500
+
+  peer0.persiorg1.persi.com:
+    container_name: peer0.persiorg1.persi.com
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer0.persiorg1.persi.com
+      - CORE_PEER_ADDRESS=peer0.persiorg1.persi.com:8501
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.persiorg.example.com:8501
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.persiorg1.persi.com:8501
+      - CORE_PEER_LOCALMSPID=persiorg1MSP
+    volumes:
+      - /var/run/:/host/var/run/
+      - ../crypto-config/peerOrganizations/persiorg1.persi.com/peers/peer0.persiorg1.persi.com/msp:/etc/hyperledger/fabric/msp
+      - ../crypto-config/peerOrganizations/persiorg1.persi.com/peers/peer0.persiorg1.persi.com/tls:/etc/hyperledger/fabric/tls
+      - peer0.persiorg1.persi.com:/var/hyperledger/production
+    ports:
+      - 8501:8501
+      - 8503:8503
+
+
+  peer1.persiorg1.persi.com:
+    container_name: peer1.persiorg1.persi.com
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer1.persiorg1.persi.com
+      - CORE_PEER_ADDRESS=peer1.persiorg1.persi.com:8501
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.persiorg.example.com:8501
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.persiorg1.persi.com:8501
+      - CORE_PEER_LOCALMSPID=persiorg1MSP
+    volumes:
+      - /var/run/:/host/var/run/
+      - ../crypto-config/peerOrganizations/persiorg1.persi.com/peers/peer1.persiorg1.persi.com/msp:/etc/hyperledger/fabric/msp
+      - ../crypto-config/peerOrganizations/persiorg1.persi.com/peers/peer1.persiorg1.persi.com/tls:/etc/hyperledger/fabric/tls
+      - peer1.persiorg1.persi.com:/var/hyperledger/production
+    ports:
+      - 8505:8501
+      - 8507:8503
+
+
+  peer0.persiorg2.persi.com:
+    container_name: peer0.persiorg2.persi.com
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer0.persiorg2.persi.com
+      - CORE_PEER_ADDRESS=peer0.persiorg2.persi.com:8501
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.persiorg.example.com:8501
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.persiorg2.persi.com:8501
+      - CORE_PEER_LOCALMSPID=persiorg2MSP
+    volumes:
+      - /var/run/:/host/var/run/
+      - ../crypto-config/peerOrganizations/persiorg2.persi.com/peers/peer0.persiorg2.persi.com/msp:/etc/hyperledger/fabric/msp
+      - ../crypto-config/peerOrganizations/persiorg2.persi.com/peers/peer0.persiorg2.persi.com/tls:/etc/hyperledger/fabric/tls
+      - peer0.persiorg2.persi.com:/var/hyperledger/production
+    ports:
+      - 8509:8501
+      - 8511:8503
+
+
+  peer1.persiorg2.persi.com:
+    container_name: peer1.persiorg2.persi.com
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer1.persiorg2.persi.com
+      - CORE_PEER_ADDRESS=peer1.persiorg2.persi.com:8501
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.persiorg.example.com:8501
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.persiorg2.persi.com:8501
+      - CORE_PEER_LOCALMSPID=persiorg2MSP
+    volumes:
+      - /var/run/:/host/var/run/
+      - ../crypto-config/peerOrganizations/persiorg2.persi.com/peers/peer1.persiorg2.persi.com/msp:/etc/hyperledger/fabric/msp
+      - ../crypto-config/peerOrganizations/persiorg2.persi.com/peers/peer1.persiorg2.persi.com/tls:/etc/hyperledger/fabric/tls
+      - peer1.persiorg2.persi.com:/var/hyperledger/production
+    ports:
+      - 8513:8501
+      - 8515:8503
+
+
+  peer0.persiorg3.persi.com:
+    container_name: peer0.persiorg3.persi.com
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer0.persiorg3.persi.com
+      - CORE_PEER_ADDRESS=peer0.persiorg3.persi.com:8501
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.persiorg.example.com:8501
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.persiorg3.persi.com:8501
+      - CORE_PEER_LOCALMSPID=persiorg3MSP
+    volumes:
+      - /var/run/:/host/var/run/
+      - ../crypto-config/peerOrganizations/persiorg3.persi.com/peers/peer0.persiorg3.persi.com/msp:/etc/hyperledger/fabric/msp
+      - ../crypto-config/peerOrganizations/persiorg3.persi.com/peers/peer0.persiorg3.persi.com/tls:/etc/hyperledger/fabric/tls
+      - peer0.persiorg3.persi.com:/var/hyperledger/production
+    ports:
+      - 8517:8501
+      - 8519:8503
+
+
+  peer1.persiorg3.persi.com:
+    container_name: peer1.persiorg3.persi.com
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer1.persiorg3.persi.com
+      - CORE_PEER_ADDRESS=peer1.persiorg3.persi.com:8501
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.persiorg.example.com:8501
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.persiorg3.persi.com:8501
+      - CORE_PEER_LOCALMSPID=persiorg3MSP
+    volumes:
+      - /var/run/:/host/var/run/
+      - ../crypto-config/peerOrganizations/persiorg3.persi.com/peers/peer1.persiorg3.persi.com/msp:/etc/hyperledger/fabric/msp
+      - ../crypto-config/peerOrganizations/persiorg3.persi.com/peers/peer1.persiorg3.persi.com/tls:/etc/hyperledger/fabric/tls
+      - peer1.persiorg3.persi.com:/var/hyperledger/production
+    ports:
+      - 8521:8501
+      - 8523:8503
+
+
+  peer0.persiorg4.persi.com:
+    container_name: peer0.persiorg4.persi.com
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer0.persiorg4.persi.com
+      - CORE_PEER_ADDRESS=peer0.persiorg4.persi.com:8501
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.persiorg.example.com:8501
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.persiorg4.persi.com:8501
+      - CORE_PEER_LOCALMSPID=persiorg4MSP
+    volumes:
+      - /var/run/:/host/var/run/
+      - ../crypto-config/peerOrganizations/persiorg4.persi.com/peers/peer0.persiorg4.persi.com/msp:/etc/hyperledger/fabric/msp
+      - ../crypto-config/peerOrganizations/persiorg4.persi.com/peers/peer0.persiorg4.persi.com/tls:/etc/hyperledger/fabric/tls
+      - peer0.persiorg4.persi.com:/var/hyperledger/production
+    ports:
+      - 8525:8501
+      - 8527:8503
+
+
+  peer1.persiorg4.persi.com:
+    container_name: peer1.persiorg4.persi.com
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer1.persiorg4.persi.com
+      - CORE_PEER_ADDRESS=peer1.persiorg4.persi.com:8501
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.persiorg.example.com:8501
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.persiorg4.persi.com:8501
+      - CORE_PEER_LOCALMSPID=persiorg4MSP
+    volumes:
+      - /var/run/:/host/var/run/
+      - ../crypto-config/peerOrganizations/persiorg4.persi.com/peers/peer1.persiorg4.persi.com/msp:/etc/hyperledger/fabric/msp
+      - ../crypto-config/peerOrganizations/persiorg4.persi.com/peers/peer1.persiorg4.persi.com/tls:/etc/hyperledger/fabric/tls
+      - peer1.persiorg4.persi.com:/var/hyperledger/production
+    ports:
+      - 8529:8501
+      - 8531:8503
+
+
+  peer0.persiorg5.persi.com:
+    container_name: peer0.persiorg5.persi.com
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer0.persiorg5.persi.com
+      - CORE_PEER_ADDRESS=peer0.persiorg5.persi.com:8501
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.persiorg.example.com:8501
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.persiorg5.persi.com:8501
+      - CORE_PEER_LOCALMSPID=persiorg5MSP
+    volumes:
+      - /var/run/:/host/var/run/
+      - ../crypto-config/peerOrganizations/persiorg5.persi.com/peers/peer0.persiorg5.persi.com/msp:/etc/hyperledger/fabric/msp
+      - ../crypto-config/peerOrganizations/persiorg5.persi.com/peers/peer0.persiorg5.persi.com/tls:/etc/hyperledger/fabric/tls
+      - peer0.persiorg5.persi.com:/var/hyperledger/production
+    ports:
+      - 8533:8501
+      - 8535:8503
+
+
+  peer1.persiorg5.persi.com:
+    container_name: peer1.persiorg5.persi.com
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer1.persiorg5.persi.com
+      - CORE_PEER_ADDRESS=peer1.persiorg5.persi.com:8501
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.persiorg.example.com:8501
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.persiorg5.persi.com:8501
+      - CORE_PEER_LOCALMSPID=persiorg5MSP
+    volumes:
+      - /var/run/:/host/var/run/
+      - ../crypto-config/peerOrganizations/persiorg5.persi.com/peers/peer1.persiorg5.persi.com/msp:/etc/hyperledger/fabric/msp
+      - ../crypto-config/peerOrganizations/persiorg5.persi.com/peers/peer1.persiorg5.persi.com/tls:/etc/hyperledger/fabric/tls
+      - peer1.persiorg5.persi.com:/var/hyperledger/production
+    ports:
+      - 8537:8501
+      - 8539:8503
+
+
+  peer0.persiorg6.persi.com:
+    container_name: peer0.persiorg6.persi.com
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer0.persiorg6.persi.com
+      - CORE_PEER_ADDRESS=peer0.persiorg6.persi.com:8501
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.persiorg.example.com:8501
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.persiorg6.persi.com:8501
+      - CORE_PEER_LOCALMSPID=persiorg6MSP
+    volumes:
+      - /var/run/:/host/var/run/
+      - ../crypto-config/peerOrganizations/persiorg6.persi.com/peers/peer0.persiorg6.persi.com/msp:/etc/hyperledger/fabric/msp
+      - ../crypto-config/peerOrganizations/persiorg6.persi.com/peers/peer0.persiorg6.persi.com/tls:/etc/hyperledger/fabric/tls
+      - peer0.persiorg6.persi.com:/var/hyperledger/production
+    ports:
+      - 8541:8501
+      - 8543:8503
+
+
+  peer1.persiorg6.persi.com:
+    container_name: peer1.persiorg6.persi.com
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer1.persiorg6.persi.com
+      - CORE_PEER_ADDRESS=peer1.persiorg6.persi.com:8501
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.persiorg.example.com:8501
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.persiorg6.persi.com:8501
+      - CORE_PEER_LOCALMSPID=persiorg6MSP
+    volumes:
+      - /var/run/:/host/var/run/
+      - ../crypto-config/peerOrganizations/persiorg6.persi.com/peers/peer1.persiorg6.persi.com/msp:/etc/hyperledger/fabric/msp
+      - ../crypto-config/peerOrganizations/persiorg6.persi.com/peers/peer1.persiorg6.persi.com/tls:/etc/hyperledger/fabric/tls
+      - peer1.persiorg6.persi.com:/var/hyperledger/production
+    ports:
+      - 8545:8501
+      - 8547:8503
+
+
+  peer0.persiorg7.persi.com:
+    container_name: peer0.persiorg7.persi.com
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer0.persiorg7.persi.com
+      - CORE_PEER_ADDRESS=peer0.persiorg7.persi.com:8501
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.persiorg.example.com:8501
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.persiorg7.persi.com:8501
+      - CORE_PEER_LOCALMSPID=persiorg7MSP
+    volumes:
+      - /var/run/:/host/var/run/
+      - ../crypto-config/peerOrganizations/persiorg7.persi.com/peers/peer0.persiorg7.persi.com/msp:/etc/hyperledger/fabric/msp
+      - ../crypto-config/peerOrganizations/persiorg7.persi.com/peers/peer0.persiorg7.persi.com/tls:/etc/hyperledger/fabric/tls
+      - peer0.persiorg7.persi.com:/var/hyperledger/production
+    ports:
+      - 8549:8501
+      - 8551:8503
+
+
+  peer1.persiorg7.persi.com:
+    container_name: peer1.persiorg7.persi.com
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer1.persiorg7.persi.com
+      - CORE_PEER_ADDRESS=peer1.persiorg7.persi.com:8501
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.persiorg.example.com:8501
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.persiorg7.persi.com:8501
+      - CORE_PEER_LOCALMSPID=persiorg7MSP
+    volumes:
+      - /var/run/:/host/var/run/
+      - ../crypto-config/peerOrganizations/persiorg7.persi.com/peers/peer1.persiorg7.persi.com/msp:/etc/hyperledger/fabric/msp
+      - ../crypto-config/peerOrganizations/persiorg7.persi.com/peers/peer1.persiorg7.persi.com/tls:/etc/hyperledger/fabric/tls
+      - peer1.persiorg7.persi.com:/var/hyperledger/production
+    ports:
+      - 8553:8501
+      - 8555:8503
+
+
+  peer0.persiorg8.persi.com:
+    container_name: peer0.persiorg8.persi.com
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer0.persiorg8.persi.com
+      - CORE_PEER_ADDRESS=peer0.persiorg8.persi.com:8501
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.persiorg.example.com:8501
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.persiorg8.persi.com:8501
+      - CORE_PEER_LOCALMSPID=persiorg8MSP
+    volumes:
+      - /var/run/:/host/var/run/
+      - ../crypto-config/peerOrganizations/persiorg8.persi.com/peers/peer0.persiorg8.persi.com/msp:/etc/hyperledger/fabric/msp
+      - ../crypto-config/peerOrganizations/persiorg8.persi.com/peers/peer0.persiorg8.persi.com/tls:/etc/hyperledger/fabric/tls
+      - peer0.persiorg8.persi.com:/var/hyperledger/production
+    ports:
+      - 8557:8501
+      - 8559:8503
+
+
+  peer1.persiorg8.persi.com:
+    container_name: peer1.persiorg8.persi.com
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer1.persiorg8.persi.com
+      - CORE_PEER_ADDRESS=peer1.persiorg8.persi.com:8501
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.persiorg.example.com:8501
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.persiorg8.persi.com:8501
+      - CORE_PEER_LOCALMSPID=persiorg8MSP
+    volumes:
+      - /var/run/:/host/var/run/
+      - ../crypto-config/peerOrganizations/persiorg8.persi.com/peers/peer1.persiorg8.persi.com/msp:/etc/hyperledger/fabric/msp
+      - ../crypto-config/peerOrganizations/persiorg8.persi.com/peers/peer1.persiorg8.persi.com/tls:/etc/hyperledger/fabric/tls
+      - peer1.persiorg8.persi.com:/var/hyperledger/production
+    ports:
+      - 8561:8501
+      - 8563:8503
+
+
+  peer0.persiorg9.persi.com:
+    container_name: peer0.persiorg9.persi.com
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer0.persiorg9.persi.com
+      - CORE_PEER_ADDRESS=peer0.persiorg9.persi.com:8501
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.persiorg.example.com:8501
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.persiorg9.persi.com:8501
+      - CORE_PEER_LOCALMSPID=persiorg9MSP
+    volumes:
+      - /var/run/:/host/var/run/
+      - ../crypto-config/peerOrganizations/persiorg9.persi.com/peers/peer0.persiorg9.persi.com/msp:/etc/hyperledger/fabric/msp
+      - ../crypto-config/peerOrganizations/persiorg9.persi.com/peers/peer0.persiorg9.persi.com/tls:/etc/hyperledger/fabric/tls
+      - peer0.persiorg9.persi.com:/var/hyperledger/production
+    ports:
+      - 8565:8501
+      - 8567:8503
+
+
+  peer1.persiorg9.persi.com:
+    container_name: peer1.persiorg9.persi.com
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer1.persiorg9.persi.com
+      - CORE_PEER_ADDRESS=peer1.persiorg9.persi.com:8501
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.persiorg.example.com:8501
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.persiorg9.persi.com:8501
+      - CORE_PEER_LOCALMSPID=persiorg9MSP
+    volumes:
+      - /var/run/:/host/var/run/
+      - ../crypto-config/peerOrganizations/persiorg9.persi.com/peers/peer1.persiorg9.persi.com/msp:/etc/hyperledger/fabric/msp
+      - ../crypto-config/peerOrganizations/persiorg9.persi.com/peers/peer1.persiorg9.persi.com/tls:/etc/hyperledger/fabric/tls
+      - peer1.persiorg9.persi.com:/var/hyperledger/production
+    ports:
+      - 8569:8501
+      - 8571:8503
+
+
+  peer0.persiorg10.persi.com:
+    container_name: peer0.persiorg10.persi.com
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer0.persiorg10.persi.com
+      - CORE_PEER_ADDRESS=peer0.persiorg10.persi.com:8501
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.persiorg.example.com:8501
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.persiorg10.persi.com:8501
+      - CORE_PEER_LOCALMSPID=persiorg10MSP
+    volumes:
+      - /var/run/:/host/var/run/
+      - ../crypto-config/peerOrganizations/persiorg10.persi.com/peers/peer0.persiorg10.persi.com/msp:/etc/hyperledger/fabric/msp
+      - ../crypto-config/peerOrganizations/persiorg10.persi.com/peers/peer0.persiorg10.persi.com/tls:/etc/hyperledger/fabric/tls
+      - peer0.persiorg10.persi.com:/var/hyperledger/production
+    ports:
+      - 8573:8501
+      - 8575:8503
+
+
+  peer1.persiorg10.persi.com:
+    container_name: peer1.persiorg10.persi.com
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer1.persiorg10.persi.com
+      - CORE_PEER_ADDRESS=peer1.persiorg10.persi.com:8501
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.persiorg.example.com:8501
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.persiorg10.persi.com:8501
+      - CORE_PEER_LOCALMSPID=persiorg10MSP
+    volumes:
+      - /var/run/:/host/var/run/
+      - ../crypto-config/peerOrganizations/persiorg10.persi.com/peers/peer1.persiorg10.persi.com/msp:/etc/hyperledger/fabric/msp
+      - ../crypto-config/peerOrganizations/persiorg10.persi.com/peers/peer1.persiorg10.persi.com/tls:/etc/hyperledger/fabric/tls
+      - peer1.persiorg10.persi.com:/var/hyperledger/production
+    ports:
+      - 8577:8501
+      - 8579:8503
+

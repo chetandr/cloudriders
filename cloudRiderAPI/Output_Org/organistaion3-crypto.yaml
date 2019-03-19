@@ -1,0 +1,8 @@
+PeerOrgs:
+  - Name: organistaion3
+    Domain: organistaion3.hyper.com
+    EnableNodeOUs: true
+    Template:
+      Count: 3
+    Users:
+      Count: 1

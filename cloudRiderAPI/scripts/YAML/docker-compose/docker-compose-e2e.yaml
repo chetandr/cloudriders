@@ -1,0 +1,8 @@
+version: "2"
+
+volumes: 
+  PARAM_VOLUMNS
+
+networks:
+  PARAM_NETWORK:
+services:

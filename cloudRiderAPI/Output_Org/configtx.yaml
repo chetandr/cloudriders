@@ -1,0 +1,8 @@
+Organizations:
+    - &organistaion3
+        Name: organistaion3MSP
+        ID: organistaion3MSP
+        MSPDir: crypto-config/peerOrganizations/organistaion3.hyper.com/msp
+        AnchorPeers:
+            - Host: peer0.organistaion3.hyper.com
+              Port: 7051

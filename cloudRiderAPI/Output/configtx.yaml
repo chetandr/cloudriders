@@ -1,0 +1,324 @@
+Organizations:
+    - &persiOrdererOrg
+        Name: persiOrdererOrg
+        ID: persiOrdererMSP
+        MSPDir: crypto-config/ordererOrganizations/persi.com/msp
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('persiOrdererMSP.member')"
+            Writers:
+                Type: Signature
+                Rule: "OR('persiOrdererMSP.member')"
+            Admins:
+                Type: Signature
+                Rule: "OR('persiOrdererMSP.admin')"
+
+
+
+    - &persiorg1
+        Name: persiorg1MSP
+        ID: persiorg1MSP
+        MSPDir: crypto-config/peerOrganizations/persiorg1.persi.com/msp
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('persiorg1MSP.admin', 'persiorg1MSP.peer', 'persiorg1MSP.client')"
+            Writers:
+               Type: Signature
+               Rule: "OR('persiorg1MSP.admin', 'persiorg1MSP.client')"
+            Admins:
+                Type: Signature
+                Rule: "OR('persiorg1MSP.admin')"
+        AnchorPeers:
+            - Host: peer0.persiorg1.persi.com
+              Port: 8501
+
+
+
+    - &persiorg2
+        Name: persiorg2MSP
+        ID: persiorg2MSP
+        MSPDir: crypto-config/peerOrganizations/persiorg2.persi.com/msp
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('persiorg2MSP.admin', 'persiorg2MSP.peer', 'persiorg2MSP.client')"
+            Writers:
+               Type: Signature
+               Rule: "OR('persiorg2MSP.admin', 'persiorg2MSP.client')"
+            Admins:
+                Type: Signature
+                Rule: "OR('persiorg2MSP.admin')"
+        AnchorPeers:
+            - Host: peer0.persiorg2.persi.com
+              Port: 8501
+
+
+
+    - &persiorg3
+        Name: persiorg3MSP
+        ID: persiorg3MSP
+        MSPDir: crypto-config/peerOrganizations/persiorg3.persi.com/msp
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('persiorg3MSP.admin', 'persiorg3MSP.peer', 'persiorg3MSP.client')"
+            Writers:
+               Type: Signature
+               Rule: "OR('persiorg3MSP.admin', 'persiorg3MSP.client')"
+            Admins:
+                Type: Signature
+                Rule: "OR('persiorg3MSP.admin')"
+        AnchorPeers:
+            - Host: peer0.persiorg3.persi.com
+              Port: 8501
+
+
+
+    - &persiorg4
+        Name: persiorg4MSP
+        ID: persiorg4MSP
+        MSPDir: crypto-config/peerOrganizations/persiorg4.persi.com/msp
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('persiorg4MSP.admin', 'persiorg4MSP.peer', 'persiorg4MSP.client')"
+            Writers:
+               Type: Signature
+               Rule: "OR('persiorg4MSP.admin', 'persiorg4MSP.client')"
+            Admins:
+                Type: Signature
+                Rule: "OR('persiorg4MSP.admin')"
+        AnchorPeers:
+            - Host: peer0.persiorg4.persi.com
+              Port: 8501
+
+
+
+    - &persiorg5
+        Name: persiorg5MSP
+        ID: persiorg5MSP
+        MSPDir: crypto-config/peerOrganizations/persiorg5.persi.com/msp
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('persiorg5MSP.admin', 'persiorg5MSP.peer', 'persiorg5MSP.client')"
+            Writers:
+               Type: Signature
+               Rule: "OR('persiorg5MSP.admin', 'persiorg5MSP.client')"
+            Admins:
+                Type: Signature
+                Rule: "OR('persiorg5MSP.admin')"
+        AnchorPeers:
+            - Host: peer0.persiorg5.persi.com
+              Port: 8501
+
+
+
+    - &persiorg6
+        Name: persiorg6MSP
+        ID: persiorg6MSP
+        MSPDir: crypto-config/peerOrganizations/persiorg6.persi.com/msp
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('persiorg6MSP.admin', 'persiorg6MSP.peer', 'persiorg6MSP.client')"
+            Writers:
+               Type: Signature
+               Rule: "OR('persiorg6MSP.admin', 'persiorg6MSP.client')"
+            Admins:
+                Type: Signature
+                Rule: "OR('persiorg6MSP.admin')"
+        AnchorPeers:
+            - Host: peer0.persiorg6.persi.com
+              Port: 8501
+
+
+
+    - &persiorg7
+        Name: persiorg7MSP
+        ID: persiorg7MSP
+        MSPDir: crypto-config/peerOrganizations/persiorg7.persi.com/msp
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('persiorg7MSP.admin', 'persiorg7MSP.peer', 'persiorg7MSP.client')"
+            Writers:
+               Type: Signature
+               Rule: "OR('persiorg7MSP.admin', 'persiorg7MSP.client')"
+            Admins:
+                Type: Signature
+                Rule: "OR('persiorg7MSP.admin')"
+        AnchorPeers:
+            - Host: peer0.persiorg7.persi.com
+              Port: 8501
+
+
+
+    - &persiorg8
+        Name: persiorg8MSP
+        ID: persiorg8MSP
+        MSPDir: crypto-config/peerOrganizations/persiorg8.persi.com/msp
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('persiorg8MSP.admin', 'persiorg8MSP.peer', 'persiorg8MSP.client')"
+            Writers:
+               Type: Signature
+               Rule: "OR('persiorg8MSP.admin', 'persiorg8MSP.client')"
+            Admins:
+                Type: Signature
+                Rule: "OR('persiorg8MSP.admin')"
+        AnchorPeers:
+            - Host: peer0.persiorg8.persi.com
+              Port: 8501
+
+
+
+    - &persiorg9
+        Name: persiorg9MSP
+        ID: persiorg9MSP
+        MSPDir: crypto-config/peerOrganizations/persiorg9.persi.com/msp
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('persiorg9MSP.admin', 'persiorg9MSP.peer', 'persiorg9MSP.client')"
+            Writers:
+               Type: Signature
+               Rule: "OR('persiorg9MSP.admin', 'persiorg9MSP.client')"
+            Admins:
+                Type: Signature
+                Rule: "OR('persiorg9MSP.admin')"
+        AnchorPeers:
+            - Host: peer0.persiorg9.persi.com
+              Port: 8501
+
+
+
+    - &persiorg10
+        Name: persiorg10MSP
+        ID: persiorg10MSP
+        MSPDir: crypto-config/peerOrganizations/persiorg10.persi.com/msp
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('persiorg10MSP.admin', 'persiorg10MSP.peer', 'persiorg10MSP.client')"
+            Writers:
+               Type: Signature
+               Rule: "OR('persiorg10MSP.admin', 'persiorg10MSP.client')"
+            Admins:
+                Type: Signature
+                Rule: "OR('persiorg10MSP.admin')"
+        AnchorPeers:
+            - Host: peer0.persiorg10.persi.com
+              Port: 8501
+
+
+
+Capabilities:
+    Channel: &ChannelCapabilities
+        V1_3: true
+    Orderer: &OrdererCapabilities
+        V1_1: true
+    Application: &ApplicationCapabilities
+        V1_3: true
+        V1_2: false
+        V1_1: false
+
+Application: &ApplicationDefaults
+    Organizations:
+    Policies:
+        Readers:
+            Type: ImplicitMeta
+            Rule: "ANY Readers"
+        Writers:
+            Type: ImplicitMeta
+            Rule: "ANY Writers"
+        Admins:
+            Type: ImplicitMeta
+            Rule: "MAJORITY Admins"
+
+Orderer: &OrdererDefaults
+    OrdererType: solo
+    Addresses:
+        - persiOrderer:persiOrderer
+    BatchTimeout: 2s
+    BatchSize:
+        MaxMessageCount: 10
+        AbsoluteMaxBytes: 99 MB
+        PreferredMaxBytes: 512 KB
+    Kafka:
+        Brokers:
+            - 127.0.0.1:19092
+    Organizations:
+    Policies:
+        Readers:
+            Type: ImplicitMeta
+            Rule: "ANY Readers"
+        Writers:
+            Type: ImplicitMeta
+            Rule: "ANY Writers"
+        Admins:
+            Type: ImplicitMeta
+            Rule: "MAJORITY Admins"
+        BlockValidation:
+            Type: ImplicitMeta
+            Rule: "ANY Writers"
+
+Channel: &ChannelDefaults
+    Policies:
+        Readers:
+            Type: ImplicitMeta
+            Rule: "ANY Readers"
+        Writers:
+            Type: ImplicitMeta
+            Rule: "ANY Writers"
+        Admins:
+            Type: ImplicitMeta
+            Rule: "MAJORITY Admins"
+    Capabilities:
+        <<: *ChannelCapabilities
+
+Profiles:
+
+    ThreeOrgsOrdererGenesis:
+        <<: *ChannelDefaults
+        Orderer:
+            <<: *OrdererDefaults
+            Organizations:
+                - *persiOrdererOrg
+            Capabilities:
+                <<: *OrdererCapabilities
+        Consortiums:
+            SampleConsortium:
+                Organizations:
+                    
+                    - *persiorg1
+                    - *persiorg2
+                    - *persiorg3
+                    - *persiorg4
+                    - *persiorg5
+                    - *persiorg6
+                    - *persiorg7
+                    - *persiorg8
+                    - *persiorg9
+                    - *persiorg10
+    ThreeOrgsChannel:
+        Consortium: SampleConsortium
+        Application:
+            <<: *ApplicationDefaults
+            Organizations:
+                
+                - *persiorg1
+                - *persiorg2
+                - *persiorg3
+                - *persiorg4
+                - *persiorg5
+                - *persiorg6
+                - *persiorg7
+                - *persiorg8
+                - *persiorg9
+                - *persiorg10
+            Capabilities:
+                <<: *ApplicationCapabilities

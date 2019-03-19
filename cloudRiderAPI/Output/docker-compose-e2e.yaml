@@ -1,0 +1,377 @@
+version: "2"
+
+volumes: 
+  persiorderer.persi.com:
+  peer0.persiorg1.persi.com:
+  peer1.persiorg1.persi.com:
+  peer0.persiorg2.persi.com:
+  peer1.persiorg2.persi.com:
+  peer0.persiorg3.persi.com:
+  peer1.persiorg3.persi.com:
+  peer0.persiorg4.persi.com:
+  peer1.persiorg4.persi.com:
+  peer0.persiorg5.persi.com:
+  peer1.persiorg5.persi.com:
+  peer0.persiorg6.persi.com:
+  peer1.persiorg6.persi.com:
+  peer0.persiorg7.persi.com:
+  peer1.persiorg7.persi.com:
+  peer0.persiorg8.persi.com:
+  peer1.persiorg8.persi.com:
+  peer0.persiorg9.persi.com:
+  peer1.persiorg9.persi.com:
+  peer0.persiorg10.persi.com:
+  peer1.persiorg10.persi.com:
+
+networks:
+  byfn:
+services:
+  ca1:
+    image: hyperledger/fabric-ca:$IMAGE_TAG
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - FABRIC_CA_SERVER_CA_NAME=ca-persiorg1
+      - FABRIC_CA_SERVER_TLS_ENABLED=true
+      - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.persiorg1.persi.com-cert.pem
+      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/CA1_PRIVATE_KEY
+    ports:
+      - "10100:10100"
+    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.persiorg1.persi.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/CA1_PRIVATE_KEY -b admin:adminpw -d'
+    volumes:
+      - ./crypto-config/peerOrganizations/persiorg1.persi.com/ca/:/etc/hyperledger/fabric-ca-server-config
+    container_name: ca_peerpersiorg1
+    networks:
+      - byfn
+  ca2:
+    image: hyperledger/fabric-ca:$IMAGE_TAG
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - FABRIC_CA_SERVER_CA_NAME=ca-persiorg2
+      - FABRIC_CA_SERVER_TLS_ENABLED=true
+      - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.persiorg2.persi.com-cert.pem
+      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/CA2_PRIVATE_KEY
+    ports:
+      - "10101:10100"
+    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.persiorg2.persi.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/CA2_PRIVATE_KEY -b admin:adminpw -d'
+    volumes:
+      - ./crypto-config/peerOrganizations/persiorg2.persi.com/ca/:/etc/hyperledger/fabric-ca-server-config
+    container_name: ca_peerpersiorg2
+    networks:
+      - byfn
+  ca3:
+    image: hyperledger/fabric-ca:$IMAGE_TAG
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - FABRIC_CA_SERVER_CA_NAME=ca-persiorg3
+      - FABRIC_CA_SERVER_TLS_ENABLED=true
+      - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.persiorg3.persi.com-cert.pem
+      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/CA3_PRIVATE_KEY
+    ports:
+      - "10102:10100"
+    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.persiorg3.persi.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/CA3_PRIVATE_KEY -b admin:adminpw -d'
+    volumes:
+      - ./crypto-config/peerOrganizations/persiorg3.persi.com/ca/:/etc/hyperledger/fabric-ca-server-config
+    container_name: ca_peerpersiorg3
+    networks:
+      - byfn
+  ca4:
+    image: hyperledger/fabric-ca:$IMAGE_TAG
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - FABRIC_CA_SERVER_CA_NAME=ca-persiorg4
+      - FABRIC_CA_SERVER_TLS_ENABLED=true
+      - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.persiorg4.persi.com-cert.pem
+      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/CA4_PRIVATE_KEY
+    ports:
+      - "10103:10100"
+    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.persiorg4.persi.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/CA4_PRIVATE_KEY -b admin:adminpw -d'
+    volumes:
+      - ./crypto-config/peerOrganizations/persiorg4.persi.com/ca/:/etc/hyperledger/fabric-ca-server-config
+    container_name: ca_peerpersiorg4
+    networks:
+      - byfn
+  ca5:
+    image: hyperledger/fabric-ca:$IMAGE_TAG
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - FABRIC_CA_SERVER_CA_NAME=ca-persiorg5
+      - FABRIC_CA_SERVER_TLS_ENABLED=true
+      - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.persiorg5.persi.com-cert.pem
+      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/CA5_PRIVATE_KEY
+    ports:
+      - "10104:10100"
+    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.persiorg5.persi.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/CA5_PRIVATE_KEY -b admin:adminpw -d'
+    volumes:
+      - ./crypto-config/peerOrganizations/persiorg5.persi.com/ca/:/etc/hyperledger/fabric-ca-server-config
+    container_name: ca_peerpersiorg5
+    networks:
+      - byfn
+  ca6:
+    image: hyperledger/fabric-ca:$IMAGE_TAG
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - FABRIC_CA_SERVER_CA_NAME=ca-persiorg6
+      - FABRIC_CA_SERVER_TLS_ENABLED=true
+      - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.persiorg6.persi.com-cert.pem
+      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/CA6_PRIVATE_KEY
+    ports:
+      - "10105:10100"
+    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.persiorg6.persi.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/CA6_PRIVATE_KEY -b admin:adminpw -d'
+    volumes:
+      - ./crypto-config/peerOrganizations/persiorg6.persi.com/ca/:/etc/hyperledger/fabric-ca-server-config
+    container_name: ca_peerpersiorg6
+    networks:
+      - byfn
+  ca7:
+    image: hyperledger/fabric-ca:$IMAGE_TAG
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - FABRIC_CA_SERVER_CA_NAME=ca-persiorg7
+      - FABRIC_CA_SERVER_TLS_ENABLED=true
+      - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.persiorg7.persi.com-cert.pem
+      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/CA7_PRIVATE_KEY
+    ports:
+      - "10106:10100"
+    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.persiorg7.persi.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/CA7_PRIVATE_KEY -b admin:adminpw -d'
+    volumes:
+      - ./crypto-config/peerOrganizations/persiorg7.persi.com/ca/:/etc/hyperledger/fabric-ca-server-config
+    container_name: ca_peerpersiorg7
+    networks:
+      - byfn
+  ca8:
+    image: hyperledger/fabric-ca:$IMAGE_TAG
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - FABRIC_CA_SERVER_CA_NAME=ca-persiorg8
+      - FABRIC_CA_SERVER_TLS_ENABLED=true
+      - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.persiorg8.persi.com-cert.pem
+      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/CA8_PRIVATE_KEY
+    ports:
+      - "10107:10100"
+    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.persiorg8.persi.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/CA8_PRIVATE_KEY -b admin:adminpw -d'
+    volumes:
+      - ./crypto-config/peerOrganizations/persiorg8.persi.com/ca/:/etc/hyperledger/fabric-ca-server-config
+    container_name: ca_peerpersiorg8
+    networks:
+      - byfn
+  ca9:
+    image: hyperledger/fabric-ca:$IMAGE_TAG
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - FABRIC_CA_SERVER_CA_NAME=ca-persiorg9
+      - FABRIC_CA_SERVER_TLS_ENABLED=true
+      - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.persiorg9.persi.com-cert.pem
+      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/CA9_PRIVATE_KEY
+    ports:
+      - "10108:10100"
+    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.persiorg9.persi.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/CA9_PRIVATE_KEY -b admin:adminpw -d'
+    volumes:
+      - ./crypto-config/peerOrganizations/persiorg9.persi.com/ca/:/etc/hyperledger/fabric-ca-server-config
+    container_name: ca_peerpersiorg9
+    networks:
+      - byfn
+  ca10:
+    image: hyperledger/fabric-ca:$IMAGE_TAG
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - FABRIC_CA_SERVER_CA_NAME=ca-persiorg10
+      - FABRIC_CA_SERVER_TLS_ENABLED=true
+      - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.persiorg10.persi.com-cert.pem
+      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/CA10_PRIVATE_KEY
+    ports:
+      - "10109:10100"
+    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.persiorg10.persi.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/CA10_PRIVATE_KEY -b admin:adminpw -d'
+    volumes:
+      - ./crypto-config/peerOrganizations/persiorg10.persi.com/ca/:/etc/hyperledger/fabric-ca-server-config
+    container_name: ca_peerpersiorg10
+    networks:
+      - byfn
+
+  persiorderer.persi.com::
+    container_name: persiorderer.persi.com:
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: persiorderer.persi.com:
+    networks:
+      - byfn
+
+
+  peer0.persiorg1.persi.com:
+    container_name: peer0.persiorg1.persi.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer0.persiorg1.persi.com
+    networks:
+      - byfn
+
+
+  peer1.persiorg1.persi.com:
+    container_name: peer1.persiorg1.persi.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer1.persiorg1.persi.com
+    networks:
+      - byfn
+
+
+  peer0.persiorg2.persi.com:
+    container_name: peer0.persiorg2.persi.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer0.persiorg2.persi.com
+    networks:
+      - byfn
+
+
+  peer1.persiorg2.persi.com:
+    container_name: peer1.persiorg2.persi.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer1.persiorg2.persi.com
+    networks:
+      - byfn
+
+
+  peer0.persiorg3.persi.com:
+    container_name: peer0.persiorg3.persi.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer0.persiorg3.persi.com
+    networks:
+      - byfn
+
+
+  peer1.persiorg3.persi.com:
+    container_name: peer1.persiorg3.persi.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer1.persiorg3.persi.com
+    networks:
+      - byfn
+
+
+  peer0.persiorg4.persi.com:
+    container_name: peer0.persiorg4.persi.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer0.persiorg4.persi.com
+    networks:
+      - byfn
+
+
+  peer1.persiorg4.persi.com:
+    container_name: peer1.persiorg4.persi.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer1.persiorg4.persi.com
+    networks:
+      - byfn
+
+
+  peer0.persiorg5.persi.com:
+    container_name: peer0.persiorg5.persi.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer0.persiorg5.persi.com
+    networks:
+      - byfn
+
+
+  peer1.persiorg5.persi.com:
+    container_name: peer1.persiorg5.persi.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer1.persiorg5.persi.com
+    networks:
+      - byfn
+
+
+  peer0.persiorg6.persi.com:
+    container_name: peer0.persiorg6.persi.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer0.persiorg6.persi.com
+    networks:
+      - byfn
+
+
+  peer1.persiorg6.persi.com:
+    container_name: peer1.persiorg6.persi.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer1.persiorg6.persi.com
+    networks:
+      - byfn
+
+
+  peer0.persiorg7.persi.com:
+    container_name: peer0.persiorg7.persi.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer0.persiorg7.persi.com
+    networks:
+      - byfn
+
+
+  peer1.persiorg7.persi.com:
+    container_name: peer1.persiorg7.persi.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer1.persiorg7.persi.com
+    networks:
+      - byfn
+
+
+  peer0.persiorg8.persi.com:
+    container_name: peer0.persiorg8.persi.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer0.persiorg8.persi.com
+    networks:
+      - byfn
+
+
+  peer1.persiorg8.persi.com:
+    container_name: peer1.persiorg8.persi.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer1.persiorg8.persi.com
+    networks:
+      - byfn
+
+
+  peer0.persiorg9.persi.com:
+    container_name: peer0.persiorg9.persi.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer0.persiorg9.persi.com
+    networks:
+      - byfn
+
+
+  peer1.persiorg9.persi.com:
+    container_name: peer1.persiorg9.persi.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer1.persiorg9.persi.com
+    networks:
+      - byfn
+
+
+  peer0.persiorg10.persi.com:
+    container_name: peer0.persiorg10.persi.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer0.persiorg10.persi.com
+    networks:
+      - byfn
+
+
+  peer1.persiorg10.persi.com:
+    container_name: peer1.persiorg10.persi.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer1.persiorg10.persi.com
+    networks:
+      - byfn
+

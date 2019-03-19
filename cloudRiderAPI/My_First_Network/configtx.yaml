@@ -1,0 +1,160 @@
+Organizations:
+    - &OrdererOrg
+        Name: OrdererOrg
+        ID: OrdererMSP
+        MSPDir: crypto-config/ordererOrganizations/cloudriders.com/msp
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('OrdererMSP.member')"
+            Writers:
+                Type: Signature
+                Rule: "OR('OrdererMSP.member')"
+            Admins:
+                Type: Signature
+                Rule: "OR('OrdererMSP.admin')"
+
+    - &MyOrg1
+        Name: MyOrg1MSP
+        ID: MyOrg1MSP
+        MSPDir: crypto-config/peerOrganizations/my-org1.cloudriders.com/msp
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('MyOrg1MSP.admin', 'MyOrg1MSP.peer', 'MyOrg1MSP.client')"
+            Writers:
+                Type: Signature
+                Rule: "OR('MyOrg1MSP.admin', 'MyOrg1MSP.client')"
+            Admins:
+                Type: Signature
+                Rule: "OR('MyOrg1MSP.admin')"
+        AnchorPeers:
+            - Host: peer0.my-org1.cloudriders.com
+              Port: 17051
+
+    - &MyOrg2
+        Name: MyOrg2MSP
+        ID: MyOrg2MSP
+        MSPDir: crypto-config/peerOrganizations/my-org2.cloudriders.com/msp
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('MyOrg2MSP.admin', 'MyOrg2MSP.peer', 'MyOrg2MSP.client')"
+            Writers:
+                Type: Signature
+                Rule: "OR('MyOrg2MSP.admin', 'MyOrg2MSP.client')"
+            Admins:
+                Type: Signature
+                Rule: "OR('MyOrg2MSP.admin')"
+        AnchorPeers:
+            - Host: peer0.my-org2.cloudriders.com
+              Port: 17051
+
+    - &MyOrg3
+        Name: MyOrg3MSP
+        ID: MyOrg3MSP
+        MSPDir: crypto-config/peerOrganizations/my-org3.cloudriders.com/msp
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('MyOrg3MSP.admin', 'MyOrg3MSP.peer', 'MyOrg3MSP.client')"
+            Writers:
+                Type: Signature
+                Rule: "OR('MyOrg3MSP.admin', 'MyOrg3MSP.client')"
+            Admins:
+                Type: Signature
+                Rule: "OR('MyOrg3MSP.admin')"
+        AnchorPeers:
+            - Host: peer0.my-org3.cloudriders.com
+              Port: 17051
+
+Capabilities:
+    Channel: &ChannelCapabilities
+        V1_3: true
+    Orderer: &OrdererCapabilities
+        V1_1: true
+    Application: &ApplicationCapabilities
+        V1_3: true
+        V1_2: false
+        V1_1: false
+
+Application: &ApplicationDefaults
+    Organizations:
+    Policies:
+        Readers:
+            Type: ImplicitMeta
+            Rule: "ANY Readers"
+        Writers:
+            Type: ImplicitMeta
+            Rule: "ANY Writers"
+        Admins:
+            Type: ImplicitMeta
+            Rule: "MAJORITY Admins"
+
+Orderer: &OrdererDefaults
+    OrdererType: solo
+    Addresses:
+        - cloud-orderer.cloudriders.com:17050
+    BatchTimeout: 2s
+    BatchSize:
+        MaxMessageCount: 10
+        AbsoluteMaxBytes: 99 MB
+        PreferredMaxBytes: 512 KB
+    Kafka:
+        Brokers:
+            - 127.0.0.1:19092
+    Organizations:
+    Policies:
+        Readers:
+            Type: ImplicitMeta
+            Rule: "ANY Readers"
+        Writers:
+            Type: ImplicitMeta
+            Rule: "ANY Writers"
+        Admins:
+            Type: ImplicitMeta
+            Rule: "MAJORITY Admins"
+        BlockValidation:
+            Type: ImplicitMeta
+            Rule: "ANY Writers"
+
+Channel: &ChannelDefaults
+    Policies:
+        Readers:
+            Type: ImplicitMeta
+            Rule: "ANY Readers"
+        Writers:
+            Type: ImplicitMeta
+            Rule: "ANY Writers"
+        Admins:
+            Type: ImplicitMeta
+            Rule: "MAJORITY Admins"
+    Capabilities:
+        <<: *ChannelCapabilities
+
+Profiles:
+
+    ThreeOrgsOrdererGenesis:
+        <<: *ChannelDefaults
+        Orderer:
+            <<: *OrdererDefaults
+            Organizations:
+                - *OrdererOrg
+            Capabilities:
+                <<: *OrdererCapabilities
+        Consortiums:
+            SampleConsortium:
+                Organizations:
+                    - *MyOrg1
+                    - *MyOrg2
+                    - *MyOrg3
+    ThreeOrgsChannel:
+        Consortium: SampleConsortium
+        Application:
+            <<: *ApplicationDefaults
+            Organizations:
+                - *MyOrg1
+                - *MyOrg2
+                - *MyOrg3
+            Capabilities:
+                <<: *ApplicationCapabilities

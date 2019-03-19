@@ -15,7 +15,7 @@ var peers =require('./services/peers')
 var consortium = require('./services/consortium')
 var services = require('./services/services')
 var dashboard = require('./services/dashboardServices')
-const port = 3000
+const port = 3030
 logger.info("Hello world")
 app.get('/',dashboard.home)
 
@@ -49,7 +49,7 @@ app.get('/hyperverse/invokeChaincode/:chaincodeId',channelService.invokeChaincod
 //API for organization
 app.post('/hyperverse/organization', org.createOrg);
 app.delete('/hyperverse/organization',org.delOrgByName);
-app.get('/hyperverse/organization/:consortiumName',org.getOrgs);
+app.get('/hyperverse/organization',org.getOrgs);
 
 //API for consortium
 app.get('/hyperverse/consortium/:name',  consortium.getConsortiumByName)

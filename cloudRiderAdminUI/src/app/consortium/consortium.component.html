@@ -26,7 +26,7 @@
                                   
                                   <tr *ngFor="let cons of consordiumData; index as i"> 
                                         <td ng-repeat="(val) in row">{{i+1}}</td> 
-                                            <td ng-repeat="(val) in row">{{cons.consortiumname}}</td> 
+                                            <td ng-repeat="(val) in row">{{cons.name}}</td> 
                                        </tr>
                              </tbody>
                          </table>
@@ -43,12 +43,12 @@
               <div class="card-body">
                   <form id="myform" >
                       <div class="row">
-                          <div class="col-md-5">
+                          <div class="col-md-6">
                             <mat-form-field class="example-full-width">
                                 <input id="domain"  name="domain" [(ngModel)]="obj.domain" #domain="ngModel" matInput placeholder="Domain" >
                               </mat-form-field>
                           </div>
-                          <div class="col-md-7">
+                          <div class="col-md-6">
                               <mat-form-field class="example-full-width">
                                 <input id="ordererName"  name="ordererName" [(ngModel)]="obj.ordererName" #ordno="ngModel" matInput placeholder="Orderer Name">
                               </mat-form-field>
@@ -56,12 +56,12 @@
                           
                       </div>
                       <div class="row">
-                            <div class="col-md-5">
+                            <div class="col-md-6">
                                     <mat-form-field class="example-full-width">
                                       <input id="ordererHostName"  name="ordererHostName" [(ngModel)]="obj.ordererHostName" #hostname="ngModel" matInput placeholder="Orderer Hostname" >
                                     </mat-form-field>
                                 </div>
-                          <div class="col-md-7">
+                          <div class="col-md-6">
                             <mat-form-field class="example-full-width">
                               <input id="orgname"  name="orgname" [(ngModel)]="obj.orgname" #orgname="ngModel" matInput placeholder="Organisation Name" type="text">
                             </mat-form-field>
@@ -69,12 +69,12 @@
                           
                       </div>
                       <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                     <mat-form-field class="example-full-width">
                                       <input id="numberOfOrgs"  name="numberOfOrgs" [(ngModel)]="obj.numberOfOrgs" #orgcount="ngModel" matInput placeholder="No of Organisation">
                                     </mat-form-field>
                                   </div>
-                          <div class="col-md-8">
+                          <div class="col-md-6">
                             <mat-form-field class="example-full-width">
                               <input id="networkname"  name="networkname" [(ngModel)]="obj.networkname" #network="ngModel" matInput placeholder="Network Name" type="text">
                             </mat-form-field>
@@ -93,6 +93,26 @@
                             </mat-form-field>
                           </div>
                       </div>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <mat-form-field class="example-full-width">
+                            <input id="orderport"  name="orderport" [(ngModel)]="obj.orderport" #peers="ngModel" matInput placeholder="Order Port">
+                          </mat-form-field>
+                        </div>
+                        
+                        <div class="col-md-6">
+                          <mat-form-field class="example-full-width">
+                            <input id="peerportstart" name="peerportstart" [(ngModel)]="obj.peerportstart" #channelName="ngModel" matInput placeholder="Peer Port Start">
+                          </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <mat-form-field class="example-full-width">
+                          <input id="peerportSequence"  name="peerportSequence" [(ngModel)]="obj.peerportSequence" #peers="ngModel" matInput placeholder="Peerport Sequence">
+                        </mat-form-field>
+                      </div>
+                  </div>
                       
                       <button (click)="onClick()" mat-raised-button type="submit" class="btn btn-danger pull-right" >Save</button>
                       <div class="clearfix"></div>

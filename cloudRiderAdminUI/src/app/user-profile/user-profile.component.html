@@ -42,146 +42,111 @@
               </div>
             </div>-->
 
-            <div class="col-md-12">
+            <div class="col-md-5">
                 <div class="card">
                     <div class="card-header card-header-danger">
-                        <h4 class="card-title ">Organizations</h4>
+                        <h4 class="card-title ">Consortiums</h4>
                         
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table">
-                                <thead class=" text-primary">
-                                    <th>
-                                        ID
-                                    </th>
-                                    <th>
-                                        Organisation Name
-                                    </th>
-                                    <th>
-                                        Consortium Name
-                                    </th>
-                                    <th>
-                                        Domain Name
-                                    </th>
-                                    <th>
-                                        Orderer Name
-                                    </th>
-                                    <th>
-                                        Network Name
-                                    </th>
-                                    </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            1
-                                        </td>
-                                        <td>
-                                            Dakota Rice
-                                        </td>
-                                        <td>
-                                            Dakota Rice
-                                        </td>
-                                        <td>
-                                            Dakota Rice
-                                        </td>
-                                        <td>
-                                            Dakota Rice
-                                        </td>
-                                        <td>
-                                            Dakota Rice
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            2
-                                        </td>
-                                        <td>
-                                            Minerva Hooper
-                                        </td>
-                                        <td>
-                                            Dakota Rice
-                                        </td>
-                                        <td>
-                                            Dakota Rice
-                                        </td>
-                                        <td>
-                                            Dakota Rice
-                                        </td>
-                                        <td>
-                                            Dakota Rice
-                                        </td>
-                                      
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            3
-                                        </td>
-                                        <td>
-                                            Sage Rodriguez
-                                        </td>
-                                        <td>
-                                            Dakota Rice
-                                        </td>
-                                        <td>
-                                            Dakota Rice
-                                        </td>
-                                        <td>
-                                            Dakota Rice
-                                        </td>
-                                        <td>
-                                            Dakota Rice
-                                        </td>
+                              <table class="table table-striped table-hover display" style="cellspacing:0;width:100%">
+                                      <thead>
+                                           <tr>
+                                                  <th>
+                                                          ID
+                                                      </th>
+                                                      <th>
+                                                          Name
+                                                      </th>
+                                                      <th>
+                                                        Consortium
+                                                    </th>
+                                                    <th>
+                                                        No of Peers
+                                                    </th>
+                                           </tr>
+                                      </thead>
+                               
+                                    <tbody >
                                         
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            4
-                                        </td>
-                                        <td>
-                                            Philip Chaney
-                                        </td>
-                                        <td>
-                                            Dakota Rice
-                                        </td>
-                                        <td>
-                                            Dakota Rice
-                                        </td>
-                                        <td>
-                                            Dakota Rice
-                                        </td>
-                                        <td>
-                                            Dakota Rice
-                                        </td>
-                                        
-                                    </tr>
-                                      <tr>
-                                        <td>
-                                            6
-                                        </td>
-                                        <td>
-                                            Mason Porter
-                                        </td>
-                                        <td>
-                                            Dakota Rice
-                                        </td>
-                                        <td>
-                                            Dakota Rice
-                                        </td>
-                                        <td>
-                                            Dakota Rice
-                                        </td>
-                                        <td>
-                                            Dakota Rice
-                                        </td>
-                                       
-                                    </tr>
-                                </tbody>
-                            </table>
+                                        <tr *ngFor="let org of orgData; index as i"> 
+                                              <td ng-repeat="(val) in row">{{i+1}}</td> 
+                                                <td ng-repeat="(val) in row">{{org.orgName}}</td>
+                                                <td ng-repeat="(val) in row">{{org.consortium}}</td>
+                                                <td ng-repeat="(val) in row">{{org.peers}}</td> 
+                                             </tr>
+                                   </tbody>
+                               </table>
+                            
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="col-md-7">
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <h4 class="card-title">Add Consortium</h4>
+                        </div>
+                    <div class="card-body">
+                        <form id="myform" >
+                            <div class="row">
+                                <div class="col-md-6">
+                                            <mat-form-field class="example-full-width">
+                                              <input id="orgname"  name="orgname" [(ngModel)]="obj.orgname" #ordno="ngModel" matInput placeholder="Organisation Name">
+                                            </mat-form-field>
+                                        </div>
+                                <div class="col-md-6">
+                                  <mat-form-field class="example-full-width">
+                                      <input id="consortium"  name="consortium" [(ngModel)]="obj.consortium" #domain="ngModel" matInput placeholder="Consortium" >
+                                    </mat-form-field>
+                                </div>
+                                
+                            </div>
+                            <div class="row">
+                                  <div class="col-md-5">
+                                          <mat-form-field class="example-full-width">
+                                            <input id="channelName"  name="channelName" [(ngModel)]="obj.channelName" #hostname="ngModel" matInput placeholder="Channel Name" >
+                                          </mat-form-field>
+                                      </div>
+                                <div class="col-md-7">
+                                  <mat-form-field class="example-full-width">
+                                    <input id="peers"  name="peers" [(ngModel)]="obj.peers" #orgname="ngModel" matInput placeholder="No of Peers" type="text">
+                                  </mat-form-field>
+                                </div>
+                                
+                            </div>
+                            <div class="row">
+                                  <div class="col-md-4">
+                                          <mat-form-field class="example-full-width">
+                                            <input id="ordererName"  name="ordererName" [(ngModel)]="obj.ordererName" #orgcount="ngModel" matInput placeholder="Orderer Name">
+                                          </mat-form-field>
+                                        </div>
+                                <div class="col-md-8">
+                                  <mat-form-field class="example-full-width">
+                                    <input id="orderHostName"  name="orderHostName" [(ngModel)]="obj.orderHostName" #network="ngModel" matInput placeholder="Order Host Name" type="text">
+                                  </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                    <div class="col-md-4">
+                                            <mat-form-field class="example-full-width">
+                                              <input id="networkName"  name="networkName" [(ngModel)]="obj.networkName" #orgcount="ngModel" matInput placeholder="Network Name">
+                                            </mat-form-field>
+                                          </div>
+                                  <div class="col-md-8">
+                                    <mat-form-field class="example-full-width">
+                                      <input id="port"  name="port" [(ngModel)]="obj.port" #network="ngModel" matInput placeholder="Port" type="text">
+                                    </mat-form-field>
+                                  </div>
+                              </div>
+                            <button (click)="onClick()" mat-raised-button type="submit" class="btn btn-danger pull-right" >Save</button>
+                            <div class="clearfix"></div>
+                        </form>
+                    </div>
                 </div>
+      
+            </div>
       </div>
   </div>
 </div>

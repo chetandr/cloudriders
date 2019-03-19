@@ -1,0 +1,27 @@
+OrdererOrgs:
+  - Name: Cloud-Orderer
+    Domain: cloudriders.com
+    Specs:
+      - Hostname: cloud-orderer
+PeerOrgs:
+  - Name: My-Org1
+    Domain: my-org1.cloudriders.com
+    EnableNodeOUs: true
+    Template:
+      Count: 2
+    Users:
+      Count: 1
+  - Name: My-Org2
+    Domain: my-org2.cloudriders.com
+    EnableNodeOUs: true
+    Template:
+      Count: 2
+    Users:
+      Count: 1
+  - Name: My-Org3
+    Domain: my-org3.cloudriders.com
+    EnableNodeOUs: true
+    Template:
+      Count: 2
+    Users:
+      Count: 1

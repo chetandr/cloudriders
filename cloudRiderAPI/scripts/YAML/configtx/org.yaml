@@ -1,0 +1,20 @@
+
+
+    - &PARAM_SHORT_ORG
+        Name: PARAM_SHORT_ORGMSP
+        ID: PARAM_SHORT_ORGMSP
+        MSPDir: crypto-config/peerOrganizations/PARAM_ORG/msp
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('PARAM_SHORT_ORGMSP.admin', 'PARAM_SHORT_ORGMSP.peer', 'PARAM_SHORT_ORGMSP.client')"
+            Writers:
+               Type: Signature
+               Rule: "OR('PARAM_SHORT_ORGMSP.admin', 'PARAM_SHORT_ORGMSP.client')"
+            Admins:
+                Type: Signature
+                Rule: "OR('PARAM_SHORT_ORGMSP.admin')"
+        AnchorPeers:
+            - Host: PARAM_PEER
+              Port: PARAM_PORT_1
+

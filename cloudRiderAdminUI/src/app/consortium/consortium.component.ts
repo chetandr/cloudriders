@@ -18,9 +18,9 @@ export class ConsortiumComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.http.get("http://10.44.14.136:3000/hyperverse/consortium").subscribe((data: any) => {
-          console.log(data.data); 
-          this.consordiumData=data.data;
+    this.http.get("http://localhost:3030/hyperverse/consortium").subscribe((data: any) => {
+          console.log(data); 
+          this.consordiumData=data;
                             
         });
   }
@@ -29,7 +29,7 @@ export class ConsortiumComponent implements OnInit {
     
     console.log(this.obj);
     let data = this.http.post(
-      "http://10.44.14.136:3000/hyperverse/consortium",
+      "http://localhost:3030/hyperverse/consortium",
      JSON.stringify(this.obj),
       {headers: this.headers}
     ).subscribe((response:any)=>{
