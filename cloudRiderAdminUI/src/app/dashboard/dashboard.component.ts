@@ -13,17 +13,21 @@ export class DashboardComponent implements OnInit {
   constructor(private http: HttpClient) { 
     this.http = http;
   }
+  getSummaryData() {
+    this.http.get("http://localhost:3030/").subscribe(
+        Data => {
+          console.log(Data);
+          this.summaryData= Data
+        });
+  }
   startAnimationForLineChart(chart){
       let seq: any, delays: any, durations: any;
       seq = 0;
       delays = 80;
       durations = 500;
-      this.http.get("http://localhost:3030/").subscribe(
-        Data => {
-          console.log(Data);
-          this.summaryData= Data
-        });
-
+      
+      setInterval(this.getSummaryData, 3000);
+      
       chart.on('draw', function(data) {
         if(data.type === 'line' || data.type === 'area') {
           data.element.animate({
